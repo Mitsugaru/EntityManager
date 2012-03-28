@@ -71,12 +71,12 @@ public class MyDispenseListener implements Listener {
 		int yy = (int) y;
 		int zz = (int) z;
 		if (alertr) {
-			Bukkit.broadcast(ChatColor.GREEN + "[ASE] " + ChatColor.DARK_RED
+			Bukkit.broadcast(ChatColor.GREEN + "[EM] " + ChatColor.DARK_RED
 					+ "Failed Dispense of: " + ChatColor.GOLD
 					+ event.getItem().getType() + ChatColor.DARK_RED + " in: "
 					+ ChatColor.YELLOW + event.getBlock().getWorld().getName()
 					+ " at: " + xx + " , " + yy + " , " + zz + ".",
-					"antispawnegg.alert");
+					"entitymanager.admin");
 			return;
 		}
 	}
