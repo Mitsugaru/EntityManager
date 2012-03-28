@@ -1,4 +1,4 @@
-# AntiSpawnEgg Configuration v2.8
+# EntityManager Configuration v2.8
 # Put name of the worlds you want the plugin to work in, aka multiworld support.
 # Eggs that are disabled can only be used by players with permission.
 # You can charge players for each egg they use, even for monsters or animals
@@ -10,12 +10,17 @@
 World:
   Worldname:
   - world
-  - nether
+  - world_nether 
+  - world_end
 Economy:
   charge:
     monster: 15
     animal: 5
     other: 10
+Disable:
+  Experience: false
+  Weather: false
+  Enchanting: false
 block:
   Dispense:
     SpawnerEggs: true
@@ -28,6 +33,11 @@ block:
     ChickenEggs: false
     EnderPearls: true
     EnderEyes: true
+  Entities:
+    Boats: false
+    Minecarts: false
+    PrimedTNT: false
+    FallingBlocks: false
 send:
   alerts: true 
 disabled:
@@ -62,4 +72,26 @@ disabled:
     mooshroom: false
     ocelot: false
     villager: true
+  mobs:
+    creeper: false 
+    skeleton: false
+    spider: false
+    zombie: false
+    slime: false
+    ghast: false
+    pigman: false
+    enderman: false
+    cavespider: false
+    silverfish: false
+    blaze: false
+    magmacube: fa;se
+    pig: false
+    sheep: false
+    cow: false
+    chicken: false
+    squid: false
+    wolf: false
+    mooshroom: false
+    ocelot: false
+    villager: false
 
