@@ -9,11 +9,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.EnderCrystal;
-import org.bukkit.entity.EnderDragon;
-import org.bukkit.entity.Giant;
-import org.bukkit.entity.IronGolem;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Snowman;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -49,40 +45,7 @@ public class ThrowListener implements Listener {
 								e.getItem().setType(null);
 								return;
 							}
-						} else if (e.getItem().getDurability() == 99) {
-							Location loc = e.getClickedBlock().getLocation();
-							e.getClickedBlock().getWorld()
-									.spawn(loc, IronGolem.class);
-							if (e.getPlayer().getGameMode() == GameMode.SURVIVAL) {
-								e.getItem().setType(null);
-								return;
-							}
-						} else if (e.getItem().getDurability() == 97) {
-							Location loc = e.getClickedBlock().getLocation();
-							e.getClickedBlock().getWorld()
-									.spawn(loc, Snowman.class);
-							if (e.getPlayer().getGameMode() == GameMode.SURVIVAL) {
-								e.getItem().setType(null);
-								return;
-							}
-						} else if (e.getItem().getDurability() == 53) {
-							Location loc = e.getClickedBlock().getLocation();
-							e.getClickedBlock().getWorld()
-									.spawn(loc, Giant.class);
-							if (e.getPlayer().getGameMode() == GameMode.SURVIVAL) {
-								e.getItem().setType(null);
-								return;
-							}
-						} else if (e.getItem().getDurability() == 63) {
-							Location loc = e.getClickedBlock().getLocation();
-							e.getClickedBlock().getWorld()
-									.spawn(loc, EnderDragon.class);
-							if (e.getPlayer().getGameMode() == GameMode.SURVIVAL) {
-								e.getItem().setType(null);
-								return;
-							}
 						}
-
 						if (e.getItem().getTypeId() == 384) {
 							if (plugin.getConfig().getBoolean(
 									"block.Throw.XpBottles")
