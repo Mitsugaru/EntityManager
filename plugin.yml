@@ -1,12 +1,12 @@
-name: AntiSpawnEgg
+name: EntityManager
 author: milkywayz 
 main: net.milkycraft.Spawnegg
-description: Creatively disable spawn eggs
+description: Creatively manage entities
 website: http://milkycraft.net
-version: 2.7
+version: 2.8
 
 commands:
-    antispawnegg:
-      aliases: ase
+    entitymanager:
+      aliases: em
 
   
