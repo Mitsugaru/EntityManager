@@ -1,0 +1,12 @@
+name: AntiSpawnEgg
+author: milkywayz 
+main: net.milkycraft.Spawnegg
+description: Creatively disable spawn eggs
+website: http://milkycraft.net
+version: 2.7
+
+commands:
+    antispawnegg:
+      aliases: ase
+
+  
