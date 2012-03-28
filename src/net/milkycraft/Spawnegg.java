@@ -99,16 +99,16 @@ public class Spawnegg extends EggWrapper {
 			 if (args.length == 2) {
 		            if (args[0].equalsIgnoreCase("purge")) {
 		            	Player target = sender.getServer().getPlayer(args[1]);
-		            	if(target.getInventory().contains(Material.MONSTER_EGG)) {
+		            	 if(target.getInventory().contains(Material.MONSTER_EGG)) {
 		            		target.getInventory().remove(Material.MONSTER_EGG);
 		            	}
-		            	if(target.getInventory().contains(Material.FIREBALL)) {
+		            	else if(target.getInventory().contains(Material.FIREBALL)) {
 		            		target.getInventory().remove(Material.FIREBALL);
 		            	}
-		            	if(target.getInventory().contains(Material.EGG)) {
+		            	else if(target.getInventory().contains(Material.EGG)) {
 		            		target.getInventory().remove(Material.EGG);
 		            	}
-		            	if(target.getInventory().contains(Material.EXP_BOTTLE)) {
+		            	else if(target.getInventory().contains(Material.EXP_BOTTLE)) {
 		            		target.getInventory().remove(Material.EXP_BOTTLE);
 		            	}
 		            	sender.sendMessage(ChatColor.GREEN + "[ASE] " +
@@ -125,9 +125,19 @@ public class Spawnegg extends EggWrapper {
 			this.reloadConfig();
 			sender.sendMessage(ChatColor.AQUA + "[AntiSpawnEgg] "
 					+ ChatColor.GREEN + "Version " + ver +
-					ChatColor.UNDERLINE
+					ChatColor.ITALIC
 					+ " Config reloaded from disk!");
 			return true;
+		}
+		if (args[0].equalsIgnoreCase("crystal")
+				&& sender.hasPermission("antispawnegg.endercrystal")) {
+			if(((Player) sender).getItemInHand().getTypeId() == 383) {
+				((Player) sender).getItemInHand().setDurability((short) 200);
+			sender.sendMessage(ChatColor.AQUA + "[ASE] "
+					+ ChatColor.GREEN + "Version " + ver 
+					+ " Egg converted to usable EnderCrystal spawnegg");
+			return true;
+			}
 		}
 		if (args.length == 0) {
 			sender.sendMessage(ChatColor.WHITE
