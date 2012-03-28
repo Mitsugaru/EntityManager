@@ -75,7 +75,6 @@ public class Spawnegg extends EggWrapper {
 
 	        }, 0, 216000);
 	}
-	@Override
 	public boolean onCommand(CommandSender sender, Command cmd,
 			String commandLabel, String[] args) {
 		String ver = this.getDescription().getVersion();
