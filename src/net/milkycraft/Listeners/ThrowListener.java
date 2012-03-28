@@ -49,11 +49,11 @@ public class ThrowListener implements Listener {
 							if (plugin.getConfig().getBoolean(
 									"block.Throw.XpBottles")
 									&& !player
-											.hasPermission("antispawnegg.throw.xpbottles")) {
+											.hasPermission("entitymanager.xpbottles")) {
 								e.setCancelled(true);
 								alert(player, e);
 								player.sendMessage(green
-										+ "[ASE]"
+										+ "[EM]"
 										+ red
 										+ " You dont have permission to throw xp bottles");
 								return;
@@ -63,11 +63,11 @@ public class ThrowListener implements Listener {
 							if (plugin.getConfig().getBoolean(
 									"block.Throw.FireCharges")
 									&& !player
-											.hasPermission("antispawnegg.throw.firecharges")) {
+											.hasPermission("entitymanager.firecharges")) {
 								e.setCancelled(true);
 								alert(player, e);
 								player.sendMessage(green
-										+ "[ASE]"
+										+ "[EM]"
 										+ red
 										+ " You dont have permission to throw fire charges");
 								return;
@@ -77,11 +77,11 @@ public class ThrowListener implements Listener {
 							if (plugin.getConfig().getBoolean(
 									"block.Throw.ChickenEggs")
 									&& !player
-											.hasPermission("antispawnegg.throw.chickeneggs")) {
+											.hasPermission("entitymanager.chickeneggs")) {
 								e.setCancelled(true);
 								alert(player, e);
 								player.sendMessage(green
-										+ "[ASE]"
+										+ "[EM]"
 										+ red
 										+ " You dont have permission to throw eggs");
 								return;
@@ -93,10 +93,10 @@ public class ThrowListener implements Listener {
 								if (plugin.getConfig().getBoolean(
 										"disabled.Potions.Regeneration")
 										&& !player
-												.hasPermission("antispawnegg.regeneration")) {
+												.hasPermission("entitymanager.regeneration")) {
 									e.setCancelled(true);
 									player.sendMessage(green
-											+ "[ASE]"
+											+ "[EM]"
 											+ red
 											+ " You dont have permission to use Regen. Potions");
 									return;
@@ -105,10 +105,10 @@ public class ThrowListener implements Listener {
 								if (plugin.getConfig().getBoolean(
 										"disabled.Potions.Swiftness")
 										&& !player
-												.hasPermission("antispawnegg.swiftness")) {
+												.hasPermission("entitymanager.swiftness")) {
 									e.setCancelled(true);
 									player.sendMessage(green
-											+ "[ASE]"
+											+ "[EM]"
 											+ red
 											+ " You dont have permission to use Swiftness Potions");
 									return;
@@ -118,10 +118,10 @@ public class ThrowListener implements Listener {
 								if (plugin.getConfig().getBoolean(
 										"disabled.Potions.FireResistance")
 										&& !player
-												.hasPermission("antispawnegg.fireresistance")) {
+												.hasPermission("entitymanager.fireresistance")) {
 									e.setCancelled(true);
 									player.sendMessage(green
-											+ "[ASE]"
+											+ "[EM]"
 											+ red
 											+ " You dont have permission to use Fire resist Potions");
 									return;
@@ -131,10 +131,10 @@ public class ThrowListener implements Listener {
 								if (plugin.getConfig().getBoolean(
 										"disabled.Potions.Poison")
 										&& !player
-												.hasPermission("antispawnegg.poison")) {
+												.hasPermission("entitymanager.poison")) {
 									e.setCancelled(true);
 									player.sendMessage(green
-											+ "[ASE]"
+											+ "[EM]"
 											+ red
 											+ " You dont have permission to use Poison Potions");
 									return;
@@ -145,10 +145,10 @@ public class ThrowListener implements Listener {
 								if (plugin.getConfig().getBoolean(
 										"disabled.Potions.InstantHealth")
 										&& !player
-												.hasPermission("antispawnegg.health")) {
+												.hasPermission("entitymanager.health")) {
 									e.setCancelled(true);
 									player.sendMessage(green
-											+ "[ASE]"
+											+ "[EM]"
 											+ red
 											+ " You dont have permission to use InstaHealth Potions");
 									return;
@@ -157,10 +157,10 @@ public class ThrowListener implements Listener {
 								if (plugin.getConfig().getBoolean(
 										"disabled.Potions.Weakness")
 										&& !player
-												.hasPermission("antispawnegg.weakness")) {
+												.hasPermission("entitymanager.weakness")) {
 									e.setCancelled(true);
 									player.sendMessage(green
-											+ "[ASE]"
+											+ "[EM]"
 											+ red
 											+ " You dont have permission to use Weakness Potions");
 									return;
@@ -169,10 +169,10 @@ public class ThrowListener implements Listener {
 								if (plugin.getConfig().getBoolean(
 										"disabled.Potions.Strength")
 										&& !player
-												.hasPermission("antispawnegg.strength")) {
+												.hasPermission("entitymanager.strength")) {
 									e.setCancelled(true);
 									player.sendMessage(green
-											+ "[ASE]"
+											+ "[EM]"
 											+ red
 											+ " You dont have permission to use Strength Potions");
 									return;
@@ -181,10 +181,10 @@ public class ThrowListener implements Listener {
 								if (plugin.getConfig().getBoolean(
 										"disabled.Potions.Slowness")
 										&& !player
-												.hasPermission("antispawnegg.slowness")) {
+												.hasPermission("entitymanager.slowness")) {
 									e.setCancelled(true);
 									player.sendMessage(green
-											+ "[ASE]"
+											+ "[EM]"
 											+ red
 											+ " You dont have permission to use Slowness Potions");
 									return;
@@ -193,10 +193,10 @@ public class ThrowListener implements Listener {
 								if (plugin.getConfig().getBoolean(
 										"disabled.Potions.Harming")
 										&& !player
-												.hasPermission("antispawnegg.harming")) {
+												.hasPermission("entitymanager.harming")) {
 									e.setCancelled(true);
 									player.sendMessage(green
-											+ "[ASE]"
+											+ "[EM]"
 											+ red
 											+ " You dont have permission to use Harming Potions");
 									return;
@@ -207,10 +207,10 @@ public class ThrowListener implements Listener {
 							if (plugin.getConfig().getBoolean(
 									"block.Throw.EnderPearls")
 									&& !player
-											.hasPermission("antispawnegg.enderpearl")) {
+											.hasPermission("entitymanager.enderpearl")) {
 								e.setCancelled(true);
 								player.sendMessage(green
-										+ "[ASE]"
+										+ "[EM]"
 										+ red
 										+ " You dont have permission to use Ender Pearls");
 								return;
@@ -220,10 +220,10 @@ public class ThrowListener implements Listener {
 							if (plugin.getConfig().getBoolean(
 									"block.Throw.EnderEyes")
 									&& !player
-											.hasPermission("antispawnegg.endereye")) {
+											.hasPermission("entitymanager.endereye")) {
 								e.setCancelled(true);
 								player.sendMessage(green
-										+ "[ASE]"
+										+ "[EM]"
 										+ red
 										+ " You dont have permission to use Ender Eyes");
 								return;
@@ -238,10 +238,10 @@ public class ThrowListener implements Listener {
 	public void alert(Player player, PlayerInteractEvent e) {
 		boolean alertr = plugin.getConfig().getBoolean("send.alerts");
 		if (alertr) {
-			Bukkit.broadcast(ChatColor.GREEN + "[ASE] " + ChatColor.DARK_RED
+			Bukkit.broadcast(ChatColor.GREEN + "[EM] " + ChatColor.DARK_RED
 					+ e.getPlayer().getDisplayName() + " Tryed to throw an "
 					+ ChatColor.GOLD + e.getItem().getType() + ".",
-					"antispawnegg.alert");
+					"entitymanager.admin");
 			return;
 		}
 	}
