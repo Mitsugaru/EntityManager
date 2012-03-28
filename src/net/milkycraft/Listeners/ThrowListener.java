@@ -18,7 +18,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
 
 public class ThrowListener implements Listener {
 	Spawnegg plugin;
-
 	public ThrowListener(Spawnegg instance) {
 		plugin = instance;
 	}
