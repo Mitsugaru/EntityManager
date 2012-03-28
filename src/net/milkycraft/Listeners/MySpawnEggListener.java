@@ -72,7 +72,7 @@ public class MySpawnEggListener implements Listener {
 									+ " You dont have permission to use creeper eggs");
 						}
 						if (!player.hasPermission("antispawnegg.bypass.charge")
-								&& Bukkit.getPluginManager().getPlugin("Vault") != null) {
+								&& Spawnegg.econ != null) {
 							Spawnegg.econ.withdrawPlayer(playa, mons);
 							return;
 						}
@@ -90,7 +90,7 @@ public class MySpawnEggListener implements Listener {
 									+ " You dont have permission to use skeleton eggs");
 						}
 						if (!player.hasPermission("antispawnegg.bypass.charge")
-								&& Bukkit.getPluginManager().getPlugin("Vault") != null) {
+								&& Spawnegg.econ != null) {
 							Spawnegg.econ.withdrawPlayer(playa, mons);
 							return;
 						}
@@ -107,7 +107,7 @@ public class MySpawnEggListener implements Listener {
 									+ " You dont have permission to use spider eggs");
 						}
 						if (!player.hasPermission("antispawnegg.bypass.charge")
-								&& Bukkit.getPluginManager().getPlugin("Vault") != null) {
+								&& Spawnegg.econ != null) {
 							Spawnegg.econ.withdrawPlayer(playa, mons);
 							return;
 						}
@@ -124,7 +124,7 @@ public class MySpawnEggListener implements Listener {
 									+ " You dont have permission to use zombie eggs");
 						}
 						if (!player.hasPermission("antispawnegg.bypass.charge")
-								&& Bukkit.getPluginManager().getPlugin("Vault") != null) {
+								&& Spawnegg.econ != null) {
 							Spawnegg.econ.withdrawPlayer(playa, mons);
 							return;
 						}
@@ -141,7 +141,7 @@ public class MySpawnEggListener implements Listener {
 									+ "You dont have permission to use slime eggs");
 						}
 						if (!player.hasPermission("antispawnegg.bypass.charge")
-								&& Bukkit.getPluginManager().getPlugin("Vault") != null) {
+								&& Spawnegg.econ != null) {
 							Spawnegg.econ.withdrawPlayer(playa, mons);
 							return;
 						}
@@ -158,7 +158,7 @@ public class MySpawnEggListener implements Listener {
 									+ " You dont have permission to use ghast eggs");
 						}
 						if (!player.hasPermission("antispawnegg.bypass.charge")
-								&& Bukkit.getPluginManager().getPlugin("Vault") != null) {
+								&& Spawnegg.econ != null) {
 							Spawnegg.econ.withdrawPlayer(playa, mons);
 							return;
 						}
@@ -175,7 +175,7 @@ public class MySpawnEggListener implements Listener {
 									+ " You dont have permission to use zombie pigman eggs");
 						}
 						if (!player.hasPermission("antispawnegg.bypass.charge")
-								&& Bukkit.getPluginManager().getPlugin("Vault") != null) {
+								&& Spawnegg.econ != null) {
 							Spawnegg.econ.withdrawPlayer(playa, mons);
 							return;
 						}
@@ -193,7 +193,7 @@ public class MySpawnEggListener implements Listener {
 									+ " You dont have permission to use enderman eggs");
 						}
 						if (!player.hasPermission("antispawnegg.bypass.charge")
-								&& Bukkit.getPluginManager().getPlugin("Vault") != null) {
+								&& Spawnegg.econ != null) {
 							Spawnegg.econ.withdrawPlayer(playa, mons);
 							return;
 						}
@@ -211,7 +211,7 @@ public class MySpawnEggListener implements Listener {
 									+ " You dont have permission to use cave spider eggs");
 						}
 						if (!player.hasPermission("antispawnegg.bypass.charge")
-								&& Bukkit.getPluginManager().getPlugin("Vault") != null) {
+								&& Spawnegg.econ != null) {
 							Spawnegg.econ.withdrawPlayer(playa, mons);
 							return;
 						}
@@ -229,7 +229,7 @@ public class MySpawnEggListener implements Listener {
 									+ " You dont have permission to use silverfish eggs");
 						}
 						if (!player.hasPermission("antispawnegg.bypass.charge")
-								&& Bukkit.getPluginManager().getPlugin("Vault") != null) {
+								&& Spawnegg.econ != null) {
 							Spawnegg.econ.withdrawPlayer(playa, mons);
 							return;
 						}
@@ -246,7 +246,7 @@ public class MySpawnEggListener implements Listener {
 									+ " You dont have permission to use blaze eggs");
 						}
 						if (!player.hasPermission("antispawnegg.bypass.charge")
-								&& Bukkit.getPluginManager().getPlugin("Vault") != null) {
+								&& Spawnegg.econ != null) {
 							Spawnegg.econ.withdrawPlayer(playa, mons);
 							return;
 						}
@@ -264,7 +264,7 @@ public class MySpawnEggListener implements Listener {
 									+ " You dont have permission to use magma cube eggs");
 						}
 						if (!player.hasPermission("antispawnegg.bypass.charge")
-								&& Bukkit.getPluginManager().getPlugin("Vault") != null) {
+								&& Spawnegg.econ != null) {
 							Spawnegg.econ.withdrawPlayer(playa, mons);
 							return;
 						}
@@ -280,7 +280,7 @@ public class MySpawnEggListener implements Listener {
 									+ " You dont have permission to use pig eggs");
 						}
 						if (!player.hasPermission("antispawnegg.bypass.charge")
-								&& Bukkit.getPluginManager().getPlugin("Vault") != null) {
+								&& Spawnegg.econ != null) {
 							Spawnegg.econ.withdrawPlayer(playa, aml);
 							return;
 						}
@@ -297,7 +297,7 @@ public class MySpawnEggListener implements Listener {
 									+ " You dont have permission to use sheep eggs");
 						}
 						if (!player.hasPermission("antispawnegg.bypass.charge")
-								&& Bukkit.getPluginManager().getPlugin("Vault") != null) {
+								&& Spawnegg.econ != null) {
 							Spawnegg.econ.withdrawPlayer(playa, aml);
 							return;
 						}
@@ -313,7 +313,7 @@ public class MySpawnEggListener implements Listener {
 									+ " You dont have permission to use cow eggs");
 						}
 						if (!player.hasPermission("antispawnegg.bypass.charge")
-								&& Bukkit.getPluginManager().getPlugin("Vault") != null) {
+								&& Spawnegg.econ != null) {
 							Spawnegg.econ.withdrawPlayer(playa, aml);
 							return;
 						}
@@ -331,7 +331,7 @@ public class MySpawnEggListener implements Listener {
 									+ " You dont have permission to use chicken eggs");
 						}
 						if (!player.hasPermission("antispawnegg.bypass.charge")
-								&& Bukkit.getPluginManager().getPlugin("Vault") != null) {
+								&& Spawnegg.econ != null) {
 							Spawnegg.econ.withdrawPlayer(playa, aml);
 							return;
 						}
@@ -348,7 +348,7 @@ public class MySpawnEggListener implements Listener {
 									+ " You dont have permission to use squid eggs");
 						}
 						if (!player.hasPermission("antispawnegg.bypass.charge")
-								&& Bukkit.getPluginManager().getPlugin("Vault") != null) {
+								&& Spawnegg.econ != null) {
 							Spawnegg.econ.withdrawPlayer(playa, aml);
 							return;
 						}
@@ -364,7 +364,7 @@ public class MySpawnEggListener implements Listener {
 									+ " You dont have permission to use wolf eggs");
 						}
 						if (!player.hasPermission("antispawnegg.bypass.charge")
-								&& Bukkit.getPluginManager().getPlugin("Vault") != null) {
+								&& Spawnegg.econ != null) {
 							Spawnegg.econ.withdrawPlayer(playa, aml);
 							return;
 						}
@@ -382,7 +382,7 @@ public class MySpawnEggListener implements Listener {
 									+ " You dont have permission to use mooshroom eggs");
 						}
 						if (!player.hasPermission("antispawnegg.bypass.charge")
-								&& Bukkit.getPluginManager().getPlugin("Vault") != null) {
+								&& Spawnegg.econ != null) {
 							Spawnegg.econ.withdrawPlayer(playa, aml);
 							return;
 						}
@@ -400,7 +400,7 @@ public class MySpawnEggListener implements Listener {
 									+ " You dont have permission to use ocelot eggs");
 						}
 						if (!player.hasPermission("antispawnegg.bypass.charge")
-								&& Bukkit.getPluginManager().getPlugin("Vault") != null) {
+								&& Spawnegg.econ != null) {
 							Spawnegg.econ.withdrawPlayer(playa, oth);
 							return;
 						}
@@ -418,7 +418,7 @@ public class MySpawnEggListener implements Listener {
 									+ " You dont have permission to use villager eggs");
 						}
 						if (!player.hasPermission("antispawnegg.bypass.charge")
-								&& Bukkit.getPluginManager().getPlugin("Vault") != null) {
+								&& Spawnegg.econ != null) {
 							Spawnegg.econ.withdrawPlayer(playa, oth);
 							return;
 						}
