@@ -47,11 +47,7 @@ public class MySpawnEggListener implements Listener {
 									.canBuild(player, loc)) {
 								event.setCancelled(true);
 								player.sendMessage(ChatColor.AQUA
-<<<<<<< HEAD
-										+ "[AntiSpawnEgg]"
-=======
 										+ "[ASE]"
->>>>>>> EnderCrystal egg support
 										+ ChatColor.RED
 										+ " You dont have permission for this area!");
 								return;
@@ -71,11 +67,7 @@ public class MySpawnEggListener implements Listener {
 							event.setCancelled(true);
 							alert(event);
 							player.sendMessage(green
-<<<<<<< HEAD
-									+ "[AntiSpawnEgg]"
-=======
 									+ "[ASE]"
->>>>>>> EnderCrystal egg support
 									+ red
 									+ " You dont have permission to use creeper eggs");
 						}
@@ -110,11 +102,7 @@ public class MySpawnEggListener implements Listener {
 							event.setCancelled(true);
 							alert(event);
 							player.sendMessage(green
-<<<<<<< HEAD
-									+ "[AntiSpawnEgg]"
-=======
 									+ "[ASE]"
->>>>>>> EnderCrystal egg support
 									+ red
 									+ " You dont have permission to use spider eggs");
 						}
@@ -131,11 +119,7 @@ public class MySpawnEggListener implements Listener {
 							event.setCancelled(true);
 							alert(event);
 							player.sendMessage(green
-<<<<<<< HEAD
-									+ "[AntiSpawnEgg]"
-=======
 									+ "[ASE]"
->>>>>>> EnderCrystal egg support
 									+ red
 									+ " You dont have permission to use zombie eggs");
 						}
@@ -152,11 +136,7 @@ public class MySpawnEggListener implements Listener {
 							event.setCancelled(true);
 							alert(event);
 							player.sendMessage(green
-<<<<<<< HEAD
-									+ "[AntiSpawnEgg]"
-=======
 									+ "[ASE]"
->>>>>>> EnderCrystal egg support
 									+ red
 									+ "You dont have permission to use slime eggs");
 						}
@@ -173,11 +153,7 @@ public class MySpawnEggListener implements Listener {
 							event.setCancelled(true);
 							alert(event);
 							player.sendMessage(green
-<<<<<<< HEAD
-									+ "[AntiSpawnEgg]"
-=======
 									+ "[ASE]"
->>>>>>> EnderCrystal egg support
 									+ red
 									+ " You dont have permission to use ghast eggs");
 						}
@@ -194,11 +170,7 @@ public class MySpawnEggListener implements Listener {
 							event.setCancelled(true);
 							alert(event);
 							player.sendMessage(green
-<<<<<<< HEAD
-									+ "[AntiSpawnEgg]"
-=======
 									+ "[ASE]"
->>>>>>> EnderCrystal egg support
 									+ red
 									+ " You dont have permission to use zombie pigman eggs");
 						}
@@ -216,11 +188,7 @@ public class MySpawnEggListener implements Listener {
 							event.setCancelled(true);
 							alert(event);
 							player.sendMessage(green
-<<<<<<< HEAD
-									+ "[AntiSpawnEgg]"
-=======
 									+ "[ASE]"
->>>>>>> EnderCrystal egg support
 									+ red
 									+ " You dont have permission to use enderman eggs");
 						}
@@ -238,11 +206,7 @@ public class MySpawnEggListener implements Listener {
 							event.setCancelled(true);
 							alert(event);
 							player.sendMessage(green
-<<<<<<< HEAD
-									+ "[AntiSpawnEgg]"
-=======
 									+ "[ASE]"
->>>>>>> EnderCrystal egg support
 									+ red
 									+ " You dont have permission to use cave spider eggs");
 						}
@@ -260,11 +224,7 @@ public class MySpawnEggListener implements Listener {
 							event.setCancelled(true);
 							alert(event);
 							player.sendMessage(green
-<<<<<<< HEAD
-									+ "[AntiSpawnEgg]"
-=======
 									+ "[ASE]"
->>>>>>> EnderCrystal egg support
 									+ red
 									+ " You dont have permission to use silverfish eggs");
 						}
@@ -281,11 +241,7 @@ public class MySpawnEggListener implements Listener {
 							event.setCancelled(true);
 							alert(event);
 							player.sendMessage(green
-<<<<<<< HEAD
-									+ "[AntiSpawnEgg]"
-=======
 									+ "[ASE]"
->>>>>>> EnderCrystal egg support
 									+ red
 									+ " You dont have permission to use blaze eggs");
 						}
@@ -303,11 +259,7 @@ public class MySpawnEggListener implements Listener {
 							event.setCancelled(true);
 							alert(event);
 							player.sendMessage(green
-<<<<<<< HEAD
-									+ "[AntiSpawnEgg]"
-=======
 									+ "[ASE]"
->>>>>>> EnderCrystal egg support
 									+ red
 									+ " You dont have permission to use magma cube eggs");
 						}
@@ -323,11 +275,7 @@ public class MySpawnEggListener implements Listener {
 							event.setCancelled(true);
 							alert(event);
 							player.sendMessage(green
-<<<<<<< HEAD
-									+ "[AntiSpawnEgg]"
-=======
 									+ "[ASE]"
->>>>>>> EnderCrystal egg support
 									+ red
 									+ " You dont have permission to use pig eggs");
 						}
@@ -344,11 +292,7 @@ public class MySpawnEggListener implements Listener {
 							event.setCancelled(true);
 							alert(event);
 							player.sendMessage(green
-<<<<<<< HEAD
-									+ "[AntiSpawnEgg]"
-=======
 									+ "[ASE]"
->>>>>>> EnderCrystal egg support
 									+ red
 									+ " You dont have permission to use sheep eggs");
 						}
@@ -364,11 +308,7 @@ public class MySpawnEggListener implements Listener {
 							event.setCancelled(true);
 							alert(event);
 							player.sendMessage(green
-<<<<<<< HEAD
-									+ "[AntiSpawnEgg]"
-=======
 									+ "[ASE]"
->>>>>>> EnderCrystal egg support
 									+ red
 									+ " You dont have permission to use cow eggs");
 						}
@@ -386,11 +326,7 @@ public class MySpawnEggListener implements Listener {
 							event.setCancelled(true);
 							alert(event);
 							player.sendMessage(green
-<<<<<<< HEAD
-									+ "[AntiSpawnEgg]"
-=======
 									+ "[ASE]"
->>>>>>> EnderCrystal egg support
 									+ red
 									+ " You dont have permission to use chicken eggs");
 						}
@@ -407,11 +343,7 @@ public class MySpawnEggListener implements Listener {
 							event.setCancelled(true);
 							alert(event);
 							player.sendMessage(green
-<<<<<<< HEAD
-									+ "[AntiSpawnEgg]"
-=======
 									+ "[ASE]"
->>>>>>> EnderCrystal egg support
 									+ red
 									+ " You dont have permission to use squid eggs");
 						}
@@ -427,11 +359,7 @@ public class MySpawnEggListener implements Listener {
 							event.setCancelled(true);
 							alert(event);
 							player.sendMessage(green
-<<<<<<< HEAD
-									+ "[AntiSpawnEgg]"
-=======
 									+ "[ASE]"
->>>>>>> EnderCrystal egg support
 									+ red
 									+ " You dont have permission to use wolf eggs");
 						}
@@ -449,11 +377,7 @@ public class MySpawnEggListener implements Listener {
 							event.setCancelled(true);
 							alert(event);
 							player.sendMessage(green
-<<<<<<< HEAD
-									+ "[AntiSpawnEgg]"
-=======
 									+ "[ASE]"
->>>>>>> EnderCrystal egg support
 									+ red
 									+ " You dont have permission to use mooshroom eggs");
 						}
@@ -471,11 +395,7 @@ public class MySpawnEggListener implements Listener {
 							event.setCancelled(true);
 							alert(event);
 							player.sendMessage(green
-<<<<<<< HEAD
-									+ "[AntiSpawnEgg]"
-=======
 									+ "[ASE]"
->>>>>>> EnderCrystal egg support
 									+ red
 									+ " You dont have permission to use ocelot eggs");
 						}
@@ -493,11 +413,7 @@ public class MySpawnEggListener implements Listener {
 							event.setCancelled(true);
 							alert(event);
 							player.sendMessage(green
-<<<<<<< HEAD
-									+ "[AntiSpawnEgg]"
-=======
 									+ "[ASE]"
->>>>>>> EnderCrystal egg support
 									+ red
 									+ " You dont have permission to use villager eggs");
 						}
@@ -505,8 +421,6 @@ public class MySpawnEggListener implements Listener {
 								&& Spawnegg.econ != null) {
 							Spawnegg.econ.withdrawPlayer(playa, oth);
 							return;
-<<<<<<< HEAD
-=======
 						}
 					}
 					else if (event.getItem().getDurability() == 200) {
@@ -525,7 +439,6 @@ public class MySpawnEggListener implements Listener {
 								&& Spawnegg.econ != null) {
 							Spawnegg.econ.withdrawPlayer(playa, mons);
 							return;
->>>>>>> EnderCrystal egg support
 						}
 					}
 				}
