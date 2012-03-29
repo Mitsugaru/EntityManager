@@ -4,7 +4,8 @@
 # You can charge players for each egg they use, even for monsters or animals
 # You can take the egg the player has if they try but fail to use it (stops alert spam)
 # You can block the dispense of: SpawnerEggs, Fireballs, XpBottles, and chicken eggs!
-# You can block the throwing of Fireballs, XpBottles, and chicken eggs as well.
+# You can block the throwing of Fireballs, XpBottles, and chicken eggs as well
+# You can totally disable the spawning of any mob at the end of the config file
 # For help, visit : http://dev.bukkit.org/server-mods/antispawnegg/pages/
 # ************************************************************************************** #
 World:
@@ -12,6 +13,8 @@ World:
   - world
   - world_nether 
   - world_end
+send:
+  alerts: true
 Economy:
   charge:
     monster: 15
@@ -19,7 +22,6 @@ Economy:
     other: 10
 Disable:
   Experience: false
-  Weather: false
   Enchanting: false
 block:
   Dispense:
@@ -36,20 +38,7 @@ block:
   Entities:
     Boats: false
     Minecarts: false
-    PrimedTNT: false
-    FallingBlocks: false
-send:
-  alerts: true 
 disabled:
-  Potions:
-    Regeneration: false
-    Swiftness: false
-    FireResistance: false
-    Poison: true
-    InstantHealth: false
-    Weakness: false
-    Strength: false
-    Slowness: false
   eggs:
     creeper: true
     skeleton: true
@@ -72,6 +61,7 @@ disabled:
     mooshroom: false
     ocelot: false
     villager: true
+    endercrystal: true
   mobs:
     creeper: false 
     skeleton: false
@@ -84,7 +74,7 @@ disabled:
     cavespider: false
     silverfish: false
     blaze: false
-    magmacube: fa;se
+    magmacube: false
     pig: false
     sheep: false
     cow: false
