@@ -4,12 +4,11 @@ import java.util.List;
 
 import net.milkycraft.Spawnegg;
 
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.EntityType;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
-import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.event.entity.EntityTargetEvent;
 
 public class SpawnListener implements Listener{
@@ -18,21 +17,15 @@ public class SpawnListener implements Listener{
 	public SpawnListener(Spawnegg instance) {
 		plugin = instance;
 	}	
+	@EventHandler(priority = EventPriority.HIGH)
 public void onNaturalSpawn(CreatureSpawnEvent e) {
 	List<String> worldz = plugin.getConfig().getStringList(
 			"World.Worldname");
 	for (String worldname : worldz) {
 		if (e.getEntity().getWorld().getName().equals(worldname)) {
-			if(e.getSpawnReason() == SpawnReason.NATURAL
-					|| e.getSpawnReason() == SpawnReason.CUSTOM
-							|| e.getSpawnReason() == SpawnReason.SPAWNER_EGG
-					|| e.getSpawnReason() == SpawnReason.SPAWNER
-					|| e.getSpawnReason() == SpawnReason.BUILD_IRONGOLEM
-					|| e.getSpawnReason() == SpawnReason.BUILD_SNOWMAN
-					|| e.getSpawnReason() == SpawnReason.CHUNK_GEN) {
 				if(e.getEntityType() == EntityType.CREEPER) {
 					if(plugin.getConfig().getBoolean("disabled.mobs.creeper")) {
-						e.setCancelled(true);
+						e.getEntity().remove();
 						blocked(e);
 						return;
 					}
@@ -191,38 +184,10 @@ public void onNaturalSpawn(CreatureSpawnEvent e) {
 						return;
 					}
 				}
-				else if(e.getEntityType() == EntityType.MINECART) {
-					if(plugin.getConfig().getBoolean("block.Entities.Minecarts")) {
-						e.getEntity().remove();
-						alert(e);
-						return;
-					}
-				}
-				else if(e.getEntityType() == EntityType.BOAT) {
-					if(plugin.getConfig().getBoolean("block.Entities.Boats")) {
-						e.getEntity().remove();
-						alert(e);
-						return;
-					}
-				}
-				else if(e.getEntityType() == EntityType.PRIMED_TNT) {
-					if(plugin.getConfig().getBoolean("block.Entities.PrimedTNT")) {
-						e.getEntity().remove();						
-						alert(e);
-						return;
-					}
-				}
-				else if(e.getEntityType() == EntityType.FALLING_BLOCK) {
-					if(plugin.getConfig().getBoolean("block.Entities.FallingBlocks")) {
-						e.getEntity().remove();						
-						alert(e);
-						return;
-					}
-				}
 			}
 		}
 		}
-	}
+	@EventHandler(priority = EventPriority.HIGH)
 public void onTarget(EntityTargetEvent ev, CreatureSpawnEvent e) {
 	if(this.blocked(e)) {
 		ev.getEntity().remove();
@@ -232,21 +197,4 @@ public void onTarget(EntityTargetEvent ev, CreatureSpawnEvent e) {
 public boolean blocked(CreatureSpawnEvent e) {
 		return cancelled;
 	}
-public void alert(CreatureSpawnEvent e) {
-	boolean alertr = plugin.getConfig().getBoolean("send.alerts");
-	double x = e.getEntity().getLocation().getX();
-	double y = e.getEntity().getLocation().getY();
-	double z = e.getEntity().getLocation().getZ();
-	int xx = (int) x;
-	int yy = (int) y;
-	int zz = (int) z;
-	if (alertr) {
-		Bukkit.broadcast(ChatColor.GREEN + "[EM] " + ChatColor.GOLD + " A " 
-				+ e.getEntityType() + " Was removed"+ ChatColor.DARK_RED + " in: "
-				+ ChatColor.YELLOW + e.getEntity().getWorld().getName()
-				+ " at: " + xx + " , " + yy + " , " + zz + ".",
-				"entitymanager.admin");
-		return;
-	}
-}
 }
