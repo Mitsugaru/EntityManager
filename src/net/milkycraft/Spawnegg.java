@@ -124,10 +124,10 @@ public class Spawnegg extends EggWrapper {
 							Material.EXP_BOTTLE)) {
 						target.getInventory().remove(Material.EXP_BOTTLE);
 					}
-					sender.sendMessage(ChatColor.GREEN + "[ASE] "
+					sender.sendMessage(ChatColor.GREEN + "[EM] "
 							+ ChatColor.GOLD + args[1] + ChatColor.RED
 							+ "'s inventory was purged of: ");
-					sender.sendMessage(ChatColor.GREEN + "[ASE] "
+					sender.sendMessage(ChatColor.GREEN + "[EM] "
 							+ ChatColor.YELLOW
 							+ "FireBalls, XpBottles, Eggs and Spawneggs");
 					return true;
@@ -137,17 +137,18 @@ public class Spawnegg extends EggWrapper {
 		if (args[0].equalsIgnoreCase("reload")
 				&& sender.hasPermission("entitymanager.admin")) {
 			this.reloadConfig();
-			sender.sendMessage(ChatColor.AQUA + "[AntiSpawnEgg] "
+			sender.sendMessage(ChatColor.AQUA + "[EntityManager] "
 					+ ChatColor.GREEN + "Version " + ver + ChatColor.ITALIC
-					+ " Config reloaded from disk!");
+					+ " Config reloaded from disk");
 			return true;
 		}
 		if (args[0].equalsIgnoreCase("crystal")
 				&& sender.hasPermission("entitymanager.endercrystal")) {
 			if (((Player) sender).getItemInHand().getTypeId() == 383) {
+				((Player) sender).getItemInHand().setAmount(1);
 				((Player) sender).getItemInHand().setDurability((short) 200);
-				sender.sendMessage(ChatColor.AQUA + "[ASE] " + ChatColor.GREEN
-						+ "Version " + ver
+				sender.sendMessage(ChatColor.AQUA + "[EM] " + ChatColor.GREEN
+						+ "Version " 
 						+ " Egg converted to usable EnderCrystal spawnegg");
 				return true;
 			}
