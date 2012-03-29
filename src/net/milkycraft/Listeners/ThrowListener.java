@@ -6,7 +6,6 @@ import net.milkycraft.Spawnegg;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.EnderCrystal;
 import org.bukkit.entity.Player;
@@ -18,6 +17,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 
 public class ThrowListener implements Listener {
 	Spawnegg plugin;
+
 	public ThrowListener(Spawnegg instance) {
 		plugin = instance;
 	}
@@ -34,18 +34,16 @@ public class ThrowListener implements Listener {
 				"World.Worldname");
 		for (String worldname : worldz) {
 			if (e.getPlayer().getWorld().getName().equals(worldname)) {
-				if (e.getAction() == Action.RIGHT_CLICK_BLOCK) {
+				if (e.getAction() == Action.RIGHT_CLICK_BLOCK || 
+						e.getAction() == Action.RIGHT_CLICK_AIR) {
 					if (e.getItem().getTypeId() == 383) {
 						if (e.getItem().getDurability() == 200) {
 							Location loc = e.getClickedBlock().getLocation();
 							e.getClickedBlock().getWorld()
-									.spawn(loc, EnderCrystal.class);
-							if (e.getPlayer().getGameMode() == GameMode.SURVIVAL) {
-								e.getItem().setType(null);
-								return;
-							}
+									.spawn(loc, EnderCrystal.class);							
 						}
-						if (e.getItem().getTypeId() == 384) {
+					}
+					else if (e.getItem().getTypeId() == 384) {
 							if (plugin.getConfig().getBoolean(
 									"block.Throw.XpBottles")
 									&& !player
@@ -59,7 +57,7 @@ public class ThrowListener implements Listener {
 								return;
 							}
 						}
-						if (e.getItem().getTypeId() == 385) {
+					else if (e.getItem().getTypeId() == 385) {
 							if (plugin.getConfig().getBoolean(
 									"block.Throw.FireCharges")
 									&& !player
@@ -73,7 +71,7 @@ public class ThrowListener implements Listener {
 								return;
 							}
 						}
-						if (e.getItem().getTypeId() == 344) {
+					else if (e.getItem().getTypeId() == 344) {
 							if (plugin.getConfig().getBoolean(
 									"block.Throw.ChickenEggs")
 									&& !player
@@ -87,123 +85,7 @@ public class ThrowListener implements Listener {
 								return;
 							}
 						}
-						if (e.getItem().getTypeId() == 373) {
-							if (e.getItem().getDurability() == 16385
-									|| e.getItem().getDurability() == 16481) {
-								if (plugin.getConfig().getBoolean(
-										"disabled.Potions.Regeneration")
-										&& !player
-												.hasPermission("entitymanager.regeneration")) {
-									e.setCancelled(true);
-									player.sendMessage(green
-											+ "[EM]"
-											+ red
-											+ " You dont have permission to use Regen. Potions");
-									return;
-								}
-							} else if (e.getItem().getDurability() == 16386) {
-								if (plugin.getConfig().getBoolean(
-										"disabled.Potions.Swiftness")
-										&& !player
-												.hasPermission("entitymanager.swiftness")) {
-									e.setCancelled(true);
-									player.sendMessage(green
-											+ "[EM]"
-											+ red
-											+ " You dont have permission to use Swiftness Potions");
-									return;
-								}
-							} else if (e.getItem().getDurability() == 16387
-									|| e.getItem().getDurability() == 16483) {
-								if (plugin.getConfig().getBoolean(
-										"disabled.Potions.FireResistance")
-										&& !player
-												.hasPermission("entitymanager.fireresistance")) {
-									e.setCancelled(true);
-									player.sendMessage(green
-											+ "[EM]"
-											+ red
-											+ " You dont have permission to use Fire resist Potions");
-									return;
-								}
-							} else if (e.getItem().getDurability() == 16388
-									|| e.getItem().getDurability() == 16484) {
-								if (plugin.getConfig().getBoolean(
-										"disabled.Potions.Poison")
-										&& !player
-												.hasPermission("entitymanager.poison")) {
-									e.setCancelled(true);
-									player.sendMessage(green
-											+ "[EM]"
-											+ red
-											+ " You dont have permission to use Poison Potions");
-									return;
-								}
-							}
-
-							else if (e.getItem().getDurability() == 16389) {
-								if (plugin.getConfig().getBoolean(
-										"disabled.Potions.InstantHealth")
-										&& !player
-												.hasPermission("entitymanager.health")) {
-									e.setCancelled(true);
-									player.sendMessage(green
-											+ "[EM]"
-											+ red
-											+ " You dont have permission to use InstaHealth Potions");
-									return;
-								}
-							} else if (e.getItem().getDurability() == 16392) {
-								if (plugin.getConfig().getBoolean(
-										"disabled.Potions.Weakness")
-										&& !player
-												.hasPermission("entitymanager.weakness")) {
-									e.setCancelled(true);
-									player.sendMessage(green
-											+ "[EM]"
-											+ red
-											+ " You dont have permission to use Weakness Potions");
-									return;
-								}
-							} else if (e.getItem().getDurability() == 16393) {
-								if (plugin.getConfig().getBoolean(
-										"disabled.Potions.Strength")
-										&& !player
-												.hasPermission("entitymanager.strength")) {
-									e.setCancelled(true);
-									player.sendMessage(green
-											+ "[EM]"
-											+ red
-											+ " You dont have permission to use Strength Potions");
-									return;
-								}
-							} else if (e.getItem().getDurability() == 16394) {
-								if (plugin.getConfig().getBoolean(
-										"disabled.Potions.Slowness")
-										&& !player
-												.hasPermission("entitymanager.slowness")) {
-									e.setCancelled(true);
-									player.sendMessage(green
-											+ "[EM]"
-											+ red
-											+ " You dont have permission to use Slowness Potions");
-									return;
-								}
-							} else if (e.getItem().getDurability() == 16396) {
-								if (plugin.getConfig().getBoolean(
-										"disabled.Potions.Harming")
-										&& !player
-												.hasPermission("entitymanager.harming")) {
-									e.setCancelled(true);
-									player.sendMessage(green
-											+ "[EM]"
-											+ red
-											+ " You dont have permission to use Harming Potions");
-									return;
-								}
-							}
-						}
-						if (e.getItem().getTypeId() == 368) {
+					else if (e.getItem().getTypeId() == 368) {
 							if (plugin.getConfig().getBoolean(
 									"block.Throw.EnderPearls")
 									&& !player
@@ -216,7 +98,7 @@ public class ThrowListener implements Listener {
 								return;
 							}
 						}
-						if (e.getItem().getTypeId() == 381) {
+					else if (e.getItem().getTypeId() == 381) {
 							if (plugin.getConfig().getBoolean(
 									"block.Throw.EnderEyes")
 									&& !player
@@ -229,17 +111,41 @@ public class ThrowListener implements Listener {
 								return;
 							}
 						}
+					else if (e.getItem().getTypeId() == 333) {
+							if (plugin.getConfig().getBoolean(
+									"block.Entities.Boats")
+									&& !player
+											.hasPermission("entitymanager.boat")) {
+								e.setCancelled(true);
+								player.sendMessage(green
+										+ "[EM]"
+										+ red
+										+ " You dont have permission to use Boats");
+								return;
+							}
+						}
+					else if (e.getItem().getTypeId() == 328) {
+							if (plugin.getConfig().getBoolean(
+									"block.Entities.Minecarts")
+									&& !player
+											.hasPermission("entitymanager.minecart")) {
+								e.setCancelled(true);
+								player.sendMessage(green
+										+ "[EM]"
+										+ red
+										+ " You dont have permission to use Minecarts");
+								return;
+							}
+						}
 					}
-				}
 			}
 		}
 	}
-
 	public void alert(Player player, PlayerInteractEvent e) {
 		boolean alertr = plugin.getConfig().getBoolean("send.alerts");
 		if (alertr) {
 			Bukkit.broadcast(ChatColor.GREEN + "[EM] " + ChatColor.DARK_RED
-					+ e.getPlayer().getDisplayName() + " Tryed to throw an "
+					+ e.getPlayer().getDisplayName() + " Tryed to throw a "
 					+ ChatColor.GOLD + e.getItem().getType() + ".",
 					"entitymanager.admin");
 			return;
