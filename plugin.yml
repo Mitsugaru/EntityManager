@@ -4,6 +4,7 @@ main: net.milkycraft.Spawnegg
 description: Creatively manage entities
 website: http://milkycraft.net
 version: 2.8
+softdepend: [WorldGaurd, Vault]
 
 commands:
     entitymanager:
