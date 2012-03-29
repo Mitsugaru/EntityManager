@@ -56,12 +56,12 @@ public class MyDispenseListener implements Listener {
 						alert(event);
 						event.setCancelled(true);
 						return;
-					}
+					}				
 				}
 			}
 		}
 	}
-
+	@EventHandler(priority = EventPriority.HIGH)
 	public void alert(BlockDispenseEvent event) {
 		boolean alertr = plugin.getConfig().getBoolean("send.alerts");
 		double x = event.getBlock().getLocation().getX();
