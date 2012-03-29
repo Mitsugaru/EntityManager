@@ -445,15 +445,17 @@ public class MySpawnEggListener implements Listener {
 			}
 		}
 	}
-
+	@EventHandler(priority = EventPriority.HIGH)
 	public void alert(PlayerInteractEvent e) {
 		boolean alertr = plugin.getConfig().getBoolean("send.alerts");
 		if (alertr) {
-			Bukkit.broadcast(ChatColor.GREEN + "[ASE] " + ChatColor.DARK_RED
+			if(e.getItem() !=null) {
+			Bukkit.broadcast(ChatColor.GREEN + "[EM] " + ChatColor.DARK_RED
 					+ e.getPlayer().getDisplayName() + " Tryed to use a  "
 					+ ChatColor.GOLD + e.getItem().getType() + ".",
 					"entitymanager.admin");
 			return;
+			}
 		}
 	}
 }
