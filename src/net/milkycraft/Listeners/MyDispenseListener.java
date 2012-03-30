@@ -4,8 +4,6 @@ import java.util.List;
 
 import net.milkycraft.Spawnegg;
 
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -63,7 +61,7 @@ public class MyDispenseListener implements Listener {
 	}
 	@EventHandler(priority = EventPriority.HIGH)
 	public void alert(BlockDispenseEvent event) {
-		boolean alertr = plugin.getConfig().getBoolean("send.alerts");
+		/*boolean alertr = plugin.getConfig().getBoolean("send.alerts");
 		double x = event.getBlock().getLocation().getX();
 		double y = event.getBlock().getLocation().getY();
 		double z = event.getBlock().getLocation().getZ();
@@ -77,7 +75,8 @@ public class MyDispenseListener implements Listener {
 					+ ChatColor.YELLOW + event.getBlock().getWorld().getName()
 					+ " at: " + xx + " , " + yy + " , " + zz + ".",
 					"entitymanager.admin");
+					*/
 			return;
 		}
 	}
-}
+
