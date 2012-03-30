@@ -11,8 +11,10 @@ import org.bukkit.event.entity.EntityTargetEvent.TargetReason;
 import org.bukkit.event.entity.EntityTargetLivingEntityEvent;
 
 public class TargetListener implements Listener{
+	/*
+	 * This class is just about solid
+	 */
 	Spawnegg plugin;
-
 	public TargetListener(Spawnegg instance) {
 		plugin = instance;
 	}		
