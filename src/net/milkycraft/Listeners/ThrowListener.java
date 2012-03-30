@@ -4,7 +4,6 @@ import java.util.List;
 
 import net.milkycraft.Spawnegg;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.EnderCrystal;
@@ -16,8 +15,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 public class ThrowListener implements Listener {
-	Spawnegg plugin;
-
+	Spawnegg plugin;	
 	public ThrowListener(Spawnegg instance) {
 		plugin = instance;
 	}
@@ -29,21 +27,14 @@ public class ThrowListener implements Listener {
 		ChatColor red = ChatColor.RED;
 		if (e.getItem() == null) {
 			return;
-		}
+		}							
 		List<String> worldz = plugin.getConfig().getStringList(
 				"World.Worldname");
 		for (String worldname : worldz) {
 			if (e.getPlayer().getWorld().getName().equals(worldname)) {
 				if (e.getAction() == Action.RIGHT_CLICK_BLOCK || 
-						e.getAction() == Action.RIGHT_CLICK_AIR) {
-					if (e.getItem().getTypeId() == 383) {
-						if (e.getItem().getDurability() == 200) {
-							Location loc = e.getClickedBlock().getLocation();
-							e.getClickedBlock().getWorld()
-									.spawn(loc, EnderCrystal.class);							
-						}
-					}
-					else if (e.getItem().getTypeId() == 384) {
+						e.getAction() == Action.RIGHT_CLICK_AIR) {									
+					 if (e.getItem().getTypeId() == 384) {
 							if (plugin.getConfig().getBoolean(
 									"block.Throw.XpBottles")
 									&& !player
@@ -91,6 +82,7 @@ public class ThrowListener implements Listener {
 									&& !player
 											.hasPermission("entitymanager.enderpearl")) {
 								e.setCancelled(true);
+								alert(player, e);
 								player.sendMessage(green
 										+ "[EM]"
 										+ red
@@ -104,6 +96,7 @@ public class ThrowListener implements Listener {
 									&& !player
 											.hasPermission("entitymanager.endereye")) {
 								e.setCancelled(true);
+								alert(player, e);
 								player.sendMessage(green
 										+ "[EM]"
 										+ red
@@ -117,6 +110,7 @@ public class ThrowListener implements Listener {
 									&& !player
 											.hasPermission("entitymanager.boat")) {
 								e.setCancelled(true);
+								alert(player, e);
 								player.sendMessage(green
 										+ "[EM]"
 										+ red
@@ -130,25 +124,36 @@ public class ThrowListener implements Listener {
 									&& !player
 											.hasPermission("entitymanager.minecart")) {
 								e.setCancelled(true);
+								alert(player, e);
 								player.sendMessage(green
 										+ "[EM]"
 										+ red
 										+ " You dont have permission to use Minecarts");
 								return;
 							}
-						}
 					}
+					 if (e.getAction() == Action.RIGHT_CLICK_BLOCK) {
+						 Location loc = e.getClickedBlock().getLocation();	
+					if (e.getItem().getTypeId() == 383) {
+							if (e.getItem().getDurability() == 200 && e.getPlayer().hasPermission("entitymanager.crystal")) {							
+								e.getClickedBlock().getWorld()
+										.spawn(loc, EnderCrystal.class);
+								return;
+							}
+							}
+						}
+				}
 			}
 		}
 	}
-	public void alert(Player player, PlayerInteractEvent e) {
-		boolean alertr = plugin.getConfig().getBoolean("send.alerts");
-		if (alertr) {
-			Bukkit.broadcast(ChatColor.GREEN + "[EM] " + ChatColor.DARK_RED
-					+ e.getPlayer().getDisplayName() + " Tryed to throw a "
-					+ ChatColor.GOLD + e.getItem().getType() + ".",
-					"entitymanager.admin");
-			return;
-		}
-	}
-}
+						public void alert(Player player, PlayerInteractEvent e) {
+							/*boolean alertr = plugin.getConfig().getBoolean("send.alerts");
+							if (alertr) {
+								Bukkit.broadcast(ChatColor.GREEN + "[EM] " + ChatColor.DARK_RED
+										+ e.getPlayer().getDisplayName() + " Tryed to throw a "
+										+ ChatColor.GOLD + e.getItem().getType() + ".",
+										"entitymanager.admin");
+										*/
+								return;
+							}
+						}
