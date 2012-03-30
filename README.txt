@@ -1,7 +1,8 @@
-AntiSpawnEgg by Milkywayz
+EntityManager by Milkywayz
 
 Features:
 - Block any type of monster egg
+- Block any mob from being spawned completely
 - Block potions from being thrown
 - Block other projectiles from being thrown.
 - Block projectiles from dispensers.
