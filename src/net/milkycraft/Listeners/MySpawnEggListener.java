@@ -423,39 +423,11 @@ public class MySpawnEggListener implements Listener {
 							return;
 						}
 					}
-					else if (event.getItem().getDurability() == 200) {
-						if (plugin.getConfig().getBoolean(
-								"disabled.eggs.endercrystal")
-								&& !player
-										.hasPermission("entitymanager.endercrystal")) {
-							event.setCancelled(true);
-							alert(event);
-							player.sendMessage(green
-									+ "[EM]"
-									+ red
-									+ " You dont have permission to use crystal eggs");
-						}
-						if (!player.hasPermission("entitymanager.bypass.charge")
-								&& Spawnegg.econ != null) {
-							Spawnegg.econ.withdrawPlayer(playa, mons);
-							return;
-						}
-					}
 				}
 			}
 		}
 	}
-	@EventHandler(priority = EventPriority.HIGH)
 	public void alert(PlayerInteractEvent e) {
-		boolean alertr = plugin.getConfig().getBoolean("send.alerts");
-		if (alertr) {
-			if(e.getItem() !=null) {
-			Bukkit.broadcast(ChatColor.GREEN + "[EM] " + ChatColor.DARK_RED
-					+ e.getPlayer().getDisplayName() + " Tryed to use a  "
-					+ ChatColor.GOLD + e.getItem().getType() + ".",
-					"entitymanager.admin");
 			return;
-			}
-		}
 	}
 }
