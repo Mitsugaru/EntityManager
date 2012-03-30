@@ -3,7 +3,7 @@ author: milkywayz
 main: net.milkycraft.Spawnegg
 description: Creatively manage entities
 website: http://milkycraft.net
-version: 2.8
+version: 2.8.1
 softdepend: [WorldGaurd, Vault]
 
 commands:
