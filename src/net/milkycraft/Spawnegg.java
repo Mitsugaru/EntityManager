@@ -80,7 +80,7 @@ public class Spawnegg extends EggWrapper {
 								log.warning("EM " + newVersion
 										+ " is out! You are running: ASE "
 										+ currentVersion);
-								log.warning("Update ASE at: http://dev.bukkit.org/server-mods/antispawnegg");
+								log.warning("Update ASE at: http://dev.bukkit.org/server-mods/entitymanager");
 							}
 						} catch (Exception e) {
 							// ignore exceptions
@@ -123,14 +123,22 @@ public class Spawnegg extends EggWrapper {
 					} else if (target.getInventory().contains(
 							Material.EXP_BOTTLE)) {
 						target.getInventory().remove(Material.EXP_BOTTLE);
+					} else if (target.getInventory().contains(
+							Material.ENDER_PEARL)) {
+						target.getInventory().remove(Material.ENDER_PEARL);
+					} else if (target.getInventory().contains(
+							Material.EYE_OF_ENDER)) {
+						target.getInventory().remove(Material.EYE_OF_ENDER);
 					}
 					sender.sendMessage(ChatColor.GREEN + "[EM] "
 							+ ChatColor.GOLD + args[1] + ChatColor.RED
 							+ "'s inventory was purged of: ");
 					sender.sendMessage(ChatColor.GREEN + "[EM] "
 							+ ChatColor.YELLOW
-							+ "FireBalls, XpBottles, Eggs and Spawneggs");
+							+ "Fireballs, Ender eyes, ender pearls, xp bottles, and spawn eggs");
 					return true;
+				} else {
+					return false;
 				}
 			}
 		}
@@ -148,7 +156,6 @@ public class Spawnegg extends EggWrapper {
 				((Player) sender).getItemInHand().setAmount(1);
 				((Player) sender).getItemInHand().setDurability((short) 200);
 				sender.sendMessage(ChatColor.AQUA + "[EM] " + ChatColor.GREEN
-						+ "Version " 
 						+ " Egg converted to usable EnderCrystal spawnegg");
 				return true;
 			}
@@ -230,7 +237,7 @@ public class Spawnegg extends EggWrapper {
 	}
 
 	public double updateCheck(double currentVersion) throws Exception {
-		String pluginUrlString = "http://dev.bukkit.org/server-mods/antispawnegg/files.rss";
+		String pluginUrlString = "http://dev.bukkit.org/server-mods/entitymanager/files.rss";
 		try {
 			URL url = new URL(pluginUrlString);
 			Document doc = DocumentBuilderFactory.newInstance()
@@ -264,7 +271,7 @@ public class Spawnegg extends EggWrapper {
 					if (newVersion > currentVersion) {
 						player.sendMessage(newVersion
 								+ " is out! You are running " + currentVersion);
-						player.sendMessage("Update ASE at: http://dev.bukkit.org/server-mods/antispawnegg");
+						player.sendMessage("Update ASE at: http://dev.bukkit.org/server-mods/entitymanager");
 					}
 				} catch (Exception e) {
 					// Ignore exceptions
