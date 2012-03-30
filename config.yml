@@ -1,4 +1,4 @@
-# EntityManager Configuration v2.8
+# EntityManager Configuration v2.8.1
 # Put name of the worlds you want the plugin to work in, aka multiworld support.
 # Eggs that are disabled can only be used by players with permission.
 # You can charge players for each egg they use, even for monsters or animals
@@ -6,15 +6,13 @@
 # You can block the dispense of: SpawnerEggs, Fireballs, XpBottles, and chicken eggs!
 # You can block the throwing of Fireballs, XpBottles, and chicken eggs as well
 # You can totally disable the spawning of any mob at the end of the config file
-# For help, visit : http://dev.bukkit.org/server-mods/antispawnegg/pages/
+# For help, visit : http://dev.bukkit.org/server-mods/entitymanager/pages/
 # ************************************************************************************** #
 World:
   Worldname:
   - world
   - world_nether 
   - world_end
-send:
-  alerts: true
 Economy:
   charge:
     monster: 15
@@ -61,7 +59,6 @@ disabled:
     mooshroom: false
     ocelot: false
     villager: true
-    endercrystal: true
   mobs:
     creeper: false 
     skeleton: false
