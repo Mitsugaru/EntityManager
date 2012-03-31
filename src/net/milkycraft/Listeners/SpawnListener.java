@@ -23,6 +23,7 @@ import org.bukkit.entity.Skeleton;
 import org.bukkit.entity.Slime;
 import org.bukkit.entity.Snowman;
 import org.bukkit.entity.Spider;
+import org.bukkit.entity.ThrownPotion;
 import org.bukkit.entity.Villager;
 import org.bukkit.entity.Wolf;
 import org.bukkit.entity.Zombie;
@@ -216,6 +217,13 @@ public void onSpawn(CreatureSpawnEvent e) {
 						return;
 					}
 				}
+				else if(e.getEntity() instanceof ThrownPotion) {
+					if(plugin.getConfig().getBoolean("block.splash-potions")) {
+						e.setCancelled(true);
+						blocked(e);
+						return;
+					}
+				}
 			}
 		}
 		}
@@ -224,7 +232,6 @@ public void onSpawn(CreatureSpawnEvent e) {
 public void onTarget(EntityTargetEvent ev, CreatureSpawnEvent e) {
 	if(this.blocked(e)) {
 		ev.getEntity().remove();
-		Spawnegg.log.warning("Blocked Mob was forcibly removed on target");
 		return;
 	}
 }
