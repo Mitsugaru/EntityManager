@@ -8,6 +8,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import net.milkbowl.vault.economy.Economy;
 import net.milkycraft.ASEConfiguration.eConfiguration;
 import net.milkycraft.Listeners.EnchantListener;
+import net.milkycraft.Listeners.EntitiesListener;
 import net.milkycraft.Listeners.ExpListener;
 import net.milkycraft.Listeners.MyDispenseListener;
 import net.milkycraft.Listeners.MySpawnEggListener;
@@ -68,6 +69,8 @@ public class Spawnegg extends EggWrapper {
 		.registerEvents(new ExpListener(this), this);
 		this.getServer().getPluginManager()
 		.registerEvents(new EnchantListener(this), this);
+		this.getServer().getPluginManager()
+		.registerEvents(new EntitiesListener(this), this);
 		
 		// Update alerter 
 		this.getServer().getScheduler()
@@ -112,7 +115,16 @@ public class Spawnegg extends EggWrapper {
 		if (cmd.getName().equalsIgnoreCase("entitymanager")) {
 			if (args.length == 2) {
 				if (args[0].equalsIgnoreCase("purge")) {
-					Player target = sender.getServer().getPlayer(args[1]);
+					Player target = sender.getServer().getPlayer(args[1]);				
+					if(target == null) {
+						sender.sendMessage(ChatColor.GREEN + "[EM]" + 
+								ChatColor.RED + args[1] + " is not online!");
+						return false;						
+					}
+					if(args.length == 1) {
+						sender.sendMessage(ChatColor.GREEN + "[EM]" +
+					ChatColor.RED + "Usage: /em purge <playername>");
+					}
 					if (target.getInventory().contains(Material.MONSTER_EGG)) {
 						target.getInventory().remove(Material.MONSTER_EGG);
 					} else if (target.getInventory()
@@ -225,7 +237,7 @@ public class Spawnegg extends EggWrapper {
 	private void setupWorldGuard() {
 		Plugin wg = this.getServer().getPluginManager().getPlugin("WorldGuard");
 		if (wg == null) {
-			log.info("[EntityManager] Couldn't hook into worldguard");
+			log.info("[EM] Teh wg didnt complete, o well.");
 		} else {
 			Spawnegg.worldguardPlugin = (WorldGuardPlugin) wg;
 			log.info("[EntityManager] Hooked into WorldGuard!");
