@@ -81,9 +81,9 @@ public class Spawnegg extends EggWrapper {
 							newVersion = updateCheck(currentVersion);
 							if (newVersion > currentVersion) {
 								log.warning("EM " + newVersion
-										+ " is out! You are running: ASE "
+										+ " is out! You are running: EM "
 										+ currentVersion);
-								log.warning("Update ASE at: http://dev.bukkit.org/server-mods/entitymanager");
+								log.warning("Update EM at: http://dev.bukkit.org/server-mods/entitymanager");
 							}
 						} catch (Exception e) {
 							// ignore exceptions
@@ -112,19 +112,23 @@ public class Spawnegg extends EggWrapper {
 					+ "*************************************");
 			return true;
 		}
+		if(args.length == 1) {
+			if(args[0].equalsIgnoreCase("purge")) {
+			sender.sendMessage(ChatColor.GREEN + "[EM]" +
+					ChatColor.RED + "Usage: /em purge <playername>");
+			return false;
+		}
+		}
 		if (cmd.getName().equalsIgnoreCase("entitymanager")) {
 			if (args.length == 2) {
 				if (args[0].equalsIgnoreCase("purge")) {
 					Player target = sender.getServer().getPlayer(args[1]);				
 					if(target == null) {
-						sender.sendMessage(ChatColor.GREEN + "[EM]" + 
+						sender.sendMessage(ChatColor.GREEN + "[EM] " + 
 								ChatColor.RED + args[1] + " is not online!");
 						return false;						
 					}
-					if(args.length == 1) {
-						sender.sendMessage(ChatColor.GREEN + "[EM]" +
-					ChatColor.RED + "Usage: /em purge <playername>");
-					}
+				 
 					if (target.getInventory().contains(Material.MONSTER_EGG)) {
 						target.getInventory().remove(Material.MONSTER_EGG);
 					} else if (target.getInventory()
@@ -158,7 +162,8 @@ public class Spawnegg extends EggWrapper {
 				&& sender.hasPermission("entitymanager.admin")) {
 			this.reloadConfig();
 			sender.sendMessage(ChatColor.AQUA + "[EntityManager] "
-					+ ChatColor.GREEN + "Version " + ver + ChatColor.ITALIC
+					+ ChatColor.GREEN + "Version " + ChatColor.YELLOW + ver +
+					ChatColor.GREEN
 					+ " Config reloaded from disk");
 			return true;
 		}
