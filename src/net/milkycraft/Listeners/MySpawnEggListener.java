@@ -65,7 +65,7 @@ public class MySpawnEggListener implements Listener {
 								&& !player
 										.hasPermission("entitymanager.creeper")) {
 							event.setCancelled(true);
-							alert(event);
+							alert(player, event);
 							player.sendMessage(green
 									+ "[EM]"
 									+ red
@@ -83,7 +83,7 @@ public class MySpawnEggListener implements Listener {
 								&& !player
 										.hasPermission("entitymanager.skeleton")) {
 							event.setCancelled(true);
-							alert(event);
+							alert(player, event);
 							player.sendMessage(green
 									+ "[EM]"
 									+ red
@@ -100,7 +100,7 @@ public class MySpawnEggListener implements Listener {
 								"disabled.eggs.spider")
 								&& !player.hasPermission("entitymanager.spider")) {
 							event.setCancelled(true);
-							alert(event);
+							alert(player, event);
 							player.sendMessage(green
 									+ "[EM]"
 									+ red
@@ -117,7 +117,7 @@ public class MySpawnEggListener implements Listener {
 								"disabled.eggs.zombie")
 								&& !player.hasPermission("entitymanager.zombie")) {
 							event.setCancelled(true);
-							alert(event);
+							alert(player, event);
 							player.sendMessage(green
 									+ "[EM]"
 									+ red
@@ -134,7 +134,7 @@ public class MySpawnEggListener implements Listener {
 								.getBoolean("disabled.eggs.slime")
 								&& !player.hasPermission("entitymanager.slime")) {
 							event.setCancelled(true);
-							alert(event);
+							alert(player, event);
 							player.sendMessage(green
 									+ "[EM]"
 									+ red
@@ -151,7 +151,7 @@ public class MySpawnEggListener implements Listener {
 								.getBoolean("disabled.eggs.ghast")
 								&& !player.hasPermission("entitymanager.ghast")) {
 							event.setCancelled(true);
-							alert(event);
+							alert(player, event);
 							player.sendMessage(green
 									+ "[EM]"
 									+ red
@@ -168,7 +168,7 @@ public class MySpawnEggListener implements Listener {
 								"disabled.eggs.pigman")
 								&& !player.hasPermission("entitymanager.pigman")) {
 							event.setCancelled(true);
-							alert(event);
+							alert(player, event);
 							player.sendMessage(green
 									+ "[EM]"
 									+ red
@@ -186,7 +186,7 @@ public class MySpawnEggListener implements Listener {
 								&& !player
 										.hasPermission("entitymanager.enderman")) {
 							event.setCancelled(true);
-							alert(event);
+							alert(player, event);
 							player.sendMessage(green
 									+ "[EM]"
 									+ red
@@ -204,7 +204,7 @@ public class MySpawnEggListener implements Listener {
 								&& !player
 										.hasPermission("entitymanager.cavespider")) {
 							event.setCancelled(true);
-							alert(event);
+							alert(player, event);
 							player.sendMessage(green
 									+ "[EM]"
 									+ red
@@ -222,7 +222,7 @@ public class MySpawnEggListener implements Listener {
 								&& !player
 										.hasPermission("entitymanager.silverfish")) {
 							event.setCancelled(true);
-							alert(event);
+							alert(player, event);
 							player.sendMessage(green
 									+ "[EM]"
 									+ red
@@ -239,7 +239,7 @@ public class MySpawnEggListener implements Listener {
 								.getBoolean("disabled.eggs.blaze")
 								&& !player.hasPermission("entitymanager.blaze")) {
 							event.setCancelled(true);
-							alert(event);
+							alert(player, event);
 							player.sendMessage(green
 									+ "[EM]"
 									+ red
@@ -257,7 +257,7 @@ public class MySpawnEggListener implements Listener {
 								&& !player
 										.hasPermission("entitymanager.magmacube")) {
 							event.setCancelled(true);
-							alert(event);
+							alert(player, event);
 							player.sendMessage(green
 									+ "[EM]"
 									+ red
@@ -273,7 +273,7 @@ public class MySpawnEggListener implements Listener {
 						if (plugin.getConfig().getBoolean("disabled.eggs.pig")
 								&& !player.hasPermission("entitymanager.pig")) {
 							event.setCancelled(true);
-							alert(event);
+							alert(player, event);
 							player.sendMessage(green
 									+ "[EM]"
 									+ red
@@ -290,7 +290,7 @@ public class MySpawnEggListener implements Listener {
 								.getBoolean("disabled.eggs.sheep")
 								&& !player.hasPermission("entitymanager.sheep")) {
 							event.setCancelled(true);
-							alert(event);
+							alert(player, event);
 							player.sendMessage(green
 									+ "[EM]"
 									+ red
@@ -306,7 +306,7 @@ public class MySpawnEggListener implements Listener {
 						if (plugin.getConfig().getBoolean("disabled.eggs.cow")
 								&& !player.hasPermission("entitymanager.cow")) {
 							event.setCancelled(true);
-							alert(event);
+							alert(player, event);
 							player.sendMessage(green
 									+ "[EM]"
 									+ red
@@ -324,7 +324,7 @@ public class MySpawnEggListener implements Listener {
 								&& !player
 										.hasPermission("entitymanager.chicken")) {
 							event.setCancelled(true);
-							alert(event);
+							alert(player, event);
 							player.sendMessage(green
 									+ "[EM]"
 									+ red
@@ -341,7 +341,7 @@ public class MySpawnEggListener implements Listener {
 								.getBoolean("disabled.eggs.squid")
 								&& !player.hasPermission("entitymanager.squid")) {
 							event.setCancelled(true);
-							alert(event);
+							alert(player, event);
 							player.sendMessage(green
 									+ "[EM]"
 									+ red
@@ -357,7 +357,7 @@ public class MySpawnEggListener implements Listener {
 						if (plugin.getConfig().getBoolean("disabled.eggs.wolf")
 								&& !player.hasPermission("entitymanager.wolf")) {
 							event.setCancelled(true);
-							alert(event);
+							alert(player, event);
 							player.sendMessage(green
 									+ "[EM]"
 									+ red
@@ -375,7 +375,7 @@ public class MySpawnEggListener implements Listener {
 								&& !player
 										.hasPermission("entitymanager.mooshroom")) {
 							event.setCancelled(true);
-							alert(event);
+							alert(player, event);
 							player.sendMessage(green
 									+ "[EM]"
 									+ red
@@ -393,7 +393,7 @@ public class MySpawnEggListener implements Listener {
 								&& !player
 										.hasPermission("entitymanager.ocelots")) {
 							event.setCancelled(true);
-							alert(event);
+							alert(player, event);
 							player.sendMessage(green
 									+ "[EM]"
 									+ red
@@ -411,7 +411,7 @@ public class MySpawnEggListener implements Listener {
 								&& !player
 										.hasPermission("entitymanager.villager")) {
 							event.setCancelled(true);
-							alert(event);
+							alert(player, event);
 							player.sendMessage(green
 									+ "[EM]"
 									+ red
@@ -427,7 +427,12 @@ public class MySpawnEggListener implements Listener {
 			}
 		}
 	}
-	public void alert(PlayerInteractEvent e) {
-			return;
+	public void alert(Player player, PlayerInteractEvent e) {
+		 Bukkit.broadcast(ChatColor.GREEN + "[EM] " + ChatColor.RED
+				 + e.getPlayer().getDisplayName()
+				 + " Tryed to use a  " 
+				 + ChatColor.GOLD
+				 + e.getItem().getType() + ".", "entitymanager.admin");
+		 return;
 	}
 }
