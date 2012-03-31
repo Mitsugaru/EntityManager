@@ -1,4 +1,4 @@
-# EntityManager Configuration v2.9.2 Beta
+# EntityManager Configuration v3.0
 # Put name of the worlds you want the plugin to work in, aka multiworld support.
 # Eggs that are disabled can only be used by players with permission.
 # You can charge players for each egg they use, even for monsters or animals
@@ -25,11 +25,8 @@ block:
   zombie-door-break: false
   ender-pickup: true
   player-damage: false
+  pvp: false
   mob-damage: false
-  suffocation-damage: false
-  explosion-damage: false
-  creeper-explosion: false
-  fireball-explosion: false
   fall-damage: false
   splash-potions: false
   arrows: false
@@ -49,6 +46,11 @@ block:
     Minecarts: false
   Creation-of:
     portals: false
+extras:
+  enable:
+    explosive-arrows: false
+  explosive-arrows: 
+    power: 0
 disabled:
   eggs:
     creeper: true
