@@ -4,6 +4,7 @@ import java.util.List;
 
 import net.milkycraft.Spawnegg;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.EnderCrystal;
@@ -147,13 +148,10 @@ public class ThrowListener implements Listener {
 		}
 	}
 						public void alert(Player player, PlayerInteractEvent e) {
-							/*boolean alertr = plugin.getConfig().getBoolean("send.alerts");
-							if (alertr) {
 								Bukkit.broadcast(ChatColor.GREEN + "[EM] " + ChatColor.DARK_RED
 										+ e.getPlayer().getDisplayName() + " Tryed to throw a "
 										+ ChatColor.GOLD + e.getItem().getType() + ".",
-										"entitymanager.admin");
-										*/
+										"entitymanager.admin");										
 								return;
 							}
 						}
