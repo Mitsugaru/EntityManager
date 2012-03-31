@@ -4,6 +4,8 @@ import java.util.List;
 
 import net.milkycraft.Spawnegg;
 
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -32,7 +34,7 @@ public class MyDispenseListener implements Listener {
 						return;
 					}
 				}
-				if (item.getTypeId() == 344) {
+				else if (item.getTypeId() == 344) {
 					if (plugin.getConfig().getBoolean(
 							"block.Dispense.ChickenEggs")) {
 						alert(event);
@@ -40,7 +42,7 @@ public class MyDispenseListener implements Listener {
 						return;
 					}
 				}
-				if (item.getTypeId() == 385) {
+				else if (item.getTypeId() == 385) {
 					if (plugin.getConfig().getBoolean(
 							"block.Dispense.FireBalls")) {
 						alert(event);
@@ -48,7 +50,7 @@ public class MyDispenseListener implements Listener {
 						return;
 					}
 				}
-				if (item.getTypeId() == 384) {
+				else if (item.getTypeId() == 384) {
 					if (plugin.getConfig().getBoolean(
 							"block.Dispense.XpBottles")) {
 						alert(event);
@@ -59,24 +61,24 @@ public class MyDispenseListener implements Listener {
 			}
 		}
 	}
-	@EventHandler(priority = EventPriority.HIGH)
+	/*
+	 * The code below doesnt send the alert, ASE 2.7 does send alerts however..
+	 * Almost exact same code, Whats wrong?
+	 */
 	public void alert(BlockDispenseEvent event) {
-		/*boolean alertr = plugin.getConfig().getBoolean("send.alerts");
 		double x = event.getBlock().getLocation().getX();
 		double y = event.getBlock().getLocation().getY();
 		double z = event.getBlock().getLocation().getZ();
 		int xx = (int) x;
 		int yy = (int) y;
 		int zz = (int) z;
-		if (alertr) {
-			Bukkit.broadcast(ChatColor.GREEN + "[EM] " + ChatColor.DARK_RED
+			Bukkit.broadcast(ChatColor.GREEN + "[EM]" + ChatColor.DARK_RED
 					+ "Failed Dispense of: " + ChatColor.GOLD
 					+ event.getItem().getType() + ChatColor.DARK_RED + " in: "
 					+ ChatColor.YELLOW + event.getBlock().getWorld().getName()
-					+ " at: " + xx + " , " + yy + " , " + zz + ".",
-					"entitymanager.admin");
-					*/
-			return;
-		}
+					+ " at: " + xx + " , " + yy + " , " + zz ,
+					"entitymanager.admin");					
+			return;		
 	}
+}
 
