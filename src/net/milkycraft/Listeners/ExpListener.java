@@ -12,12 +12,14 @@ public class ExpListener implements Listener {
 	 * Class tested and working
 	 */
 	Spawnegg plugin;
+
 	public ExpListener(Spawnegg instance) {
 		plugin = instance;
 	}
-	@EventHandler(priority = EventPriority.HIGH)
+
+	@EventHandler(priority = EventPriority.LOWEST)
 	public void onXpDrop(EntityDeathEvent e) {
-		if(plugin.getConfig().getBoolean("Disable.Experience")) {
+		if (plugin.getConfig().getBoolean("Disable.Experience")) {
 			e.setDroppedExp(0);
 			return;
 		}
