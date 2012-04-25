@@ -1,241 +1,123 @@
 package net.milkycraft.Listeners;
 
 import java.util.List;
+import java.util.logging.Level;
 
 import net.milkycraft.Spawnegg;
 
-import org.bukkit.entity.CaveSpider;
-import org.bukkit.entity.Chicken;
-import org.bukkit.entity.Cow;
-import org.bukkit.entity.Creeper;
-import org.bukkit.entity.Enderman;
-import org.bukkit.entity.Ghast;
-import org.bukkit.entity.IronGolem;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.MagmaCube;
-import org.bukkit.entity.MushroomCow;
-import org.bukkit.entity.Ocelot;
-import org.bukkit.entity.Pig;
-import org.bukkit.entity.PigZombie;
-import org.bukkit.entity.Sheep;
-import org.bukkit.entity.Silverfish;
-import org.bukkit.entity.Skeleton;
-import org.bukkit.entity.Slime;
-import org.bukkit.entity.Snowman;
-import org.bukkit.entity.Spider;
-import org.bukkit.entity.ThrownPotion;
-import org.bukkit.entity.Villager;
-import org.bukkit.entity.Wolf;
-import org.bukkit.entity.Zombie;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityTargetEvent;
+import org.bukkit.event.world.ChunkLoadEvent;
+import org.bukkit.event.world.ChunkUnloadEvent;
 
-public class SpawnListener implements Listener{
-	private boolean cancelled = true;
+public class SpawnListener implements Listener {
 	Spawnegg plugin;
+
 	public SpawnListener(Spawnegg instance) {
 		plugin = instance;
-	}	
-	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-public void onSpawn(CreatureSpawnEvent e) {
-		 if(e.isCancelled()) {
-			 return;
 	}
-	List<String> worldz = plugin.getConfig().getStringList(
-			"World.Worldname");
-	for (String worldname : worldz) {
-		if (e.getEntity().getWorld().getName().equals(worldname)) {
-			if(e.getEntity() instanceof LivingEntity) {
-				if(e.getEntity() instanceof Creeper) {
-					if(plugin.getConfig().getBoolean("disabled.mobs.creeper")) {
-						e.setCancelled(true);
-						blocked(e);
-						return;
-					}
+
+	private int killed = 0;
+	private int dilled = 0;
+
+	@EventHandler(priority = EventPriority.HIGHEST)
+	public void onSpawn(CreatureSpawnEvent e) {
+		List<String> worldz = plugin.getConfig().getStringList(
+				"World.Worldname");
+		for (String worldname : worldz) {
+			if (e.getEntity().getWorld().getName().equals(worldname)) {
+				e.setCancelled(plugin.getConfig().getBoolean(
+						"disabled.mobs."
+								+ e.getEntityType().toString().toLowerCase()));
+				return;
+			}
+		}
+	}
+
+	/*
+	 * active mob removal system Chiefly removes mobs that were spawned before
+	 * they were blocked in config logs message to config every 5 mobs that get
+	 * removed
+	 */
+	@EventHandler(priority = EventPriority.LOWEST)
+	public void onTarget(EntityTargetEvent e) {
+		final String mob = e.getEntityType().toString().toLowerCase();
+		if (plugin.getConfig().getBoolean("disabled.mobs." + mob)) {
+			Entity target = e.getTarget();
+			if (target instanceof Player) {
+				e.getEntity().remove();
+				++killed;
+				if (killed >= 10) {
+					Spawnegg.log
+							.log(Level.INFO,
+									"[EM]Some "
+											+ mob
+											+ "'s were forcibly removed because they are disabled");
+					killed -= 10;
 				}
-				else if(e.getEntity()instanceof Skeleton) {
-					if(plugin.getConfig().getBoolean("disabled.mobs.skeleton")) {
-						e.setCancelled(true);
-						blocked(e);
-						return;
-					}
-				}
-				else if(e.getEntity() instanceof Spider) {
-					if(plugin.getConfig().getBoolean("disabled.mobs.spider")) {
-						e.setCancelled(true);
-						blocked(e);
-						return;
-					}
-				}
-				else if(e.getEntity() instanceof Zombie) {
-					if(plugin.getConfig().getBoolean("disabled.mobs.zombie")) {
-						e.setCancelled(true);
-						blocked(e);
-						return;
-					}
-				}
-				else if(e.getEntity() instanceof Slime) {
-					if(plugin.getConfig().getBoolean("disabled.mobs.slime")) {
-						e.setCancelled(true);
-						blocked(e);
-						return;
-					}
-				}
-				else if(e.getEntity() instanceof Ghast) {
-					if(plugin.getConfig().getBoolean("disabled.mobs.ghast")) {
-						e.setCancelled(true);
-						blocked(e);
-						return;
-					}
-				}
-				else if(e.getEntity() instanceof PigZombie) {
-					if(plugin.getConfig().getBoolean("disabled.mobs.pigman")) {
-						e.setCancelled(true);
-						blocked(e);
-						return;
-					}
-				}
-				else if(e.getEntity() instanceof Enderman) {
-					if(plugin.getConfig().getBoolean("disabled.mobs.enderman")) {
-						e.setCancelled(true);
-						blocked(e);
-						return;
-					}
-				}
-				else if(e.getEntity() instanceof CaveSpider) {
-					if(plugin.getConfig().getBoolean("disabled.mobs.cavespider")) {
-						e.setCancelled(true);
-						blocked(e);
-						return;
-					}
-				}
-				else if(e.getEntity() instanceof Silverfish) {
-					if(plugin.getConfig().getBoolean("disabled.mobs.silverfish")) {
-						e.setCancelled(true);
-						blocked(e);
-						return;
-					}
-				}
-				else if(e.getEntity() instanceof Ghast) {
-					if(plugin.getConfig().getBoolean("disabled.mobs.blaze")) {
-						e.setCancelled(true);
-						blocked(e);
-						return;
-					}
-				}
-				else if(e.getEntity() instanceof MagmaCube) {
-					if(plugin.getConfig().getBoolean("disabled.mobs.magmacube")) {
-						e.setCancelled(true);
-						blocked(e);
-						return;
-					}
-				}
-				else if(e.getEntity() instanceof Pig) {
-					if(plugin.getConfig().getBoolean("disabled.mobs.pig")) {
-						e.setCancelled(true);
-						blocked(e);
-						return;
-					}
-				}
-				else if(e.getEntity() instanceof Sheep) {
-					if(plugin.getConfig().getBoolean("disabled.mobs.sheep")) {
-						e.setCancelled(true);
-						blocked(e);
-						return;
-					}
-				}
-				else if(e.getEntity() instanceof Cow) {
-					if(plugin.getConfig().getBoolean("disabled.mobs.cow")) {
-						e.setCancelled(true);
-						blocked(e);
-						return;
-					}
-				}
-				else if(e.getEntity() instanceof Chicken) {
-					if(plugin.getConfig().getBoolean("disabled.mobs.chicken")) {
-						e.setCancelled(true);
-						blocked(e);
-						return;
-					}
-				}
-				else if(e.getEntity() instanceof Ghast) {
-					if(plugin.getConfig().getBoolean("disabled.mobs.squid")) {
-						e.setCancelled(true);
-						blocked(e);
-						return;
-					}
-				}
-				else if(e.getEntity() instanceof Wolf) {
-					if(plugin.getConfig().getBoolean("disabled.mobs.wolf")) {
-						e.setCancelled(true);
-						blocked(e);
-						return;
-					}
-				}
-				else if(e.getEntity() instanceof MushroomCow) {
-					if(plugin.getConfig().getBoolean("disabled.mobs.mooshroom")) {
-						e.setCancelled(true);
-						blocked(e);
-						return;
-					}
-				}
-				else if(e.getEntity() instanceof Snowman) {
-					if(plugin.getConfig().getBoolean("disabled.mobs.snowgolem")) {
-						e.setCancelled(true);
-						blocked(e);
-						return;
-					}
-				}
-				else if(e.getEntity() instanceof Ocelot) {
-					if(plugin.getConfig().getBoolean("disabled.mobs.ocelot")) {
-						e.setCancelled(true);
-						blocked(e);
-						return;
-					}
-				}
-				else if(e.getEntity() instanceof IronGolem) {
-					if(plugin.getConfig().getBoolean("disabled.mobs.irongolem")) {
-						e.setCancelled(true);
-						blocked(e);
-						return;
-					}
-				}
-				else if(e.getEntity() instanceof Villager) {
-					if(plugin.getConfig().getBoolean("disabled.mobs.villager")) {
-						e.setCancelled(true);
-						blocked(e);
-						return;
-					}
-				}
-				else if(e.getEntity() instanceof Villager) {
-					if(plugin.getConfig().getBoolean("disabled.mobs.villager")) {
-						e.setCancelled(true);
-						blocked(e);
-						return;
-					}
-				}
-				else if(e.getEntity() instanceof ThrownPotion) {
-					if(plugin.getConfig().getBoolean("block.splash-potions")) {
-						e.setCancelled(true);
-						blocked(e);
-						return;
+			}
+		}
+	}
+
+	@EventHandler(priority = EventPriority.LOWEST)
+	public void onBlockDamage(EntityDamageEvent e) {
+		final String mob = e.getEntityType().toString().toLowerCase();
+		if (plugin.getConfig().getBoolean("disabled.mobs." + mob)) {
+			e.getEntity().remove();
+			++dilled;
+			if (dilled > 10) {
+				Spawnegg.log.log(Level.INFO, "[EM]Some " + mob
+						+ "'s were forcibly removed because they are disabled");
+				dilled -= 10;
+			}
+		}
+	}
+
+	@EventHandler(priority = EventPriority.LOWEST)
+	public void onChunkLoad(ChunkLoadEvent e) {
+		List<String> worldz = plugin.getConfig().getStringList(
+				"World.Worldname");
+		for (String worldname : worldz) {
+			if (e.getWorld().getName().equals(worldname)) {
+				// Iterate through the entities in the chunk
+				for (Entity en : e.getChunk().getEntities()) {
+					final String mob = en.getType().toString().toLowerCase();
+					if (plugin.getConfig().getBoolean("disabled.mobs." + mob)) {
+						try {
+							en.remove();
+						} catch (NullPointerException ex) {
+							Spawnegg.log.log(Level.WARNING, ex.getMessage());
+						}
 					}
 				}
 			}
 		}
+	}	
+	
+	@EventHandler(priority = EventPriority.LOWEST)
+	public void onChunkUnLoad(ChunkUnloadEvent e) {
+		List<String> worldz = plugin.getConfig().getStringList(
+				"World.Worldname");
+		for (String worldname : worldz) {
+			if (e.getWorld().getName().equals(worldname)) {
+				// Iterate through the entities in the chunk
+				for (Entity en : e.getChunk().getEntities()) {
+					final String mob = en.getType().toString().toLowerCase();
+					if (plugin.getConfig().getBoolean("disabled.mobs." + mob)) {
+						try {
+							en.remove();
+						} catch (NullPointerException ex) {
+							Spawnegg.log.log(Level.WARNING, ex.getMessage());
+						}
+					}
+				}
+			}
 		}
-	}
-	@EventHandler(priority = EventPriority.HIGH)
-public void onTarget(EntityTargetEvent ev, CreatureSpawnEvent e) {
-	if(this.blocked(e)) {
-		ev.getEntity().remove();
-		return;
-	}
-}
-public boolean blocked(CreatureSpawnEvent e) {
-		return cancelled;
 	}
 }
