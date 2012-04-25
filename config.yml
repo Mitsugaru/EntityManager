@@ -1,6 +1,7 @@
-# EntityManager Configuration v3.0
+# EntityManager Configuration v3.3
 # Put name of the worlds you want the plugin to work in, aka multiworld support.
 # Eggs that are disabled can only be used by players with permission.
+# When you have perms and you login, you get a message, you can disable it..
 # You can charge players for each egg they use, even for monsters or animals
 # You can take the egg the player has if they try but fail to use it (stops alert spam)
 # You can block the dispense of: SpawnerEggs, Fireballs, XpBottles, and chicken eggs!
@@ -8,49 +9,59 @@
 # You can totally disable the spawning of any mob at the end of the config file
 # For help, visit : http://dev.bukkit.org/server-mods/entitymanager/pages/
 # ************************************************************************************** #
+EntityManager:
+  Login-MOTD: true
+  Send-Alerts: true
+  Metrics: true
+  Logging: true
+
 World:
   Worldname:
   - world
   - world_nether 
   - world_end
+
 Economy:
   charge:
     monster: 15
     animal: 5
     other: 10
+
 Disable:
   Experience: false
   Enchanting: false
+
 block:
-  zombie-door-break: false
-  ender-pickup: true
-  player-damage: false
-  pvp: false
-  mob-damage: false
-  fall-damage: false
-  splash-potions: false
-  arrows: false
+  Actions:
+    zombie-door-break: false
+    ender-pickup: true
+    pvp: false
+    mob-damage: false
+    fishing: false
   Dispense:
     SpawnerEggs: true
     ChickenEggs: true
     FireBalls: true
     XpBottles: true
+    Potions: true
   Throw:
     XpBottles: true
     FireCharges: true
     ChickenEggs: false
     EnderPearls: false
     EnderEyes: false
+    Potions: false
   Entities:
     Boats: false
     Minecarts: false
+    Paintings: false
   Creation-of:
     portals: false
+
 extras:
-  enable:
-    explosive-arrows: false
   explosive-arrows: 
     power: 0
+
 disabled:
   eggs:
     creeper: true
@@ -81,19 +92,22 @@ disabled:
     zombie: false
     slime: false
     ghast: false
-    pigman: false
+    pig_zombie: false
     enderman: false
-    cavespider: false
+    cave_spider: false
     silverfish: false
     blaze: false
-    magmacube: false
+    magma_cube: false
     pig: false
     sheep: false
     cow: false
     chicken: false
     squid: false
     wolf: false
-    mooshroom: false
+    mushroom_cow: false
+    snowman: false
     ocelot: false
+    ender_dragon: false
     villager: false
+    iron_golem: false
 
