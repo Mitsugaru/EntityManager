@@ -6,6 +6,7 @@ import net.milkycraft.Spawnegg;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -19,7 +20,7 @@ public class MyDispenseListener implements Listener {
 		plugin = instance;
 	}
 
-	@EventHandler(priority = EventPriority.HIGH)
+	@EventHandler(priority = EventPriority.LOWEST)
 	public void onDispense(BlockDispenseEvent event) {
 		ItemStack item = event.getItem();
 		List<String> worldz = plugin.getConfig().getStringList(
@@ -33,38 +34,38 @@ public class MyDispenseListener implements Listener {
 						event.setCancelled(true);
 						return;
 					}
-				}
-				else if (item.getTypeId() == 344) {
+				} else if (item.getTypeId() == 344) {
 					if (plugin.getConfig().getBoolean(
 							"block.Dispense.ChickenEggs")) {
 						alert(event);
 						event.setCancelled(true);
 						return;
 					}
-				}
-				else if (item.getTypeId() == 385) {
+				} else if (item.getTypeId() == 373) {
+					if (plugin.getConfig().getBoolean("block.Dispense.Potions")) {
+						alert(event);
+						event.setCancelled(true);
+						return;
+					}
+				} else if (item.getTypeId() == 385) {
 					if (plugin.getConfig().getBoolean(
 							"block.Dispense.FireBalls")) {
 						alert(event);
 						event.setCancelled(true);
 						return;
 					}
-				}
-				else if (item.getTypeId() == 384) {
+				} else if (item.getTypeId() == 384) {
 					if (plugin.getConfig().getBoolean(
 							"block.Dispense.XpBottles")) {
 						alert(event);
 						event.setCancelled(true);
 						return;
-					}				
+					}
 				}
 			}
 		}
 	}
-	/*
-	 * The code below doesnt send the alert, ASE 2.7 does send alerts however..
-	 * Almost exact same code, Whats wrong?
-	 */
+
 	public void alert(BlockDispenseEvent event) {
 		double x = event.getBlock().getLocation().getX();
 		double y = event.getBlock().getLocation().getY();
@@ -72,13 +73,19 @@ public class MyDispenseListener implements Listener {
 		int xx = (int) x;
 		int yy = (int) y;
 		int zz = (int) z;
-			Bukkit.broadcast(ChatColor.GREEN + "[EM]" + ChatColor.DARK_RED
-					+ "Failed Dispense of: " + ChatColor.GOLD
-					+ event.getItem().getType() + ChatColor.DARK_RED + " in: "
-					+ ChatColor.YELLOW + event.getBlock().getWorld().getName()
-					+ " at: " + xx + " , " + yy + " , " + zz ,
-					"entitymanager.admin");					
-			return;		
+		if (plugin.getConfig().getBoolean("Send-Alerts")) {
+			for (Player p : Bukkit.getServer().getOnlinePlayers()) {
+				if (p.hasPermission("entitymanager.admin")) {
+					p.sendMessage(ChatColor.GREEN
+							+ "[EM] "
+							+ ChatColor.DARK_RED
+							+ "Failed dispense of "
+							+ ChatColor.GOLD
+							+ event.getItem().getType().toString()
+									.toLowerCase() + " at: " + xx + "," + yy
+							+ "," + zz + ".");
+				}
+			}
+		}
 	}
 }
-
