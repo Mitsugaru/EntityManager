@@ -1,6 +1,7 @@
 package net.milkycraft.Listeners;
 
 import net.milkycraft.Spawnegg;
+import net.milkycraft.ASEConfiguration.Settings;
 
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -10,9 +11,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.enchantment.PrepareItemEnchantEvent;
 
 public class EnchantListener implements Listener {
-	/*
-	 * Class Tested and working
-	 */
 	Spawnegg plugin;
 
 	public EnchantListener(Spawnegg instance) {
@@ -21,7 +19,7 @@ public class EnchantListener implements Listener {
 
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onEnchantAttempt(PrepareItemEnchantEvent e) {
-		if (plugin.getConfig().getBoolean("Disable.Enchanting")
+		if (Settings.totalenchant
 				&& !e.getEnchanter().hasPermission("entitymanager.enchanting")) {
 			e.setCancelled(true);
 			e.getEnchanter().sendMessage(
