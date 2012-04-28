@@ -17,10 +17,12 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 public class ThrowListener implements Listener {
-	Spawnegg plugin;	
-	public ThrowListener(Spawnegg instance) {
-		plugin = instance;
+	Spawnegg plugin;
+
+	public ThrowListener(Spawnegg innstance) {
+		plugin = innstance;
 	}
+
 	public final Logger log = Logger.getLogger("Minecraft");
 
 	@EventHandler(priority = EventPriority.LOWEST)
@@ -43,16 +45,17 @@ public class ThrowListener implements Listener {
 							e.setCancelled(true);
 							alerter(e);
 							messager(e);
-						}
-						if (plugin.getConfig().getBoolean(
-								"EntityManager.Logging")) {
-							log.log(Level.WARNING, "[EntityManager] "
-									+ e.getPlayer().getDisplayName()
-											.toLowerCase()
-									+ " tried to throw a "
-									+ e.getItem().getType().toString()
-											.toLowerCase());
-							return;
+
+							if (plugin.getConfig().getBoolean(
+									"EntityManager.Logging")) {
+								log.log(Level.WARNING, "[EntityManager] "
+										+ e.getPlayer().getDisplayName()
+												.toLowerCase()
+										+ " tried to throw a "
+										+ e.getItem().getType().toString()
+												.toLowerCase());
+								return;
+							}
 						}
 					} else if (e.getItem().getTypeId() == 385) {
 						if (plugin.getConfig().getBoolean(
@@ -62,16 +65,17 @@ public class ThrowListener implements Listener {
 							e.setCancelled(true);
 							alerter(e);
 							messager(e);
-						}
-						if (plugin.getConfig().getBoolean(
-								"EntityManager.Logging")) {
-							log.log(Level.WARNING, "[EntityManager] "
-									+ e.getPlayer().getDisplayName()
-											.toLowerCase()
-									+ " tried to throw a "
-									+ e.getItem().getType().toString()
-											.toLowerCase());
-							return;
+
+							if (plugin.getConfig().getBoolean(
+									"EntityManager.Logging")) {
+								log.log(Level.WARNING, "[EntityManager] "
+										+ e.getPlayer().getDisplayName()
+												.toLowerCase()
+										+ " tried to throw a "
+										+ e.getItem().getType().toString()
+												.toLowerCase());
+								return;
+							}
 						}
 					} else if (e.getItem().getTypeId() == 344) {
 						if (plugin.getConfig().getBoolean(
@@ -80,16 +84,17 @@ public class ThrowListener implements Listener {
 										.hasPermission("entitymanager.chickeneggs")) {
 							e.setCancelled(true);
 							messager(e);
-						}
-						if (plugin.getConfig().getBoolean(
-								"EntityManager.Logging")) {
-							log.log(Level.WARNING, "[EntityManager] "
-									+ e.getPlayer().getDisplayName()
-											.toLowerCase()
-									+ " tried to throw a "
-									+ e.getItem().getType().toString()
-											.toLowerCase());
-							return;
+
+							if (plugin.getConfig().getBoolean(
+									"EntityManager.Logging")) {
+								log.log(Level.WARNING, "[EntityManager] "
+										+ e.getPlayer().getDisplayName()
+												.toLowerCase()
+										+ " tried to throw a "
+										+ e.getItem().getType().toString()
+												.toLowerCase());
+								return;
+							}
 						}
 					} else if (e.getItem().getTypeId() == 368) {
 						if (plugin.getConfig().getBoolean(
@@ -99,16 +104,17 @@ public class ThrowListener implements Listener {
 							e.setCancelled(true);
 							messager(e);
 							alerter(e);
-						}
-						if (plugin.getConfig().getBoolean(
-								"EntityManager.Logging")) {
-							log.log(Level.WARNING, "[EntityManager] "
-									+ e.getPlayer().getDisplayName()
-											.toLowerCase()
-									+ " tried to throw a "
-									+ e.getItem().getType().toString()
-											.toLowerCase());
-							return;
+
+							if (plugin.getConfig().getBoolean(
+									"EntityManager.Logging")) {
+								log.log(Level.WARNING, "[EntityManager] "
+										+ e.getPlayer().getDisplayName()
+												.toLowerCase()
+										+ " tried to throw a "
+										+ e.getItem().getType().toString()
+												.toLowerCase());
+								return;
+							}
 						}
 					} else if (e.getItem().getTypeId() == 381) {
 						if (plugin.getConfig().getBoolean(
@@ -118,16 +124,17 @@ public class ThrowListener implements Listener {
 							e.setCancelled(true);
 							messager(e);
 							alerter(e);
-						}
-						if (plugin.getConfig().getBoolean(
-								"EntityManager.Logging")) {
-							log.log(Level.WARNING, "[EntityManager] "
-									+ e.getPlayer().getDisplayName()
-											.toLowerCase()
-									+ " tried to throw a "
-									+ e.getItem().getType().toString()
-											.toLowerCase());
-							return;
+
+							if (plugin.getConfig().getBoolean(
+									"EntityManager.Logging")) {
+								log.log(Level.WARNING, "[EntityManager] "
+										+ e.getPlayer().getDisplayName()
+												.toLowerCase()
+										+ " tried to throw a "
+										+ e.getItem().getType().toString()
+												.toLowerCase());
+								return;
+							}
 						}
 					} else if (e.getItem().getTypeId() == 333) {
 						if (plugin.getConfig().getBoolean(
@@ -135,16 +142,17 @@ public class ThrowListener implements Listener {
 								&& !player.hasPermission("entitymanager.boats")) {
 							e.setCancelled(true);
 							messager(e);
-						}
-						if (plugin.getConfig().getBoolean(
-								"EntityManager.Logging")) {
-							log.log(Level.WARNING, "[EntityManager] "
-									+ e.getPlayer().getDisplayName()
-											.toLowerCase()
-									+ " tried to use a "
-									+ e.getItem().getType().toString()
-											.toLowerCase());
-							return;
+
+							if (plugin.getConfig().getBoolean(
+									"EntityManager.Logging")) {
+								log.log(Level.WARNING, "[EntityManager] "
+										+ e.getPlayer().getDisplayName()
+												.toLowerCase()
+										+ " tried to use a "
+										+ e.getItem().getType().toString()
+												.toLowerCase());
+								return;
+							}
 						}
 					} else if (e.getItem().getTypeId() == 328) {
 						if (plugin.getConfig().getBoolean(
@@ -153,16 +161,17 @@ public class ThrowListener implements Listener {
 										.hasPermission("entitymanager.minecarts")) {
 							e.setCancelled(true);
 							messager(e);
-						}
-						if (plugin.getConfig().getBoolean(
-								"EntityManager.Logging")) {
-							log.log(Level.WARNING, "[EntityManager] "
-									+ e.getPlayer().getDisplayName()
-											.toLowerCase()
-									+ " tried to use a "
-									+ e.getItem().getType().toString()
-											.toLowerCase());
-							return;
+
+							if (plugin.getConfig().getBoolean(
+									"EntityManager.Logging")) {
+								log.log(Level.WARNING, "[EntityManager] "
+										+ e.getPlayer().getDisplayName()
+												.toLowerCase()
+										+ " tried to use a "
+										+ e.getItem().getType().toString()
+												.toLowerCase());
+								return;
+							}
 						}
 					} else if (e.getItem().getTypeId() == 373) {
 						if (plugin.getConfig()
@@ -171,16 +180,17 @@ public class ThrowListener implements Listener {
 										.hasPermission("entitymanager.potions")) {
 							e.setCancelled(true);
 							messager(e);
-						}
-						if (plugin.getConfig().getBoolean(
-								"EntityManager.Logging")) {
-							log.log(Level.WARNING, "[EntityManager] "
-									+ e.getPlayer().getDisplayName()
-											.toLowerCase()
-									+ " tried to throw a "
-									+ e.getItem().getType().toString()
-											.toLowerCase());
-							return;
+
+							if (plugin.getConfig().getBoolean(
+									"EntityManager.Logging")) {
+								log.log(Level.WARNING, "[EntityManager] "
+										+ e.getPlayer().getDisplayName()
+												.toLowerCase()
+										+ " tried to throw a "
+										+ e.getItem().getType().toString()
+												.toLowerCase());
+								return;
+							}
 						}
 					}
 					if (e.getAction() == Action.RIGHT_CLICK_BLOCK) {
@@ -198,13 +208,16 @@ public class ThrowListener implements Listener {
 													ChatColor.GREEN
 															+ "[EM]"
 															+ "You don't have permission to place ender crystals!");
-								}
-								if (plugin.getConfig().getBoolean(
-										"EntityManager.Logging")) {
-									log.log(Level.WARNING, "[EntityManager] "
-											+ e.getPlayer().getDisplayName()
-													.toLowerCase()
-											+ " tried to place a Ender Crystal");
+
+									if (plugin.getConfig().getBoolean(
+											"EntityManager.Logging")) {
+										log.log(Level.WARNING,
+												"[EntityManager] "
+														+ e.getPlayer()
+																.getDisplayName()
+																.toLowerCase()
+														+ " tried to place a Ender Crystal");
+									}
 								}
 							}
 						}
@@ -213,20 +226,27 @@ public class ThrowListener implements Listener {
 			}
 		}
 	}
+
 	public void alerter(PlayerInteractEvent e) {
 		final Player player = e.getPlayer();
-		if(plugin.getConfig().getBoolean("Send-Alerts")) {
-			for(Player p : player.getServer().getOnlinePlayers()) {
-				if(p.hasPermission("entitymanager.admin")) {
-					p.sendMessage(ChatColor.GREEN + "[EM] " + ChatColor.DARK_RED
-				+ e.getPlayer().getDisplayName() + " tryed to use a "
-				+ ChatColor.GOLD + e.getItem().getType().toString().toLowerCase() + ".");
+		if (plugin.getConfig().getBoolean("Send-Alerts")) {
+			for (Player p : player.getServer().getOnlinePlayers()) {
+				if (p.hasPermission("entitymanager.admin")) {
+					p.sendMessage(ChatColor.GREEN + "[EM] "
+							+ ChatColor.DARK_RED
+							+ e.getPlayer().getDisplayName()
+							+ " tryed to use a " + ChatColor.GOLD
+							+ e.getItem().getType().toString().toLowerCase()
+							+ ".");
 				}
 			}
 		}
 	}
+
 	public void messager(PlayerInteractEvent e) {
 		final Player player = e.getPlayer();
-		player.sendMessage(ChatColor.GREEN + "[EM] " + ChatColor.RED + "You dont have permission for " + e.getItem().getType().toString().toLowerCase() + "'s.");  
+		player.sendMessage(ChatColor.GREEN + "[EM] " + ChatColor.RED
+				+ "You dont have permission for "
+				+ e.getItem().getType().toString().toLowerCase() + "'s.");
 	}
 }
