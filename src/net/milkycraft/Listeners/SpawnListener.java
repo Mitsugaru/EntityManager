@@ -18,7 +18,6 @@ import org.bukkit.event.world.ChunkUnloadEvent;
 
 public class SpawnListener implements Listener {
 	Spawnegg plugin;
-
 	public SpawnListener(Spawnegg instance) {
 		plugin = instance;
 	}
@@ -33,8 +32,7 @@ public class SpawnListener implements Listener {
 		for (String worldname : worldz) {
 			if (e.getEntity().getWorld().getName().equals(worldname)) {
 				e.setCancelled(plugin.getConfig().getBoolean(
-						"disabled.mobs."
-								+ e.getEntityType().toString().toLowerCase()));
+						"disabled.mobs." +e.getEntityType().toString().toLowerCase()));
 				return;
 			}
 		}
