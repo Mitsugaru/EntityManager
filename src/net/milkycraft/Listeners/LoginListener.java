@@ -1,6 +1,7 @@
 package net.milkycraft.Listeners;
 
 import net.milkycraft.Spawnegg;
+import net.milkycraft.ASEConfiguration.Settings;
 
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
@@ -17,7 +18,7 @@ public class LoginListener implements Listener {
 
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onLogin(PlayerJoinEvent e) {
-		if (plugin.getConfig().getBoolean("EntityManager.Login-MOTD")) {
+		if (Settings.Motd) {
 			e.getPlayer()
 					.sendMessage(
 							ChatColor.GREEN
