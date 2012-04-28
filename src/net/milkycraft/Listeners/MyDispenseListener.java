@@ -3,6 +3,7 @@ package net.milkycraft.Listeners;
 import java.util.List;
 
 import net.milkycraft.Spawnegg;
+import net.milkycraft.ASEConfiguration.Settings;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -23,8 +24,8 @@ public class MyDispenseListener implements Listener {
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onDispense(BlockDispenseEvent event) {
 		ItemStack item = event.getItem();
-		List<String> worldz = plugin.getConfig().getStringList(
-				"World.Worldname");
+		List<Integer> itemz = Settings.items;
+		List<String> worldz = Settings.worlds;
 		for (String worldname : worldz) {
 			if (event.getBlock().getWorld().getName().equals(worldname)) {
 				if (event.getItem().getTypeId() == 383) {
@@ -62,18 +63,24 @@ public class MyDispenseListener implements Listener {
 						return;
 					}
 				}
+				for(Integer itemx : itemz) {
+					if(event.getItem().getTypeId() == itemx) {
+						event.setCancelled(true);
+						alert(event);
+					}
+				}
 			}
 		}
 	}
 
-	public void alert(BlockDispenseEvent event) {
-		double x = event.getBlock().getLocation().getX();
-		double y = event.getBlock().getLocation().getY();
-		double z = event.getBlock().getLocation().getZ();
+	public void alert(BlockDispenseEvent e) {
+		double x = e.getBlock().getLocation().getX();
+		double y = e.getBlock().getLocation().getY();
+		double z = e.getBlock().getLocation().getZ();
 		int xx = (int) x;
 		int yy = (int) y;
 		int zz = (int) z;
-		if (plugin.getConfig().getBoolean("Send-Alerts")) {
+		if (Settings.alertz) {
 			for (Player p : Bukkit.getServer().getOnlinePlayers()) {
 				if (p.hasPermission("entitymanager.admin")) {
 					p.sendMessage(ChatColor.GREEN
@@ -81,7 +88,7 @@ public class MyDispenseListener implements Listener {
 							+ ChatColor.DARK_RED
 							+ "Failed dispense of "
 							+ ChatColor.GOLD
-							+ event.getItem().getType().toString()
+							+ e.getItem().getType().toString()
 									.toLowerCase() + " at: " + xx + "," + yy
 							+ "," + zz + ".");
 				}
