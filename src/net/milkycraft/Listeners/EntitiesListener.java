@@ -1,11 +1,11 @@
 package net.milkycraft.Listeners;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import net.milkycraft.Spawnegg;
-
 import org.bukkit.ChatColor;
 import org.bukkit.Difficulty;
 import org.bukkit.Location;
@@ -33,6 +33,7 @@ import org.bukkit.event.world.PortalCreateEvent.CreateReason;
 
 public class EntitiesListener implements Listener {
 	Spawnegg plugin;
+	public HashMap<Integer, Player> alerters = new HashMap<Integer, Player>();
 
 	public EntitiesListener(Spawnegg instance) {
 		plugin = instance;
@@ -104,13 +105,14 @@ public class EntitiesListener implements Listener {
 			if (e.getEntity().getWorld().getName().equals(worldname)) {
 				if (e.getEntity() instanceof LivingEntity) {
 					if (!(e.getEntity() instanceof Player)) {
-						if(e.getDamager() instanceof Player) {
-							final Player p = (Player)e.getDamager();						
-						if (plugin.getConfig().getBoolean(
-								"block.Actions.mob-damage") && !p.hasPermission("entitymanager.mob-damage")) {
-							e.setCancelled(true);
-							return;
-						}
+						if (e.getDamager() instanceof Player) {
+							final Player p = (Player) e.getDamager();
+							if (plugin.getConfig().getBoolean(
+									"block.Actions.mob-damage")
+									&& !p.hasPermission("entitymanager.mob-damage")) {
+								e.setCancelled(true);
+								return;
+							}
 						}
 					} else if (e.getDamager() instanceof Player) {
 						if (e.getEntity() instanceof Player) {
@@ -213,11 +215,11 @@ public class EntitiesListener implements Listener {
 											+ "[EM] "
 											+ ChatColor.RED
 											+ "You dont have permission to place paintings");
-				}
-				if (plugin.getConfig().getBoolean("EntityManager.Logging")) {
-					log.info(e.getPlayer().getDisplayName()
-							+ " tried to place a painting");
-					return;
+					if (plugin.getConfig().getBoolean("EntityManager.Logging")) {
+						log.info(e.getPlayer().getDisplayName()
+								+ " tried to place a painting");
+						return;
+					}
 				}
 			}
 		}
@@ -232,11 +234,11 @@ public class EntitiesListener implements Listener {
 				if (plugin.getConfig().getBoolean("disabled.mobs.pig_zombie")) {
 					e.setCancelled(true);
 					e.getEntity().remove();
-				}
-				if (plugin.getConfig().getBoolean("EntityManager.Logging")) {
-					Spawnegg.log
-							.log(Level.WARNING,
-									"[EM] A pig was zapped but pigmans are disabled! Removing pig!");
+					if (plugin.getConfig().getBoolean("EntityManager.Logging")) {
+						Spawnegg.log
+								.log(Level.WARNING,
+										"[EM] A pig was zapped but pigmans are disabled! Removing pig!");
+					}
 				}
 			}
 		}
@@ -255,9 +257,10 @@ public class EntitiesListener implements Listener {
 					player.sendMessage(ChatColor.GREEN + "[EM] "
 							+ ChatColor.RED
 							+ "You dont have permission to fish");
-				}
-				if (plugin.getConfig().getBoolean("EntityManager.Logging")) {
-					log.info(e.getPlayer().getDisplayName() + " tried to fish");
+					if (plugin.getConfig().getBoolean("EntityManager.Logging")) {
+						log.info(e.getPlayer().getDisplayName()
+								+ " tried to fish");
+					}
 				}
 			}
 		}
