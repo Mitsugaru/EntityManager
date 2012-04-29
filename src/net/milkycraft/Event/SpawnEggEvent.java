@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package net.milkycraft.Event;
 
 
@@ -7,15 +10,31 @@ import net.milkycraft.Enums.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class SpawnEggEvent.
+ */
 public class SpawnEggEvent {
+	
+	/** The player. */
 	private Player player = null;
+	
+	/** The event. */
 	private PlayerInteractEvent event = null;
+	
+	/** The egg meta. */
 	private int eggMeta;
+	
+	/** The breed. */
 	private EntityType breed = null;
 
+	/**
+	 * Instantiates a new spawn egg event.
+	 *
+	 * @param event the event
+	 */
 	public SpawnEggEvent(PlayerInteractEvent event) {
 		this.player = event.getPlayer();
-
 		this.event = event;
 
 		this.eggMeta = event.getPlayer().getItemInHand().getDurability();
@@ -93,18 +112,38 @@ public class SpawnEggEvent {
 		}
 	}
 
+	/**
+	 * Gets the player.
+	 *
+	 * @return the player
+	 */
 	public Player getPlayer() {
 		return player;
 	}
 
+	/**
+	 * Gets the interact event.
+	 *
+	 * @return the interact event
+	 */
 	public PlayerInteractEvent getInteractEvent() {
 		return event;
 	}
 
+	/**
+	 * Gets the entity id.
+	 *
+	 * @return the entity id
+	 */
 	public int getEntityId() {
 		return eggMeta;
 	}
 
+	/**
+	 * Gets the entity breed.
+	 *
+	 * @return the entity breed
+	 */
 	public EntityType getEntityBreed() {
 		if (breed != null) {
 			return breed;
@@ -113,18 +152,37 @@ public class SpawnEggEvent {
 		}
 	}
 
+	/** The Id. */
 	int Id = 0;
+	
+	/** The cat. */
 	EntityCategory cat = EntityCategory.UNKNOWN;
 
+	/**
+	 * Instantiates a new spawn egg event.
+	 *
+	 * @param eId the e id
+	 * @param cat the cat
+	 */
 	SpawnEggEvent(int eId, EntityCategory cat) {
 		Id = eId;
 		this.cat = cat;
 	}
 
+	/**
+	 * Gets the category.
+	 *
+	 * @return the category
+	 */
 	public EntityCategory getCategory() {
 		return this.cat;
 	}
 
+	/**
+	 * Gets the id.
+	 *
+	 * @return the id
+	 */
 	public int getId() {
 		return Id;
 	}
