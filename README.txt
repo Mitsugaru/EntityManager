@@ -8,5 +8,7 @@ Features:
 - Block projectiles from dispensers.
 - In game alerting and inventory purge command
 - Hostile mobs don't target user if spawned with egg
+- Block items from being dropped in certain game modes
+- Block any items you put on the blacklist
 
 Commands and permissions can be found on bukkitdev
