@@ -1,5 +1,5 @@
 #
-#  EntityManager Configuration 3.4.2
+#  EntityManager Configuration 3.4.3
 #  http://dev.bukkit.org/server-mods/entitymanager/pages/configuration/
 #####
 
@@ -11,8 +11,6 @@ EntityManager:
   Send-Alerts: true
   Metrics: true
   Logging: true
-  TooManyDrops:
-    Kick: true
 
 #
 # Put the names of the worlds you want the plugin to work in
@@ -39,7 +37,7 @@ Disable:
 block:
   Actions:
     zombie-door-break: false
-    ender-pickup: true
+    ender-pickup: false
     pvp: false
     mob-damage: false
     fishing: false
