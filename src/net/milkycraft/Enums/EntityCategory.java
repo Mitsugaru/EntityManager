@@ -1,5 +1,22 @@
+/*
+ * 
+ */
 package net.milkycraft.Enums;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Enum EntityCategory.
+ */
 public enum EntityCategory {
-	ANIMAL, MONSTER, NPC, UNKNOWN, SPECIAL,
+	
+	/** The ANIMAL. */
+	ANIMAL, 
+ /** The MONSTER. */
+ MONSTER, 
+ /** The NPC. */
+ NPC, 
+ /** The UNKNOWN. */
+ UNKNOWN, 
+ /** The SPECIAL. */
+ SPECIAL,
 }
