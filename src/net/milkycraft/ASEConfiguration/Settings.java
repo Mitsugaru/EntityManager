@@ -1,59 +1,91 @@
+/*
+ * 
+ */
 package net.milkycraft.ASEConfiguration;
 
 import java.util.List;
 
 import net.milkycraft.Spawnegg;
 
-public class Settings extends ConfigLoader {
+import org.bukkit.configuration.file.FileConfiguration;
 
+/**
+ * The Class Settings.
+ */
+public class Settings extends ConfigLoader {
 	/*
 	 * GENERAL SETTINGS
 	 */
-
+    /** The Constant instance. */
+	private final static Settings instance = new Settings(Spawnegg.p);
 	/* General Settings */
-	public static Boolean Motd, alertz, metrics, logging, kicking;
-
+	/** The logging. */
+	public static Boolean Motd, alertz, metrics, logging;
 	/* World Settings */
+	/** The worlds. */
 	public static List<String> worlds;
-
 	/* Disabled */
+	/** The totalenchant. */
 	public static Boolean totalexp, totalenchant;
 	/* Actions */
+	/** The arrowz. */
 	public static Boolean doorBreak, enderPickup, pvp, mobdmg, fishing, arrowz;
 	/* Dispense */
+	/** The potionz. */
 	public static Boolean MonsEggs, ChickEggs, Fballs, xBottz, potionz;
+	
+	/** The items. */
 	public static List<Integer> items;
 	/* Throw */
+	/** The potion. */
 	public static Boolean xpbott, fire, egg, pearl, eye, potion;
 	/* Entities */
+	/** The paintz. */
 	public static Boolean boatz, cartz, paintz;
 	/* ItemDrop */
+	/** The b destroy. */
 	public static Boolean cDrop, sDrop, onDeath, bDestroy;
+	
+	/** The bitems. */
 	public static List<Integer> bitems;
 	/* creation of */
+	/** The portals. */
 	public static Boolean portals;
 	/* Economy */
+	/** The npc. */
 	public static Integer mons, animal, npc;
 	/* Disabled Eggs */
+	/** The villa. */
 	public static Boolean creep, skele, spider, zombie, slime, ghast, pigman,
 			ender, cave, fish, blaze, cube, pig, sheep, cow, chick, squid,
 			wolf, moosh, ocelot, villa;
 	/* Disabled mobs */
+	/** The villas. */
 	public static Boolean creeps, skeles, spiders, zombies, slimes, ghasts, pigmans, enders,
 			caves, fishs, blazes, cubes, pigs, sheeps, cows, chicks, squids, snow, dragons, iron,
 			wolfs, mooshs, ocelots, villas;
+	
+	/** The all. */
 	public static Boolean all;
-	public static ConfigLoader cl = null;
+	/* other */
 
 	/*
 	 * CONFIG LOADING
 	 */
 
+	/**
+	 * Instantiates a new settings.
+	 *
+	 * @param spawnegg the plugin
+	 */
 	public Settings(Spawnegg plugin) {
 		super(plugin, "config.yml");
 		config = plugin.getConfig();
 	}
 
+	/* (non-Javadoc)
+	 * @see net.milkycraft.ASEConfiguration.ConfigLoader#load()
+	 */
 	@Override
 	public void load() {
 		// If it doesn't exist, copy it from the .jar
@@ -64,6 +96,22 @@ public class Settings extends ConfigLoader {
 		addDefaults();
 		loadKeys();
 	}
+	
+	/**
+	 * Reload.
+	 */
+	@Override
+	public void reload() {
+		if (!configFile.exists()) {
+			dataFolder.mkdir();
+			plugin.saveDefaultConfig();
+		}
+		loadKeys();
+	}
+	
+	/* (non-Javadoc)
+	 * @see net.milkycraft.ASEConfiguration.ConfigLoader#loadKeys()
+	 */
 	@Override
 	protected void loadKeys() {
 		plugin.getLogger().info("Loading EntityManager config");
@@ -72,7 +120,6 @@ public class Settings extends ConfigLoader {
 		alertz = config.getBoolean("EntityManager.Send-Alerts");
 		metrics = config.getBoolean("EntityManager.Metrics");
 		logging = config.getBoolean("EntityManager.Logging");
-		kicking = config.getBoolean("EntityManager.TooManyDrops");
 		/* Stop */
 		worlds = config.getStringList("World.Worldname");
 		/* Stop */
@@ -164,4 +211,24 @@ public class Settings extends ConfigLoader {
 		iron = config.getBoolean("disabled.mobs.iron_golen");
 		snow = config.getBoolean("disabled.mobs.snowman");
 	}
+	
+	/**
+	 * Used for config booleanes like ("disabled.mobs." + ev.getEntityType().toLowerCase())
+	 *
+	 * @return Return the config
+	 * @author milkywayz
+	 */
+	public static FileConfiguration getConfig() {
+		return config;
+	}
+
+	/**
+	 * Gets the single instance of Settings.
+	 *
+	 * @return single instance of Settings
+	 */
+	public static Settings getInstance() {
+		return instance;
+	}
+	
 }
