@@ -1,19 +1,11 @@
-# EntityManager Configuration v3.4
-# Put name of the worlds you want the plugin to work in, aka multiworld support.
-# Logging is when a player is blocked from doing something, it logs to console
-# Send-alerts sends in game alerts to admins when someone fails to do something
-# Metrics is a statistics feature, you can disable if you don't want to help me.. :P
-# Eggs that are disabled can only be used by players with permission.
-# When you have perms and you login, you get a message, you can disable it..
-# You can charge players for each egg they use, even for monsters or animals
-# All actions that are disabled can be overridden with permission
-# You can take the egg the player has if they try but fail to use it (stops alert spam)
-# You can block the dispense of: SpawnerEggs, Fireballs, XpBottles, and chicken eggs!
-# You can block the throwing of Fireballs, XpBottles, and chicken eggs as well
-# You can totally disable the spawning of any mob at the end of the config file
-# If a player isn't allowed to drop items you can kick them if they try to drop too many (if they keep spamming the drop button, or if they use hacks to drop items)
-# For help, visit : http://dev.bukkit.org/server-mods/entitymanager/pages/
-# ************************************************************************************** #
+#
+#  EntityManager Configuration 3.4.2
+#  http://dev.bukkit.org/server-mods/entitymanager/pages/configuration/
+#####
+
+#
+#   General settings for EntityManager
+###
 EntityManager:
   Login-MOTD: true
   Send-Alerts: true
@@ -22,16 +14,28 @@ EntityManager:
   TooManyDrops:
     Kick: true
 
+#
+# Put the names of the worlds you want the plugin to work in
+# Worlds not in this list will be completely ignored
+### 
 World:
   Worldname:
   - world
   - world_nether 
   - world_end
 
+#
+# Settings for EXP drops and Enchanting
+# You can disable enchanting to require permissions to enchant
+# You can disable experience so exp orbs never drop
+###
 Disable:
   Experience: false
   Enchanting: false
 
+#
+# Settings for EntityManager blocking 
+###
 block:
   Actions:
     zombie-door-break: false
@@ -40,6 +44,11 @@ block:
     mob-damage: false
     fishing: false
     arrows: false
+
+#
+# Block the dispense of the item completely
+# Add items to the blacklist and they won't dispense either
+###
   Dispense:
     SpawnerEggs: true
     ChickenEggs: true
@@ -49,6 +58,12 @@ block:
     Items:
     - 7
     - 57
+
+#
+# Block players from throwing the below items
+# If true, player needs to permission to use the below items
+###
+
   Throw:
     XpBottles: true
     FireCharges: true
@@ -56,10 +71,20 @@ block:
     EnderPearls: false
     EnderEyes: false
     Potions: false
+
+#
+# Block Entities from being placing
+###
   Entities:
     Boats: false
     Minecarts: false
     Paintings: false
+
+#
+# Control the dropping of items in:
+# Gamemodes, on death, when a block is broken
+# You can make blacklisted items that are blocked from players without permission
+###
   ItemDrop:
     Creative-mode: true
     Survival-mode: false
@@ -67,16 +92,26 @@ block:
     Block-destroy: false
     Blacklisted-items:
     - 57
+#
+# Block fire from igniting portals
+###
   Creation-of:
     portals: false
 
-
+#
+# Used when a player uses an monster egg that isnt blocked
+# Uses vault to charge them per use , if vault isnt installed, economy doesn't matter
+###
 Economy:
   charge:
     monster: 15
     animal: 5
     npc: 10
 
+#
+# Disabling an egg makes the egg be blocked unless:
+# The player has permission for that egg
+###
 disabled:
   eggs:
     creeper: true
@@ -100,6 +135,12 @@ disabled:
     mooshroom: false
     ocelot: false
     villager: true
+
+#
+# Disabling an mob makes the mob completely blocked from the world
+# -Remember all aspects of EntityManager are with the World list at the top
+# Once you reload, the mobs will disappear rather quickly, but not immediately
+###
   mobs:
     creeper: false 
     skeleton: false
