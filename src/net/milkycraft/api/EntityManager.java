@@ -1,21 +1,33 @@
+/*
+ * The EntityManager developers API
+ * So far not much you can change within the plugin
+ * Mostly used for ease of use
+ */
 package net.milkycraft.api;
 
+import net.milkycraft.Spawnegg;
 import net.milkycraft.ASEConfiguration.Settings;
 import net.milkycraft.Enums.EntityType;
-
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class EntityManager.
+ */
 public class EntityManager {
-	private static volatile EntityManager instance;
+	
+	/** The Constant instance. */
+	private final static EntityManager instance = new EntityManager();
+	
+	/** The Constant settings. */
+	private final static Settings settings = new Settings(Spawnegg.p);
 
 	/**
-	 * Get if that player can use fishing poles
-	 * 
-	 * @param player
-	 *            The target player
+	 * Get if that player can use fishing poles.
+	 *
+	 * @param player The target player
 	 * @return true for yes, false for no
 	 */
 	public boolean canFish(Player player) {
@@ -27,10 +39,9 @@ public class EntityManager {
 	}
 
 	/**
-	 * Get if that player can use paintings
-	 * 
-	 * @param player
-	 *            The target player
+	 * Get if that player can use paintings.
+	 *
+	 * @param player The target player
 	 * @return true for yes, false for no
 	 */
 	public boolean canPaint(Player player) {
@@ -42,25 +53,47 @@ public class EntityManager {
 	}
 
 	/**
-	 * Get if that player can drop items in creative mode
-	 * 
-	 * @param player
-	 *            The target player
+	 * Get if that player can drop items in creative mode.
+	 *
+	 * @param player The target player
 	 * @return true for yes, false for no
 	 */
 	public boolean canCreativeDrop(Player player) {
-		boolean result = player.hasPermission("entitymanager.creative.drop");
 		if (Settings.cDrop) {
-			return result;
+			return player.hasPermission("entitymanager.creative.drop");
+		} else {
+			return true;
 		}
-		return true;
 	}
 
 	/**
-	 * Get if that player can drop items in survival mode
-	 * 
-	 * @param player
-	 *            The target player
+	 * See if a player has permission to hurt mobs when its blocked in config.
+	 *
+	 * @param player the player
+	 * @return If a player can hurt a mob when mobs cant take damage from
+	 * entities
+	 */
+	public boolean canHurtGodMobs(Player player) {
+		if (Settings.mobdmg) {
+			return player.hasPermission("entitymanager.mob-damage");
+		} else {
+			return true;
+		}
+	}
+
+	/**
+	 * Check if mobs dont recieve damage from players.
+	 *
+	 * @return true for yes, false for no
+	 */
+	public boolean areMobsGod() {
+		return Settings.mobdmg;
+	}
+
+	/**
+	 * Get if that player can drop items in survival mode.
+	 *
+	 * @param player The target player
 	 * @return true for yes, false for no
 	 */
 	public boolean canSurvivalDrop(Player player) {
@@ -72,8 +105,8 @@ public class EntityManager {
 	}
 
 	/**
-	 * Gets if metrics is enabled for the plugin
-	 * 
+	 * Gets if metrics is enabled for the plugin.
+	 *
 	 * @return true for yes, false for no
 	 */
 	public boolean isMetricsEnabled() {
@@ -81,10 +114,9 @@ public class EntityManager {
 	}
 
 	/**
-	 * Get if that entity can drop experience
-	 * 
-	 * @param entity
-	 *            Any entity, can be used on Listeners very well :P
+	 * Get if that entity can drop experience.
+	 *
+	 * @param entity Any entity, can be used on Listeners very well :P
 	 * @return true if experience isnt blocking in config
 	 */
 	public boolean canDropXp(Entity entity) {
@@ -93,10 +125,9 @@ public class EntityManager {
 
 	/**
 	 * Get if that player can use enchanting tables Based on: Config and
-	 * permission
-	 * 
-	 * @param player
-	 *            The target player
+	 * permission.
+	 *
+	 * @param player The target player
 	 * @return true for yes, false for no
 	 */
 	public boolean canEnchant(Player player) {
@@ -108,10 +139,9 @@ public class EntityManager {
 	}
 
 	/**
-	 * Get if that player can damage other players
-	 * 
-	 * @param player
-	 *            The target player
+	 * Get if that player can damage other players.
+	 *
+	 * @param player The target player
 	 * @return true for yes, false for no
 	 */
 	public boolean canPVP(Player player) {
@@ -123,10 +153,9 @@ public class EntityManager {
 	}
 
 	/**
-	 * Get if that player can use a boat
-	 * 
-	 * @param player
-	 *            The target player
+	 * Get if that player can use a boat.
+	 *
+	 * @param player The target player
 	 * @return true for yes, false for no
 	 */
 	public boolean canUseBoats(Player player) {
@@ -138,10 +167,9 @@ public class EntityManager {
 	}
 
 	/**
-	 * Get if that player can bypass the item blacklist
-	 * 
-	 * @param player
-	 *            The target player
+	 * Get if that player can bypass the item blacklist.
+	 *
+	 * @param player The target player
 	 * @return true for yes, false for no
 	 */
 	public boolean canBypassBlacklist(Player player) {
@@ -149,10 +177,9 @@ public class EntityManager {
 	}
 
 	/**
-	 * Get if that player can use a minecart
-	 * 
-	 * @param player
-	 *            The target player
+	 * Get if that player can use a minecart.
+	 *
+	 * @param player The target player
 	 * @return true for yes, false for no
 	 */
 	public boolean canUseMinecarts(Player player) {
@@ -164,8 +191,8 @@ public class EntityManager {
 	}
 
 	/**
-	 * Get the state of logging within entitymanager
-	 * 
+	 * Get the state of logging within entitymanager.
+	 *
 	 * @return if logging is enabled
 	 */
 	public boolean isLogging() {
@@ -173,8 +200,8 @@ public class EntityManager {
 	}
 
 	/**
-	 * Get a list of worlds that the plugin is enabled in
-	 * 
+	 * Get a list of worlds that the plugin is enabled in.
+	 *
 	 * @return list of applicable worlds
 	 */
 	public java.util.List<String> getWorlds() {
@@ -182,8 +209,8 @@ public class EntityManager {
 	}
 
 	/**
-	 * Get a list of items blocked from dispensers
-	 * 
+	 * Get a list of items blocked from dispensers.
+	 *
 	 * @return a list of items blocked from dispensers
 	 */
 	public java.util.List<Integer> getBlacklistedDispenserDrops() {
@@ -191,8 +218,8 @@ public class EntityManager {
 	}
 
 	/**
-	 * Get a list of items blocked from player inventories
-	 * 
+	 * Get a list of items blocked from player inventories.
+	 *
 	 * @return a list of items blocked from player inventories
 	 */
 	public java.util.List<Integer> getBlacklistedItemDrops() {
@@ -200,8 +227,8 @@ public class EntityManager {
 	}
 
 	/**
-	 * Get monster egg price per use
-	 * 
+	 * Get monster egg price per use.
+	 *
 	 * @return price per use of monster eggs
 	 */
 	public int monsterEggCharge() {
@@ -209,16 +236,17 @@ public class EntityManager {
 	}
 
 	/**
-	 * Get animal egg price per use
-	 * 
+	 * Get animal egg price per use.
+	 *
+	 * @return the int
 	 */
 	public int animalEggCharge() {
 		return Settings.animal;
 	}
 
 	/**
-	 * Get npc egg price per use
-	 * 
+	 * Get npc egg price per use.
+	 *
 	 * @return price per use of npc eggs
 	 */
 	public int npcEggCharge() {
@@ -226,14 +254,12 @@ public class EntityManager {
 	}
 
 	/**
-	 * Get if player can throw a throwable
-	 * 
-	 * @author milkywayz
-	 * @param player
-	 *            The player your trying to see if they can throw
-	 * @param material
-	 *            EXP_BOTTLE, FIREBALL, EGG, ENDER_PEARL, ENDER_EYE, POTION
+	 * Get if player can throw a throwable.
+	 *
+	 * @param player The player your trying to see if they can throw
+	 * @param material EXP_BOTTLE, FIREBALL, EGG, ENDER_PEARL, ENDER_EYE, POTION
 	 * @return true if they can, false if they cant
+	 * @author milkywayz
 	 */
 	public boolean canThrow(Player player, Material material) {
 		if (material == Material.EXP_BOTTLE) {
@@ -276,33 +302,44 @@ public class EntityManager {
 			return true;
 		}
 	}
+
 	/**
-	 * Get if that entity can spawn based on config settings
-	 * TODO: Find a way to canSpawn() without the param plugin for ease of use
-	 * @param mob
-	 *            The EntityType of the mob
-	 * @param plugin
-	 *            Reference the mainclass of EntityMangager
+	 * Get if that entity can spawn based on config settings.
+	 *
+	 * @param mob The EntityType of the mob
 	 * @return if the mob is physically blocked from spawning
-	 * @deprecated May be hard to reference plugin, therefore deprecated until
-	 *             better solution is found
 	 */
-	@Deprecated
-	public boolean canSpawn(EntityType mob, Plugin plugin) {
-		return !plugin.getConfig().getBoolean(
-				"disabled.mobs." + mob.toString().toLowerCase());
+	public boolean canSpawn(EntityType mob) {
+		return !Settings.getConfig().getBoolean(
+				"disabled.mobs." + mob.name().toLowerCase());
 	}
+
 	/**
-	 * Get if player is a entitymanager "admin"
-	 * 
-	 * @param player
-	 *            The player being used to see if is a EntityManager admin
+	 * Get if player is a entitymanager "admin".
+	 *
+	 * @param player The player being used to see if is a EntityManager admin
 	 * @return if player has permission
 	 */
 	public boolean isEntityManagerAdmin(Player player) {
 		return player.hasPermission("entitymanager.admin");
 	}
 
+	/**
+	 * See if player can spawn a mob with an egg.
+	 *
+	 * @param player the player
+	 * @param mob Name of mob use net.milkycraft.Enums.EntityType for reference
+	 * @return True if player has permission or if egg is just not blocked
+	 */
+	public boolean canPlayerSpawn(Player player, EntityType mob) {
+		if (Settings.getConfig().getBoolean(
+				"disabled.eggs." + mob.name().toLowerCase())) {
+			return player.hasPermission("entitymanager."
+					+ mob.name().toLowerCase());
+		} else {
+			return true;
+		}
+	}
 	/**
 	 * Get if player has a permission dedicated to entitymanager Typical
 	 * permission: entitymanager.fishing or entitymanager.throw.xpbottles
@@ -322,15 +359,20 @@ public class EntityManager {
 	}
 
 	/**
+	 * Gets the settings.
+	 *
+	 * @return The settings class, EntityManager.getManager().getSettings()
+	 */
+	public Settings getSettings() {
+		return settings;
+	}
+	/**
 	 * Get this class so you can use the public values Proper use of API:
 	 * EntityManager.getManager().canSpawn() - For example...
 	 * 
 	 * @return The EntityManager Official API
 	 */
 	public static EntityManager getManager() {
-		if (instance == null) {
-			instance = new EntityManager();
-		}
 		return instance;
 	}
 }

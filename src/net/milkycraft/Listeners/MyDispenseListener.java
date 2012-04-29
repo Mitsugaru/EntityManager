@@ -1,12 +1,15 @@
+/*
+ * 
+ */
 package net.milkycraft.Listeners;
 
 import java.util.List;
 
-import net.milkycraft.Spawnegg;
 import net.milkycraft.ASEConfiguration.Settings;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -14,57 +17,65 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockDispenseEvent;
 import org.bukkit.inventory.ItemStack;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The listener interface for receiving myDispense events.
+ * The class that is interested in processing a myDispense
+ * event implements this interface, and the object created
+ * with that class is registered with a component using the
+ * component's <code>addMyDispenseListener<code> method. When
+ * the myDispense event occurs, that object's appropriate
+ * method is invoked.
+ *
+ * @see MyDispenseEvent
+ */
 public class MyDispenseListener implements Listener {
-	Spawnegg plugin;
 
-	public MyDispenseListener(Spawnegg instance) {
-		plugin = instance;
-	}
-
+	/**
+	 * On dispense.
+	 *
+	 * @param event the event
+	 */
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onDispense(BlockDispenseEvent event) {
-		ItemStack item = event.getItem();
-		List<Integer> itemz = Settings.items;
-		List<String> worldz = Settings.worlds;
+		final ItemStack item = event.getItem();
+		final List<Integer> itemz = Settings.items;
+		final List<String> worldz = Settings.worlds;
 		for (String worldname : worldz) {
 			if (event.getBlock().getWorld().getName().equals(worldname)) {
-				if (event.getItem().getTypeId() == 383) {
-					if (plugin.getConfig().getBoolean(
-							"block.Dispense.SpawnerEggs")) {
-						alert(event);
+				if (item.getType() == Material.MONSTER_EGG) {
+					if (Settings.MonsEggs) {
 						event.setCancelled(true);
+						alert(event);
 						return;
 					}
-				} else if (item.getTypeId() == 344) {
-					if (plugin.getConfig().getBoolean(
-							"block.Dispense.ChickenEggs")) {
-						alert(event);
+				} else if (item.getType() == Material.EGG) {
+					if (Settings.ChickEggs) {
 						event.setCancelled(true);
+						alert(event);
 						return;
 					}
-				} else if (item.getTypeId() == 373) {
-					if (plugin.getConfig().getBoolean("block.Dispense.Potions")) {
-						alert(event);
+				} else if (item.getType() == Material.POTION) {
+					if (Settings.potionz) {
 						event.setCancelled(true);
+						alert(event);
 						return;
 					}
-				} else if (item.getTypeId() == 385) {
-					if (plugin.getConfig().getBoolean(
-							"block.Dispense.FireBalls")) {
-						alert(event);
+				} else if (item.getType() == Material.FIREBALL) {
+					if (Settings.Fballs) {
 						event.setCancelled(true);
+						alert(event);
 						return;
 					}
-				} else if (item.getTypeId() == 384) {
-					if (plugin.getConfig().getBoolean(
-							"block.Dispense.XpBottles")) {
-						alert(event);
+				} else if (item.getType() == Material.EXP_BOTTLE) {
+					if (Settings.xBottz) {
 						event.setCancelled(true);
+						alert(event);
 						return;
 					}
 				}
-				for(Integer itemx : itemz) {
-					if(event.getItem().getTypeId() == itemx) {
+				for (Integer itemx : itemz) {
+					if (event.getItem().getTypeId() == itemx) {
 						event.setCancelled(true);
 						alert(event);
 					}
@@ -73,23 +84,25 @@ public class MyDispenseListener implements Listener {
 		}
 	}
 
-	public void alert(BlockDispenseEvent e) {
-		double x = e.getBlock().getLocation().getX();
-		double y = e.getBlock().getLocation().getY();
-		double z = e.getBlock().getLocation().getZ();
-		int xx = (int) x;
-		int yy = (int) y;
-		int zz = (int) z;
+	/**
+	 * Alert.
+	 *
+	 * @param event the event
+	 */
+	public final void alert(BlockDispenseEvent event) {
+		double x = event.getBlock().getLocation().getX();
+		double y = event.getBlock().getLocation().getY();
+		double z = event.getBlock().getLocation().getZ();
+		final int xx = (int) x;
+		final int yy = (int) y;
+		final int zz = (int) z;
+		final String item = event.getItem().getType().toString().toLowerCase();
 		if (Settings.alertz) {
 			for (Player p : Bukkit.getServer().getOnlinePlayers()) {
 				if (p.hasPermission("entitymanager.admin")) {
-					p.sendMessage(ChatColor.GREEN
-							+ "[EM] "
-							+ ChatColor.DARK_RED
-							+ "Failed dispense of "
-							+ ChatColor.GOLD
-							+ e.getItem().getType().toString()
-									.toLowerCase() + " at: " + xx + "," + yy
+					p.sendMessage(ChatColor.GREEN + "[EM] "
+							+ ChatColor.DARK_RED + "Failed dispense of "
+							+ ChatColor.GOLD + item + " at: " + xx + "," + yy
 							+ "," + zz + ".");
 				}
 			}
