@@ -3,12 +3,16 @@
  */
 package net.milkycraft.ASEConfiguration;
 
+import java.io.File;
+import java.io.InputStream;
 import java.util.List;
 
 import net.milkycraft.Spawnegg;
 
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class Settings.
  */
@@ -16,28 +20,32 @@ public class Settings extends ConfigLoader {
 	/*
 	 * GENERAL SETTINGS
 	 */
-    /** The Constant instance. */
+	/** The Constant instance. */
 	private final static Settings instance = new Settings(Spawnegg.p);
 	/* General Settings */
 	/** The logging. */
-	public static Boolean Motd, alertz, metrics, logging;
-	/* World Settings */
+	
+	public static Boolean Motd, alertz, metrics, logging, amrs;
+	
+	/** The worlds. */
+	public static Boolean world;
+
 	/** The worlds. */
 	public static List<String> worlds;
-	/* Disabled */
+	
 	/** The totalenchant. */
 	public static Boolean totalexp, totalenchant;
-	/* Actions */
-	/** The arrowz. */
+	
+	/** The Actions. */	
 	public static Boolean doorBreak, enderPickup, pvp, mobdmg, fishing, arrowz;
-	/* Dispense */
+	
 	/** The potionz. */
 	public static Boolean MonsEggs, ChickEggs, Fballs, xBottz, potionz;
-	
+
 	/** The items. */
 	public static List<Integer> items;
-	/* Throw */
-	/** The potion. */
+
+	/** The thrown items. */
 	public static Boolean xpbott, fire, egg, pearl, eye, potion;
 	/* Entities */
 	/** The paintz. */
@@ -45,28 +53,32 @@ public class Settings extends ConfigLoader {
 	/* ItemDrop */
 	/** The b destroy. */
 	public static Boolean cDrop, sDrop, onDeath, bDestroy;
-	
-	/** The bitems. */
+
+	/** The black listed items. */
 	public static List<Integer> bitems;
-	/* creation of */
 	/** The portals. */
 	public static Boolean portals;
-	/* Economy */
-	/** The npc. */
+	
+	/** Economy. */
 	public static Integer mons, animal, npc;
-	/* Disabled Eggs */
-	/** The villa. */
+	
+	/** Disabled eggs. */
 	public static Boolean creep, skele, spider, zombie, slime, ghast, pigman,
 			ender, cave, fish, blaze, cube, pig, sheep, cow, chick, squid,
 			wolf, moosh, ocelot, villa;
-	/* Disabled mobs */
-	/** The villas. */
-	public static Boolean creeps, skeles, spiders, zombies, slimes, ghasts, pigmans, enders,
-			caves, fishs, blazes, cubes, pigs, sheeps, cows, chicks, squids, snow, dragons, iron,
-			wolfs, mooshs, ocelots, villas;
 	
+	/** Disabled mobs. */
+	public static Boolean creeps, skeles, spiders, zombies, slimes, ghasts,
+			pigmans, enders, caves, fishs, blazes, cubes, pigs, sheeps, cows,
+			chicks, squids, snow, dragons, iron, wolfs, mooshs, ocelots,
+			villas;
+
 	/** The all. */
 	public static Boolean all;
+	
+	/** The godcrops. */
+	public static Boolean godcrops;
+
 	/* other */
 
 	/*
@@ -75,15 +87,18 @@ public class Settings extends ConfigLoader {
 
 	/**
 	 * Instantiates a new settings.
-	 *
-	 * @param spawnegg the plugin
+	 * 
+	 * @param plugin
+	 *            the plugin
 	 */
 	public Settings(Spawnegg plugin) {
 		super(plugin, "config.yml");
 		config = plugin.getConfig();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.milkycraft.ASEConfiguration.ConfigLoader#load()
 	 */
 	@Override
@@ -96,20 +111,10 @@ public class Settings extends ConfigLoader {
 		addDefaults();
 		loadKeys();
 	}
-	
-	/**
-	 * Reload.
-	 */
-	@Override
-	public void reload() {
-		if (!configFile.exists()) {
-			dataFolder.mkdir();
-			plugin.saveDefaultConfig();
-		}
-		loadKeys();
-	}
-	
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.milkycraft.ASEConfiguration.ConfigLoader#loadKeys()
 	 */
 	@Override
@@ -120,8 +125,10 @@ public class Settings extends ConfigLoader {
 		alertz = config.getBoolean("EntityManager.Send-Alerts");
 		metrics = config.getBoolean("EntityManager.Metrics");
 		logging = config.getBoolean("EntityManager.Logging");
+		amrs = config.getBoolean("EntityManager.Advanced-Mob-Remover");
 		/* Stop */
-		worlds = config.getStringList("World.Worldname");
+		worlds = config.getStringList("World.Worlds");
+		world = config.getBoolean("World.All");
 		/* Stop */
 		totalexp = config.getBoolean("Disable.Experience");
 		totalenchant = config.getBoolean("Disable.Enchanting");
@@ -168,7 +175,7 @@ public class Settings extends ConfigLoader {
 		skele = config.getBoolean("disabled.eggs.skeleton");
 		spider = config.getBoolean("disabled.eggs.spider");
 		zombie = config.getBoolean("disabled.eggs.zombie");
-		slime  = config.getBoolean("disabled.eggs.slime");
+		slime = config.getBoolean("disabled.eggs.slime");
 		ghast = config.getBoolean("disabled.eggs.ghast");
 		pigman = config.getBoolean("disabled.eggs.pigman");
 		ender = config.getBoolean("disabled.eggs.enderman");
@@ -190,7 +197,7 @@ public class Settings extends ConfigLoader {
 		skeles = config.getBoolean("disabled.mobs.skeleton");
 		spiders = config.getBoolean("disabled.mobs.spider");
 		zombies = config.getBoolean("disabled.mobs.zombie");
-		slimes  = config.getBoolean("disabled.mobs.slime");
+		slimes = config.getBoolean("disabled.mobs.slime");
 		ghasts = config.getBoolean("disabled.mobs.ghast");
 		pigmans = config.getBoolean("disabled.mobs.pig_zombie");
 		enders = config.getBoolean("disabled.mobs.enderman");
@@ -210,11 +217,13 @@ public class Settings extends ConfigLoader {
 		dragons = config.getBoolean("disabled.mobs.ender_dragon");
 		iron = config.getBoolean("disabled.mobs.iron_golen");
 		snow = config.getBoolean("disabled.mobs.snowman");
+		godcrops = config.getBoolean("block.Actions.crop-damage");
 	}
-	
+
 	/**
-	 * Used for config booleanes like ("disabled.mobs." + ev.getEntityType().toLowerCase())
-	 *
+	 * Used for config booleanes like ("disabled.mobs." +
+	 * ev.getEntityType().toLowerCase())
+	 * 
 	 * @return Return the config
 	 * @author milkywayz
 	 */
@@ -224,11 +233,32 @@ public class Settings extends ConfigLoader {
 
 	/**
 	 * Gets the single instance of Settings.
-	 *
+	 * 
 	 * @return single instance of Settings
 	 */
 	public static Settings getInstance() {
 		return instance;
 	}
-	
+
+	/* (non-Javadoc)
+	 * @see net.milkycraft.ASEConfiguration.ConfigLoader#reload()
+	 */
+	@Override
+	public void reload() {
+		if (configFile == null) {
+			configFile = new File(plugin.getDataFolder(), fileName);
+		}
+
+		config = YamlConfiguration.loadConfiguration(configFile);
+
+		// Look for defaults in the jar
+		final InputStream defConfigStream = plugin.getResource(fileName);
+
+		if (defConfigStream != null) {
+			final YamlConfiguration defConfig = YamlConfiguration
+					.loadConfiguration(defConfigStream);
+
+			config.setDefaults(defConfig);
+		}
+	}
 }
