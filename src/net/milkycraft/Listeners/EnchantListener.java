@@ -17,41 +17,40 @@ import org.bukkit.event.enchantment.PrepareItemEnchantEvent;
 
 // TODO: Auto-generated Javadoc
 /**
- * The listener interface for receiving enchant events.
- * The class that is interested in processing a enchant
- * event implements this interface, and the object created
- * with that class is registered with a component using the
+ * The listener interface for receiving enchant events. The class that is
+ * interested in processing a enchant event implements this interface, and the
+ * object created with that class is registered with a component using the
  * component's <code>addEnchantListener<code> method. When
  * the enchant event occurs, that object's appropriate
  * method is invoked.
- *
+ * 
  * @see EnchantEvent
  */
 public class EnchantListener implements Listener {
 
+	/** The perm. */
+	private final String perm = ChatColor.GREEN + "[EM]" + ChatColor.RED
+			+ " You dont have permission to enchant items!";
+
 	/**
 	 * On enchant attempt.
-	 *
-	 * @param e the e
+	 * 
+	 * @param e
+	 *            the event
 	 */
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onEnchantAttempt(PrepareItemEnchantEvent e) {
 		final List<String> worldz = Settings.worlds;
 		final World world = e.getEnchantBlock().getWorld();
-		for (String worldname : worldz) {
-			if (world.getName() == worldname) {
+		for (final String worldname : worldz) {
+			if (world.getName() == worldname || Settings.world) {
 				if (Settings.totalenchant
 						&& !e.getEnchanter().hasPermission(
 								"entitymanager.enchanting")) {
 					e.setCancelled(true);
-					e.getEnchanter()
-							.sendMessage(
-									ChatColor.GREEN
-											+ "[EM]"
-											+ ChatColor.RED
-											+ " You dont have permission to enchant items!");
+					e.getEnchanter().sendMessage(perm);
 					if (Settings.alertz) {
-						for (Player p : e.getEnchanter().getServer()
+						for (final Player p : e.getEnchanter().getServer()
 								.getOnlinePlayers()) {
 							if (p.hasPermission("entitymanager.admin")) {
 								p.sendMessage(ChatColor.GREEN
