@@ -16,63 +16,69 @@ import org.bukkit.configuration.file.FileConfiguration;
  */
 public abstract class ConfigLoader {
 
-    /** The config file. */
-    protected static File configFile;
-    
-    /** The data folder. */
-    protected static File dataFolder;
-    
-    /** The plugin. */
-    protected final Spawnegg plugin;
-    
-    /** The config. */
-    protected static FileConfiguration config;
+	/** The config file. */
+	protected static File configFile;
 
-    /**
-     * Instantiates a new config loader.
-     *
-     * @param plugin the plugin
-     * @param fileName the file name
-     */
-    public ConfigLoader(Spawnegg plugin, String fileName){
-        this.plugin = plugin;
-        dataFolder = plugin.getDataFolder();
-        configFile = new File(dataFolder, File.separator + fileName);
-    }
+	/** The data folder. */
+	protected static File dataFolder;
 
-    /**
-     * Load this config file.
-     */
-    protected abstract void load();
-    /**
-     * Save this config file.
-     */
-    private static void saveConfig() {
-        try {
-            config.save(configFile);
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+	/** The plugin. */
+	protected final Spawnegg plugin;
 
-    /**
-     * Add the defaults to this config file.
-     */
-    protected void addDefaults() {
+	/** The config. */
+	protected static FileConfiguration config;
 
-        // Load from included config.yml
-        config.options().copyDefaults(true);
-        saveConfig();
-    }
+	/** The file name. */
+	protected String fileName;
 
-    /**
-     * Load the keys from this config file.
-     */
-    protected abstract void loadKeys();
+	/**
+	 * Instantiates a new config loader.
+	 * 
+	 * @param plugin
+	 *            the plugin
+	 * @param fileName
+	 *            the file name
+	 */
+	public ConfigLoader(Spawnegg plugin, String fileName) {
+		this.plugin = plugin;
+		this.fileName = fileName;
+		dataFolder = plugin.getDataFolder();
+		configFile = new File(dataFolder, File.separator + fileName);
+	}
 
-    /**
-     * Reload.
-     */
-    protected abstract void reload();
+	/**
+	 * Load this config file.
+	 */
+	protected abstract void load();
+
+	/**
+	 * Save this config file.
+	 */
+	private static void saveConfig() {
+		try {
+			config.save(configFile);
+		} catch (final IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Add the defaults to this config file.
+	 */
+	protected void addDefaults() {
+
+		// Load from included config.yml
+		config.options().copyDefaults(true);
+		saveConfig();
+	}
+
+	/**
+	 * Load the keys from this config file.
+	 */
+	protected abstract void loadKeys();
+
+	/**
+	 * Reload.
+	 */
+	protected abstract void reload();
 }
