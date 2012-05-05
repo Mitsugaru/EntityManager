@@ -1,6 +1,7 @@
 #
-#  EntityManager Configuration 3.4.3
+#  EntityManager Configuration 3.5
 #  http://dev.bukkit.org/server-mods/entitymanager/pages/configuration/
+#  Advanced-Mob-Remover removes disabled mobs when chunks load and unload, this may cause lag for some servers, recommended to only be used after you make changes to the disabled mobs section of config, otherwise its a waste of server resources.
 #####
 
 #
@@ -11,15 +12,16 @@ EntityManager:
   Send-Alerts: true
   Metrics: true
   Logging: true
-
+  Advanced-Mob-Remover: false
 #
 # Put the names of the worlds you want the plugin to work in
 # Worlds not in this list will be completely ignored
 ### 
 World:
-  Worldname:
+  All: true
+  Worlds:
   - world
-  - world_nether 
+  - world_nether
   - world_end
 
 #
@@ -42,7 +44,7 @@ block:
     mob-damage: false
     fishing: false
     arrows: false
-
+    crop-damage: false
 #
 # Block the dispense of the item completely
 # Add items to the blacklist and they won't dispense either
@@ -95,6 +97,8 @@ block:
 ###
   Creation-of:
     portals: false
+
+
 
 #
 # Used when a player uses an monster egg that isnt blocked
@@ -164,4 +168,5 @@ disabled:
     ender_dragon: false
     villager: false
     iron_golem: false
+
 
