@@ -1,5 +1,12 @@
 /*
- * 
+ *  Spawnegg is licensed under the ISC License
+ *  
+ *  Copyright © 2012 Nick Porillo milkywayz@mail.com
+
+Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted, provided that the above copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. 
+IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 package net.milkycraft;
 
@@ -35,75 +42,72 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 
+// TODO: Auto-generated Javadoc
 /**
- * The Mainclass for EntityManager
+ * The Mainclass for EntityManager.
  */
 public class Spawnegg extends JavaPlugin {
 
 	/** The maindirectory. */
 	public static String maindirectory = "plugins" + File.separator
 			+ "EntityManager";
-
+	
 	/** The file. */
 	public static File file = new File(maindirectory + File.separator
 			+ "config.yml");
-
+	
 	/** The log. */
 	public static Logger log = Logger.getLogger("Minecraft");
-
+	
 	/** The worldguard plugin. */
 	public static WorldGuardPlugin worldguardPlugin = null;
-
+	
 	/** The econ. */
 	public static Economy econ = null;
-
+	
 	/** The config. */
 	public static Settings config;
-
-	/** How to reference main class in other classes in a static manner */
+	/** How to reference main class in other classes in a static manner. */
 	public static Spawnegg p;
-
+	
 	/** The entitymanager. */
 	public static File entitymanager;
+	
 
-	/*
-	 * (non-Javadoc)
-	 * 
+	/* (non-Javadoc)
 	 * @see org.bukkit.plugin.java.JavaPlugin#onEnable()
 	 */
 	@Override
-	public void onEnable() {		
+	public void onEnable() {
 		p = this;
 		entitymanager = this.getFile();
 		new File(maindirectory).mkdir();
 		setupPluginDependencies();
 		Spawnegg.config = new Settings(this);
 		Spawnegg.config.load();
-		this.getServer().getPluginManager()
-				.registerEvents(new MyDispenseListener(), this);
-		this.getServer().getPluginManager()
-				.registerEvents(new LoginListener(), this);
-		this.getServer().getPluginManager()
-				.registerEvents(new MySpawnEggListener(), this);
-		this.getServer().getPluginManager()
+		getServer().getPluginManager().registerEvents(new MyDispenseListener(),
+				this);
+		getServer().getPluginManager()
+				.registerEvents(new LoginListener(this), this);
+		getServer().getPluginManager().registerEvents(new MySpawnEggListener(),
+				this);
+		getServer().getPluginManager()
 				.registerEvents(new SpawnListener(), this);
-		this.getServer().getPluginManager()
-				.registerEvents(new TargetListener(), this);
-		this.getServer().getPluginManager()
+		getServer().getPluginManager().registerEvents(new TargetListener(),
+				this);
+		getServer().getPluginManager()
 				.registerEvents(new ThrowListener(), this);
-		this.getServer().getPluginManager()
-				.registerEvents(new ExpListener(), this);
-		this.getServer().getPluginManager()
-				.registerEvents(new EnchantListener(), this);
-		this.getServer().getPluginManager()
-				.registerEvents(new EntitiesListener(), this);
-		this.getServer().getPluginManager()
-				.registerEvents(new DropManager(), this);
+		getServer().getPluginManager().registerEvents(new ExpListener(), this);
+		getServer().getPluginManager().registerEvents(new EnchantListener(),
+				this);
+		getServer().getPluginManager().registerEvents(new EntitiesListener(),
+				this);
+		getServer().getPluginManager().registerEvents(new DropManager(), this);
 		if (Settings.metrics) {
 			try {
 				final Metrics metrics = new Metrics(this);
 				metrics.beginMeasuringPlugin(this);
-			} catch (IOException e) {
+			} catch (final IOException e) {
 				writeLog(e.getMessage());
 			}
 			writeLog("[EntityManager] Metrics loaded!");
@@ -112,9 +116,13 @@ public class Spawnegg extends JavaPlugin {
 
 	}
 
+	/* (non-Javadoc)
+	 * @see org.bukkit.plugin.java.JavaPlugin#onCommand(org.bukkit.command.CommandSender, org.bukkit.command.Command, java.lang.String, java.lang.String[])
+	 */
+	@Override
 	public boolean onCommand(CommandSender sender, Command cmd,
 			String commandLabel, String[] args) {
-		String ver = this.getDescription().getVersion();
+		final String ver = getDescription().getVersion();
 		if (args.length == 0) {
 			sender.sendMessage(ChatColor.WHITE
 					+ "*************************************");
@@ -125,6 +133,10 @@ public class Spawnegg extends JavaPlugin {
 					+ EntityManager.getManager().isMetricsEnabled()
 					+ ChatColor.GOLD + "      Metrics: " + ChatColor.RED
 					+ EntityManager.getManager().isMetricsEnabled());
+			sender.sendMessage(ChatColor.GOLD + "Alerts: " + ChatColor.RED
+					+ EntityManager.getManager().isSendingAlerts()
+					+ ChatColor.GOLD + "      Motd: " + ChatColor.RED
+					+ EntityManager.getManager().isMotdEnabled());
 			sender.sendMessage(ChatColor.GREEN
 					+ "Sumbit requests on bukkit dev to have them added!");
 			sender.sendMessage(ChatColor.GREEN
@@ -144,7 +156,7 @@ public class Spawnegg extends JavaPlugin {
 			if (args.length == 2) {
 				if (args[0].equalsIgnoreCase("purge")
 						&& sender.hasPermission("entitymanager.admin")) {
-					Player target = sender.getServer().getPlayer(args[1]);
+					final Player target = sender.getServer().getPlayer(args[1]);
 					if (target == null) {
 						sender.sendMessage(ChatColor.GREEN + "[EM] "
 								+ ChatColor.RED + args[1] + " is not online!");
@@ -187,8 +199,8 @@ public class Spawnegg extends JavaPlugin {
 						target.getInventory().remove(Material.POTION);
 						pot = true;
 					}
-					ChatColor a = ChatColor.AQUA;
-					ChatColor y = ChatColor.YELLOW;
+					final ChatColor a = ChatColor.AQUA;
+					final ChatColor y = ChatColor.YELLOW;
 					sender.sendMessage(ChatColor.GREEN + "[EM]"
 							+ ChatColor.GOLD + args[1] + ChatColor.RED
 							+ "'s inventory was purged of: ");
@@ -207,24 +219,21 @@ public class Spawnegg extends JavaPlugin {
 		}
 		if (args[0].equalsIgnoreCase("reload")
 				&& sender.hasPermission("entitymanager.admin")) {
-			this.reloadConfig();
 			Settings.getInstance().reload();
 			sender.sendMessage(ChatColor.DARK_AQUA + "[EM]" + ChatColor.GREEN
 					+ "Configuration reloaded");
-			return true;
-		}
-		if (args[0].equalsIgnoreCase("test")) {
 			/*
-			 * Test command for methods and config stuff Isn't advertised on
-			 * bukkitdev since it does nothing in releases
+			 * Most likely doesnt successfully reload the config Code wise
+			 * speaking it should.
 			 */
+			return true;
 		}
 		if (cmd.getName().equalsIgnoreCase("entitymanager")) {
 			if (args.length == 2) {
 				if (args[0].equalsIgnoreCase("canspawn")) {
 					if (sender.hasPermission("entitymanager.admin")) {
 						try {
-							String mob = args[1].toUpperCase();
+							final String mob = args[1].toUpperCase();
 							if (!EntityManager.getManager().canSpawn(
 									EntityType.valueOf(args[1].toUpperCase()))) {
 								sender.sendMessage(ChatColor.GREEN + "[EM]"
@@ -238,17 +247,17 @@ public class Spawnegg extends JavaPlugin {
 										+ ChatColor.GREEN + "can spawn.");
 							}
 							return true;
-						} catch (ArrayIndexOutOfBoundsException e) {
+						} catch (final ArrayIndexOutOfBoundsException e) {
 							sender.sendMessage(ChatColor.RED
 									+ "Correct usage: /em canspawn EntityType");
 							log.log(Level.WARNING,
 									e.getMessage() + " : " + e.getCause());
-						} catch (NullPointerException e) {
+						} catch (final NullPointerException e) {
 							sender.sendMessage(ChatColor.RED
 									+ "Correct usage: /em canspawn EntityType");
 							log.log(Level.WARNING,
 									e.getMessage() + " : " + e.getCause());
-						} catch (IllegalArgumentException e) {
+						} catch (final IllegalArgumentException e) {
 							sender.sendMessage(ChatColor.RED
 									+ "There is no Entity: " + ChatColor.YELLOW
 									+ args[1].toLowerCase() + ChatColor.WHITE
@@ -279,48 +288,32 @@ public class Spawnegg extends JavaPlugin {
 		}
 		if (args[0].equalsIgnoreCase("mobs")
 				&& sender.hasPermission("entitymanager.admin")) {
-			boolean creeper = this.getConfig().getBoolean(
-					"disabled.mobs.creeper");
-			boolean skeleton = this.getConfig().getBoolean(
-					"disabled.mobs.skeleton");
-			boolean spider = this.getConfig()
-					.getBoolean("disabled.mobs.spider");
-			boolean zombie = this.getConfig()
-					.getBoolean("disabled.mobs.zombie");
-			boolean slime = this.getConfig().getBoolean("disabled.mobs.slime");
-			boolean ghast = this.getConfig().getBoolean("disabled.mobs.ghast");
-			boolean pigman = this.getConfig().getBoolean(
-					"disabled.mobs.pig_zombie");
-			boolean enderman = this.getConfig().getBoolean(
-					"disabled.mobs.enderman");
-			boolean cavespider = this.getConfig().getBoolean(
-					"disabled.mobs.cave_spider");
-			boolean silverfish = this.getConfig().getBoolean(
-					"disabled.mobs.silverfish");
-			boolean blaze = this.getConfig().getBoolean("disabled.mobs.blaze");
-			boolean magmacube = this.getConfig().getBoolean(
-					"disabled.mobs.magma_cube");
-			boolean pig = this.getConfig().getBoolean("disabled.mobs.pig");
-			boolean sheep = this.getConfig().getBoolean("disabled.mobs.sheep");
-			boolean cow = this.getConfig().getBoolean("disabled.mobs.cow");
-			boolean chicken = this.getConfig().getBoolean(
-					"disabled.mobs.chicken");
-			boolean squid = this.getConfig().getBoolean("disabled.mobs.squid");
-			boolean wolf = this.getConfig().getBoolean("disabled.mobs.wolf");
-			boolean mushroom = this.getConfig().getBoolean(
-					"disabled.mobs.mushroom_cow");
-			boolean snowman = this.getConfig().getBoolean(
-					"disabled.mobs.snowman");
-			boolean dragon = this.getConfig().getBoolean(
-					"disabled.mobs.ender_dragon");
-			boolean ocelot = this.getConfig()
-					.getBoolean("disabled.mobs.ocelot");
-			boolean vill = this.getConfig()
-					.getBoolean("disabled.mobs.villager");
-			boolean irongolem = this.getConfig().getBoolean(
-					"disabled.mobs.iron_golem");
-			ChatColor g = ChatColor.GREEN;
-			ChatColor w = ChatColor.YELLOW;
+			 boolean creeper = Settings.creeps;
+			 boolean skeleton = Settings.skeles;
+			 boolean spider = Settings.spiders;
+			 boolean zombie = Settings.zombies;
+			 boolean slime = Settings.slimes;
+			 boolean ghast = Settings.ghasts;
+			 boolean pigman = Settings.pigmans;
+			 boolean enderman = Settings.enders;
+			 boolean cavespider = Settings.caves;
+			 boolean silverfish = Settings.fishs;
+			 boolean blaze = Settings.blazes;
+			 boolean magmacube = Settings.cubes;
+			 boolean pig = Settings.pigs;
+			 boolean sheep = Settings.sheeps;
+			 boolean cow = Settings.cows;
+			 boolean chicken = Settings.chicks;
+			 boolean squid = Settings.squids;
+			 boolean wolf = Settings.wolfs;
+			 boolean mushroom = Settings.mooshs;
+			 boolean snowman = Settings.snow;
+			 boolean dragon = Settings.dragons;
+			 boolean ocelot = Settings.ocelots;
+			 boolean vill = Settings.villas;
+			 boolean irongolem = Settings.iron;
+			final ChatColor g = ChatColor.GREEN;
+			final ChatColor w = ChatColor.YELLOW;
 			sender.sendMessage(ChatColor.AQUA
 					+ "------------Blocked mobs list------------");
 			sender.sendMessage(w + "Pig = " + g + pig + w
@@ -392,13 +385,13 @@ public class Spawnegg extends JavaPlugin {
 	private void setupPluginDependencies() {
 		try {
 			setupWorldGuard();
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			log.warning("[EntityManager] Failed to load WorldGuard");
 			e.printStackTrace();
 		}
 		try {
 			setupEconomy();
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			log.warning("[EntityManager] Failed to load Vault");
 			e.printStackTrace();
 		}
@@ -407,19 +400,19 @@ public class Spawnegg extends JavaPlugin {
 	/**
 	 * Setup economy.
 	 * 
-	 * @return
+	 * @return true, if successful
 	 */
 	private boolean setupEconomy() {
 		if (getServer().getPluginManager().getPlugin("Vault") == null) {
 			econ = null;
-			log.warning("[EntityManager] Vault not found, economy support disabled");
+			log.warning("[EntityManager] Vault not found, Egg charging is disabled!");
 		} else {
 			log.info("[EntityManager] Hooked into Vault!");
 		}
 		if (getServer().getPluginManager().getPlugin("Vault") == null) {
 			return false;
 		}
-		RegisteredServiceProvider<Economy> rsp = getServer()
+		final RegisteredServiceProvider<Economy> rsp = getServer()
 				.getServicesManager().getRegistration(Economy.class);
 		if (rsp == null) {
 			return false;
@@ -432,20 +425,21 @@ public class Spawnegg extends JavaPlugin {
 	 * Setup world guard.
 	 */
 	private void setupWorldGuard() {
-		Plugin wg = this.getServer().getPluginManager().getPlugin("WorldGuard");
+		final Plugin wg = this.getServer().getPluginManager()
+				.getPlugin("WorldGuard");
 		if (wg == null) {
-			log.info("[EM] Worldguard not found");
 		} else {
 			Spawnegg.worldguardPlugin = (WorldGuardPlugin) wg;
-			log.info("[EntityManager] Hooked into WorldGuard!");
+			log.info("[EntityManager] Hooked into WorldGuard, Respecting Regions");
 		}
+
 	}
 
 	/**
 	 * Write log.
 	 * 
 	 * @param text
-	 *            the text
+	 *            the message
 	 */
 	public void writeLog(String text) {
 		Spawnegg.log.info(text);
@@ -456,6 +450,7 @@ public class Spawnegg extends JavaPlugin {
 	 * 
 	 * @return The EntityManager developers API class
 	 */
+
 	public EntityManager getApi() {
 		return EntityManager.getManager();
 	}
