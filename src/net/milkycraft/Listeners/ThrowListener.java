@@ -21,14 +21,13 @@ import org.bukkit.inventory.ItemStack;
 
 // TODO: Auto-generated Javadoc
 /**
- * The listener interface for receiving throw events.
- * The class that is interested in processing a throw
- * event implements this interface, and the object created
- * with that class is registered with a component using the
+ * The listener interface for receiving throw events. The class that is
+ * interested in processing a throw event implements this interface, and the
+ * object created with that class is registered with a component using the
  * component's <code>addThrowListener<code> method. When
  * the throw event occurs, that object's appropriate
  * method is invoked.
- *
+ * 
  * @see ThrowEvent
  */
 public class ThrowListener implements Listener {
@@ -38,8 +37,9 @@ public class ThrowListener implements Listener {
 
 	/**
 	 * On throw.
-	 *
-	 * @param e the e
+	 * 
+	 * @param e
+	 *            the e
 	 */
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void OnThrow(PlayerInteractEvent e) {
@@ -49,8 +49,8 @@ public class ThrowListener implements Listener {
 		if (item == null) {
 			return;
 		}
-		for (String worldname : worldz) {
-			if (player.getWorld().getName().equals(worldname)) {
+		for (final String worldname : worldz) {
+			if (Settings.world || player.getWorld().getName().equals(worldname)) {
 				if (e.getAction() == Action.RIGHT_CLICK_BLOCK
 						|| e.getAction() == Action.RIGHT_CLICK_AIR) {
 					if (item.getType() == Material.EXP_BOTTLE) {
@@ -60,9 +60,6 @@ public class ThrowListener implements Listener {
 							e.setCancelled(true);
 							alerter(e);
 							messager(e);
-							if (Settings.logging) {
-								eLogger(e);
-							}
 						}
 					} else if (item.getType() == Material.FIREBALL) {
 						if (Settings.fire
@@ -71,9 +68,6 @@ public class ThrowListener implements Listener {
 							e.setCancelled(true);
 							alerter(e);
 							messager(e);
-							if (Settings.logging) {
-								eLogger(e);
-							}
 						}
 					} else if (item.getType() == Material.EGG) {
 						if (Settings.egg
@@ -81,9 +75,6 @@ public class ThrowListener implements Listener {
 										.hasPermission("entitymanager.chickeneggs")) {
 							e.setCancelled(true);
 							messager(e);
-							if (Settings.logging) {
-								eLogger(e);
-							}
 						}
 					} else if (item.getType() == Material.ENDER_PEARL) {
 						if (Settings.pearl
@@ -92,9 +83,6 @@ public class ThrowListener implements Listener {
 							e.setCancelled(true);
 							messager(e);
 							alerter(e);
-							if (Settings.logging) {
-								eLogger(e);
-							}
 						}
 					} else if (item.getType() == Material.EYE_OF_ENDER) {
 						if (Settings.eye
@@ -103,18 +91,12 @@ public class ThrowListener implements Listener {
 							e.setCancelled(true);
 							messager(e);
 							alerter(e);
-							if (Settings.logging) {
-								eLogger(e);
-							}
 						}
 					} else if (item.getType() == Material.BOAT) {
 						if (Settings.boatz
 								&& !player.hasPermission("entitymanager.boats")) {
 							e.setCancelled(true);
 							messager(e);
-							if (Settings.logging) {
-								eLogger(e);
-							}
 						}
 					} else if (item.getType() == Material.MINECART) {
 						if (Settings.cartz
@@ -122,9 +104,6 @@ public class ThrowListener implements Listener {
 										.hasPermission("entitymanager.minecarts")) {
 							e.setCancelled(true);
 							messager(e);
-							if (Settings.logging) {
-								eLogger(e);
-							}
 						}
 					} else if (item.getType() == Material.POTION) {
 						if (Settings.potion
@@ -132,12 +111,9 @@ public class ThrowListener implements Listener {
 										.hasPermission("entitymanager.potions")) {
 							e.setCancelled(true);
 							messager(e);
-							if (Settings.logging) {
-								eLogger(e);
-							} // Logger
 						} // Cancelled
-					}	// Material		
-					
+					} // Material
+
 				} // Action
 			} // World
 		} // World iterator
@@ -145,13 +121,14 @@ public class ThrowListener implements Listener {
 
 	/**
 	 * Alerts admins that player failed an action.
-	 *
-	 * @param e the e
+	 * 
+	 * @param e
+	 *            the e
 	 */
 	public final void alerter(PlayerInteractEvent e) {
 		final Player player = e.getPlayer();
 		if (Settings.alertz) {
-			for (Player p : player.getServer().getOnlinePlayers()) {
+			for (final Player p : player.getServer().getOnlinePlayers()) {
 				if (p.hasPermission("entitymanager.admin")) {
 					p.sendMessage(ChatColor.GREEN + "[EM] "
 							+ ChatColor.DARK_RED
@@ -166,8 +143,9 @@ public class ThrowListener implements Listener {
 
 	/**
 	 * Alerts console that player failed an action.
-	 *
-	 * @param e the e
+	 * 
+	 * @param e
+	 *            the e
 	 */
 	public final void eLogger(PlayerInteractEvent e) {
 		log.log(Level.WARNING, "[EntityManager] "
@@ -179,13 +157,17 @@ public class ThrowListener implements Listener {
 
 	/**
 	 * Alerts player they cant do an action.
-	 *
-	 * @param e the e
+	 * 
+	 * @param e
+	 *            the e
 	 */
 	public final void messager(PlayerInteractEvent e) {
 		final Player player = e.getPlayer();
 		player.sendMessage(ChatColor.GREEN + "[EM] " + ChatColor.RED
 				+ "You dont have permission for "
 				+ e.getItem().getType().toString().toLowerCase() + "'s.");
+		if (Settings.logging) {
+			eLogger(e);
+		}
 	}
 }
