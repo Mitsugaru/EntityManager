@@ -1,8 +1,9 @@
 /*
- * 
+ * SpawnEggEvent was based on the work of GooseMonkey97
+ * https://github.com/GooseMonkey/NoSpawnEggsv1/blob/master/src/com/goosemonkey/NoSpawnEggs/listeners/PlayerEggThrowListener.java
+ * Was modified for use in EntityManager, all credit where credit is due.
  */
 package net.milkycraft.Event;
-
 
 import net.milkycraft.Enums.EntityCategory;
 import net.milkycraft.Enums.EntityType;
@@ -15,23 +16,24 @@ import org.bukkit.event.player.PlayerInteractEvent;
  * The Class SpawnEggEvent.
  */
 public class SpawnEggEvent {
-	
+
 	/** The player. */
 	private Player player = null;
-	
+
 	/** The event. */
 	private PlayerInteractEvent event = null;
-	
+
 	/** The egg meta. */
 	private int eggMeta;
-	
+
 	/** The breed. */
 	private EntityType breed = null;
 
 	/**
 	 * Instantiates a new spawn egg event.
-	 *
-	 * @param event the event
+	 * 
+	 * @param event
+	 *            the event
 	 */
 	public SpawnEggEvent(PlayerInteractEvent event) {
 		this.player = event.getPlayer();
@@ -114,7 +116,7 @@ public class SpawnEggEvent {
 
 	/**
 	 * Gets the player.
-	 *
+	 * 
 	 * @return the player
 	 */
 	public Player getPlayer() {
@@ -123,7 +125,7 @@ public class SpawnEggEvent {
 
 	/**
 	 * Gets the interact event.
-	 *
+	 * 
 	 * @return the interact event
 	 */
 	public PlayerInteractEvent getInteractEvent() {
@@ -132,7 +134,7 @@ public class SpawnEggEvent {
 
 	/**
 	 * Gets the entity id.
-	 *
+	 * 
 	 * @return the entity id
 	 */
 	public int getEntityId() {
@@ -141,7 +143,7 @@ public class SpawnEggEvent {
 
 	/**
 	 * Gets the entity breed.
-	 *
+	 * 
 	 * @return the entity breed
 	 */
 	public EntityType getEntityBreed() {
@@ -154,15 +156,17 @@ public class SpawnEggEvent {
 
 	/** The Id. */
 	int Id = 0;
-	
+
 	/** The cat. */
 	EntityCategory cat = EntityCategory.UNKNOWN;
 
 	/**
 	 * Instantiates a new spawn egg event.
-	 *
-	 * @param eId the e id
-	 * @param cat the cat
+	 * 
+	 * @param eId
+	 *            the e id
+	 * @param cat
+	 *            the cat
 	 */
 	SpawnEggEvent(int eId, EntityCategory cat) {
 		Id = eId;
@@ -171,19 +175,11 @@ public class SpawnEggEvent {
 
 	/**
 	 * Gets the category.
-	 *
+	 * 
 	 * @return the category
 	 */
 	public EntityCategory getCategory() {
 		return this.cat;
 	}
 
-	/**
-	 * Gets the id.
-	 *
-	 * @return the id
-	 */
-	public int getId() {
-		return Id;
-	}
 }
