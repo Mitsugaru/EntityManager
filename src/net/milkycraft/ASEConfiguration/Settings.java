@@ -24,22 +24,22 @@ public class Settings extends ConfigLoader {
 	private final static Settings instance = new Settings(Spawnegg.p);
 	/* General Settings */
 	/** The logging. */
-	
+
 	public static Boolean Motd, alertz, metrics, logging, amrs;
-	
+
 	/** The worlds. */
 	public static Boolean world;
 
 	/** The worlds. */
 	public static List<String> worlds;
-	
+
 	/** The totalenchant. */
 	public static Boolean totalexp, totalenchant;
-	
-	/** The Actions. */	
+
+	/** The Actions. */
 	public static Boolean doorBreak, enderPickup, pvp, mobdmg, fishing, arrowz;
-	
-	/** The potionz. */
+
+	/** The dispensed things */
 	public static Boolean MonsEggs, ChickEggs, Fballs, xBottz, potionz;
 
 	/** The items. */
@@ -58,15 +58,15 @@ public class Settings extends ConfigLoader {
 	public static List<Integer> bitems;
 	/** The portals. */
 	public static Boolean portals;
-	
+
 	/** Economy. */
 	public static Integer mons, animal, npc;
-	
+
 	/** Disabled eggs. */
 	public static Boolean creep, skele, spider, zombie, slime, ghast, pigman,
 			ender, cave, fish, blaze, cube, pig, sheep, cow, chick, squid,
 			wolf, moosh, ocelot, villa;
-	
+
 	/** Disabled mobs. */
 	public static Boolean creeps, skeles, spiders, zombies, slimes, ghasts,
 			pigmans, enders, caves, fishs, blazes, cubes, pigs, sheeps, cows,
@@ -75,7 +75,7 @@ public class Settings extends ConfigLoader {
 
 	/** The all. */
 	public static Boolean all;
-	
+
 	/** The godcrops. */
 	public static Boolean godcrops;
 
@@ -240,7 +240,9 @@ public class Settings extends ConfigLoader {
 		return instance;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.milkycraft.ASEConfiguration.ConfigLoader#reload()
 	 */
 	@Override
