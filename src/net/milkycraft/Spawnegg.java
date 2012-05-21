@@ -51,30 +51,31 @@ public class Spawnegg extends JavaPlugin {
 	/** The maindirectory. */
 	public static String maindirectory = "plugins" + File.separator
 			+ "EntityManager";
-	
+
 	/** The file. */
 	public static File file = new File(maindirectory + File.separator
 			+ "config.yml");
-	
+
 	/** The log. */
 	public static Logger log = Logger.getLogger("Minecraft");
-	
+
 	/** The worldguard plugin. */
 	public static WorldGuardPlugin worldguardPlugin = null;
-	
+
 	/** The econ. */
 	public static Economy econ = null;
-	
+
 	/** The config. */
 	public static Settings config;
 	/** How to reference main class in other classes in a static manner. */
 	public static Spawnegg p;
-	
+
 	/** The entitymanager. */
 	public static File entitymanager;
-	
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.bukkit.plugin.java.JavaPlugin#onEnable()
 	 */
 	@Override
@@ -87,8 +88,8 @@ public class Spawnegg extends JavaPlugin {
 		Spawnegg.config.load();
 		getServer().getPluginManager().registerEvents(new MyDispenseListener(),
 				this);
-		getServer().getPluginManager()
-				.registerEvents(new LoginListener(this), this);
+		getServer().getPluginManager().registerEvents(new LoginListener(this),
+				this);
 		getServer().getPluginManager().registerEvents(new MySpawnEggListener(),
 				this);
 		getServer().getPluginManager()
@@ -116,8 +117,12 @@ public class Spawnegg extends JavaPlugin {
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.bukkit.plugin.java.JavaPlugin#onCommand(org.bukkit.command.CommandSender, org.bukkit.command.Command, java.lang.String, java.lang.String[])
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.bukkit.plugin.java.JavaPlugin#onCommand(org.bukkit.command.CommandSender
+	 * , org.bukkit.command.Command, java.lang.String, java.lang.String[])
 	 */
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd,
@@ -288,30 +293,30 @@ public class Spawnegg extends JavaPlugin {
 		}
 		if (args[0].equalsIgnoreCase("mobs")
 				&& sender.hasPermission("entitymanager.admin")) {
-			 boolean creeper = Settings.creeps;
-			 boolean skeleton = Settings.skeles;
-			 boolean spider = Settings.spiders;
-			 boolean zombie = Settings.zombies;
-			 boolean slime = Settings.slimes;
-			 boolean ghast = Settings.ghasts;
-			 boolean pigman = Settings.pigmans;
-			 boolean enderman = Settings.enders;
-			 boolean cavespider = Settings.caves;
-			 boolean silverfish = Settings.fishs;
-			 boolean blaze = Settings.blazes;
-			 boolean magmacube = Settings.cubes;
-			 boolean pig = Settings.pigs;
-			 boolean sheep = Settings.sheeps;
-			 boolean cow = Settings.cows;
-			 boolean chicken = Settings.chicks;
-			 boolean squid = Settings.squids;
-			 boolean wolf = Settings.wolfs;
-			 boolean mushroom = Settings.mooshs;
-			 boolean snowman = Settings.snow;
-			 boolean dragon = Settings.dragons;
-			 boolean ocelot = Settings.ocelots;
-			 boolean vill = Settings.villas;
-			 boolean irongolem = Settings.iron;
+			boolean creeper = Settings.creeps;
+			boolean skeleton = Settings.skeles;
+			boolean spider = Settings.spiders;
+			boolean zombie = Settings.zombies;
+			boolean slime = Settings.slimes;
+			boolean ghast = Settings.ghasts;
+			boolean pigman = Settings.pigmans;
+			boolean enderman = Settings.enders;
+			boolean cavespider = Settings.caves;
+			boolean silverfish = Settings.fishs;
+			boolean blaze = Settings.blazes;
+			boolean magmacube = Settings.cubes;
+			boolean pig = Settings.pigs;
+			boolean sheep = Settings.sheeps;
+			boolean cow = Settings.cows;
+			boolean chicken = Settings.chicks;
+			boolean squid = Settings.squids;
+			boolean wolf = Settings.wolfs;
+			boolean mushroom = Settings.mooshs;
+			boolean snowman = Settings.snow;
+			boolean dragon = Settings.dragons;
+			boolean ocelot = Settings.ocelots;
+			boolean vill = Settings.villas;
+			boolean irongolem = Settings.iron;
 			final ChatColor g = ChatColor.GREEN;
 			final ChatColor w = ChatColor.YELLOW;
 			sender.sendMessage(ChatColor.AQUA
