@@ -14,39 +14,26 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.ExpBottleEvent;
 
-// TODO: Auto-generated Javadoc
-/**
- * The listener interface for receiving exp events. The class that is interested
- * in processing a exp event implements this interface, and the object created
- * with that class is registered with a component using the component's
- * <code>addExpListener<code> method. When
- * the exp event occurs, that object's appropriate
- * method is invoked.
- *
- * @see ExpEvent
- */
 
 public class ExpListener implements Listener {
-	
-	/** The Constant clazz. */
-	private static final ExpListener clazz = new ExpListener();
-	
+
+
 	/** On xp drop. */
-	private int xp = 0;
-	
+
 	/**
 	 * On xp drop.
-	 *
-	 * @param e the e
+	 * 
+	 * @param e
+	 *            the e
 	 */
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onXpDrop(EntityDeathEvent e) {
 		final List<String> worldz = Settings.worlds;
 		final World world = e.getEntity().getWorld();
-		for (final String worldname : worldz) {
+		for (String worldname : worldz) {
 			if (Settings.world || world.getName().equals(worldname)) {
 				if (Settings.totalexp) {
-					e.setDroppedExp(xp);
+					e.setDroppedExp(0);
 				}
 			}
 		}
@@ -71,22 +58,5 @@ public class ExpListener implements Listener {
 			}
 		}
 	}
-	
-	/**
-	 * Sets the exp dropped.
-	 *
-	 * @param exp the new exp dropped
-	 */
-	public void setExpDropped(int exp) {
-		xp = exp;
-	}
-	
-	/**
-	 * Gets the this.
-	 *
-	 * @return the this
-	 */
-	public static ExpListener getThis() {
-		return clazz;
-	}
+
 }

@@ -19,19 +19,9 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
-// TODO: Auto-generated Javadoc
-/**
- * The listener interface for receiving throw events. The class that is
- * interested in processing a throw event implements this interface, and the
- * object created with that class is registered with a component using the
- * component's <code>addThrowListener<code> method. When
- * the throw event occurs, that object's appropriate
- * method is invoked.
- * 
- * @see ThrowEvent
- */
 public class ThrowListener implements Listener {
 
+	/* Random note.. im tired right now*/
 	/** The log. */
 	public final Logger log = Logger.getLogger("Minecraft");
 
@@ -49,8 +39,9 @@ public class ThrowListener implements Listener {
 		if (item == null) {
 			return;
 		}
-		for (final String worldname : worldz) {
-			if (Settings.world || player.getWorld().getName().equals(worldname)) {
+
+		for (String worldname : worldz) {
+			if (player.getWorld().getName().equals(worldname)) {
 				if (e.getAction() == Action.RIGHT_CLICK_BLOCK
 						|| e.getAction() == Action.RIGHT_CLICK_AIR) {
 					if (item.getType() == Material.EXP_BOTTLE) {
@@ -58,16 +49,16 @@ public class ThrowListener implements Listener {
 								&& !player
 										.hasPermission("entitymanager.xpbottles")) {
 							e.setCancelled(true);
-							alerter(e);
 							messager(e);
+							return;
 						}
 					} else if (item.getType() == Material.FIREBALL) {
 						if (Settings.fire
 								&& !player
 										.hasPermission("entitymanager.firecharges")) {
 							e.setCancelled(true);
-							alerter(e);
 							messager(e);
+							return;
 						}
 					} else if (item.getType() == Material.EGG) {
 						if (Settings.egg
@@ -75,6 +66,7 @@ public class ThrowListener implements Listener {
 										.hasPermission("entitymanager.chickeneggs")) {
 							e.setCancelled(true);
 							messager(e);
+							return;
 						}
 					} else if (item.getType() == Material.ENDER_PEARL) {
 						if (Settings.pearl
@@ -82,7 +74,7 @@ public class ThrowListener implements Listener {
 										.hasPermission("entitymanager.enderpearls")) {
 							e.setCancelled(true);
 							messager(e);
-							alerter(e);
+							return;
 						}
 					} else if (item.getType() == Material.EYE_OF_ENDER) {
 						if (Settings.eye
@@ -90,13 +82,14 @@ public class ThrowListener implements Listener {
 										.hasPermission("entitymanager.endereyes")) {
 							e.setCancelled(true);
 							messager(e);
-							alerter(e);
+							return;
 						}
 					} else if (item.getType() == Material.BOAT) {
 						if (Settings.boatz
 								&& !player.hasPermission("entitymanager.boats")) {
 							e.setCancelled(true);
 							messager(e);
+							return;
 						}
 					} else if (item.getType() == Material.MINECART) {
 						if (Settings.cartz
@@ -104,6 +97,7 @@ public class ThrowListener implements Listener {
 										.hasPermission("entitymanager.minecarts")) {
 							e.setCancelled(true);
 							messager(e);
+							return;
 						}
 					} else if (item.getType() == Material.POTION) {
 						if (Settings.potion
@@ -111,49 +105,15 @@ public class ThrowListener implements Listener {
 										.hasPermission("entitymanager.potions")) {
 							e.setCancelled(true);
 							messager(e);
+							return;
 						} // Cancelled
 					} // Material
 
 				} // Action
 			} // World
-		} // World iterator
-	} // Event
-
-	/**
-	 * Alerts admins that player failed an action.
-	 * 
-	 * @param e
-	 *            the e
-	 */
-	public final void alerter(PlayerInteractEvent e) {
-		final Player player = e.getPlayer();
-		if (Settings.alertz) {
-			for (final Player p : player.getServer().getOnlinePlayers()) {
-				if (p.hasPermission("entitymanager.admin")) {
-					p.sendMessage(ChatColor.GREEN + "[EM] "
-							+ ChatColor.DARK_RED
-							+ e.getPlayer().getDisplayName()
-							+ " tried to use a " + ChatColor.GOLD
-							+ e.getItem().getType().toString().toLowerCase()
-							+ ".");
-				}
-			}
 		}
 	}
 
-	/**
-	 * Alerts console that player failed an action.
-	 * 
-	 * @param e
-	 *            the e
-	 */
-	public final void eLogger(PlayerInteractEvent e) {
-		log.log(Level.WARNING, "[EntityManager] "
-				+ e.getPlayer().getDisplayName().toLowerCase()
-				+ " tried to use a "
-				+ e.getItem().getType().toString().toLowerCase());
-		return;
-	}
 
 	/**
 	 * Alerts player they cant do an action.
@@ -167,7 +127,22 @@ public class ThrowListener implements Listener {
 				+ "You dont have permission for "
 				+ e.getItem().getType().toString().toLowerCase() + "'s.");
 		if (Settings.logging) {
-			eLogger(e);
+			log.log(Level.WARNING, "[EntityManager] "
+					+ player.getDisplayName().toLowerCase()
+					+ " tried to use a "
+					+ e.getItem().getType().toString().toLowerCase());
+		}
+		if (Settings.alertz) {
+			for (Player  p : player.getServer().getOnlinePlayers()) {
+				if (p.hasPermission("entitymanager.admin")) {
+					p.sendMessage(ChatColor.GREEN + "[EM] "
+							+ ChatColor.DARK_RED
+							+ e.getPlayer().getDisplayName()
+							+ " tried to use a " + ChatColor.GOLD
+							+ e.getItem().getType().toString().toLowerCase()
+							+ ".");
+				}
+			}
 		}
 	}
 }

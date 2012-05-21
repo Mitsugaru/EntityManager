@@ -73,28 +73,16 @@ public class MySpawnEggListener implements Listener {
 			return;
 		}
 
-		for (final String worldname : worldz) {
-			if (Settings.world
-					|| e.getPlayer().getWorld().getName().equals(worldname)) {
+		for (String wname : worldz) {
+			if (Settings.world || player.getWorld().getName().equals(wname)) {
 				if (player.getItemInHand().getTypeId() == 383) {
-					/*
-					 * If player is in a region where they cant build Then dont
-					 * let them use the monster egg Prevents people trolling
-					 * others property If worldguard isnt installed this is just
-					 * ignored
-					 */
 					if (!Spawnegg.worldguardPlugin.canBuild(player, loc)) {
 						e.setCancelled(true);
 						player.sendMessage(ChatColor.YELLOW
-								+ "You cant use monster eggs in this region!");
+								+ "You cant use spawner eggs in this region!");
 						return;
 					}
-					/*
-					 * Check if the block they click with the item isnt a chest,
-					 * furnace, etc Due to the fact that the clicked block can
-					 * be null (if clicking air, entities, etc) We gotta define
-					 * the variable down here
-					 */
+					
 					final Material mat = e.getClickedBlock().getType();
 					if (!(mat == Material.CHEST || mat == Material.FURNACE || mat == Material.DISPENSER)) {
 						if (!onDecidingSpawningFactors(seg)) {
@@ -128,13 +116,17 @@ public class MySpawnEggListener implements Listener {
 							} // end of bypass perm charge block
 						} // End of charges
 					} else {
-						player.sendMessage(ChatColor.RED
-								+ "Opened InventoryHolder with MonsterEgg");
+						player.sendMessage(ChatColor.AQUA
+								+ "Opened that "
+								+ e.getClickedBlock().getType().toString()
+										.toLowerCase() + " with a "
+								+ seg.getEntityBreed().toString().toLowerCase()
+								+ " egg");
 					}
 				} // Item check
 			} // World
 		} // World Iterator
-	} // Listener
+	}
 
 	/**
 	 * On deciding spawning factors.
@@ -153,9 +145,6 @@ public class MySpawnEggListener implements Listener {
 		if (e.getEntityBreed().getCategory() == EntityCategory.UNKNOWN) {
 			return true;
 		}
-		final List<String> worldz = Settings.worlds;
-		for (final String worldname : worldz) {
-			if (e.getPlayer().getWorld().getName().equals(worldname)) {
 				if (e.getEntityBreed().getCategory() != EntityCategory.UNKNOWN) {
 					if (Settings.getConfig().getBoolean(
 							"disabled.eggs."
@@ -172,10 +161,8 @@ public class MySpawnEggListener implements Listener {
 					} else {
 						return true;
 					}
-				}
-			}
 		}
-		return false;
+		return true;
 	}
 
 	/**
@@ -225,14 +212,13 @@ public class MySpawnEggListener implements Listener {
 	 */
 	public final void alerter(SpawnEggEvent ev) {
 		if (Settings.logging) {
-			log.log(Level.WARNING, ChatColor.RED + "[EntityManager] "
-					+ ChatColor.DARK_RED
+			log.log(Level.WARNING, "[EntityManager] "
 					+ ev.getPlayer().getDisplayName().toLowerCase()
-					+ ChatColor.GOLD + " tried to use an " + ChatColor.YELLOW
+					+ " tried to use an "
 					+ ev.getEntityBreed().toString().toLowerCase() + " egg");
 		}
 		if (Settings.alertz) {
-			for (final Player p : ev.getPlayer().getServer().getOnlinePlayers()) {
+			for (Player p : ev.getPlayer().getServer().getOnlinePlayers()) {
 				if (p.hasPermission("entitymanager.admin")) {
 					p.sendMessage(ChatColor.GREEN + "[EM] "
 							+ ChatColor.DARK_RED

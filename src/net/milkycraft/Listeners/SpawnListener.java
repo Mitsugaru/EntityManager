@@ -4,9 +4,6 @@
 package net.milkycraft.Listeners;
 
 import java.util.List;
-import java.util.logging.Level;
-
-import net.milkycraft.Spawnegg;
 import net.milkycraft.ASEConfiguration.Settings;
 
 import org.bukkit.entity.Entity;
@@ -42,7 +39,7 @@ public class SpawnListener implements Listener {
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onSpawn(CreatureSpawnEvent e) {
 		final List<String> worldz = Settings.worlds;
-		for (final String worldname : worldz) {
+		for (String worldname : worldz) {
 			if (Settings.world
 					|| e.getEntity().getWorld().getName().equals(worldname)) {
 				e.setCancelled(Settings.getConfig().getBoolean(
@@ -70,7 +67,7 @@ public class SpawnListener implements Listener {
 			return;
 		}
 		final List<String> worldz = Settings.worlds;
-		for (final String worldname : worldz) {
+		for (String worldname : worldz) {
 			if (Settings.world
 					|| e.getEntity().getWorld().getName().equals(worldname)) {
 				final String mob = e.getEntityType().toString().toLowerCase();
@@ -91,12 +88,12 @@ public class SpawnListener implements Listener {
 	 *            the event
 	 */
 	@EventHandler(priority = EventPriority.LOWEST)
-	public void onBlockDamage(EntityDamageEvent e) {
+	public void onBlockedMobDamage(EntityDamageEvent e) {
 		if (!Settings.amrs) {
 			return;
 		}
 		final List<String> worldz = Settings.worlds;
-		for (final String worldname : worldz) {
+		for ( String worldname : worldz) {
 			if (Settings.world
 					|| e.getEntity().getWorld().getName().equals(worldname)) {
 				final String mob = e.getEntityType().toString().toLowerCase();
@@ -119,17 +116,13 @@ public class SpawnListener implements Listener {
 			return;
 		}
 		final List<String> worldz = Settings.worlds;
-		for (final String worldname : worldz) {
+		for (String worldname : worldz) {
 			if (Settings.world || e.getWorld().getName().equals(worldname)) {
 				// Iterate through the entities in the chunk
-				for (final Entity en : e.getChunk().getEntities()) {
+				for (Entity en : e.getChunk().getEntities()) {
 					final String mob = en.getType().toString().toLowerCase();
 					if (Settings.getConfig().getBoolean("disabled.mobs." + mob)) {
-						try {
 							en.remove();
-						} catch (final NullPointerException ex) {
-							Spawnegg.log.log(Level.WARNING, ex.getMessage());
-						}
 					}
 				}
 			}
@@ -148,17 +141,13 @@ public class SpawnListener implements Listener {
 			return;
 		}
 		final List<String> worldz = Settings.worlds;
-		for (final String worldname : worldz) {
+		for (String worldname : worldz) {
 			if (Settings.world || e.getWorld().getName().equals(worldname)) {
 				// Iterate through the entities in the chunk
-				for (final Entity en : e.getChunk().getEntities()) {
+				for (Entity en : e.getChunk().getEntities()) {
 					final String mob = en.getType().toString().toLowerCase();
 					if (Settings.getConfig().getBoolean("disabled.mobs." + mob)) {
-						try {
 							en.remove();
-						} catch (final NullPointerException ex) {
-							Spawnegg.log.log(Level.WARNING, ex.getMessage());
-						}
 					}
 				}
 			}

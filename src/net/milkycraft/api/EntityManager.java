@@ -25,7 +25,7 @@ public class EntityManager {
 
 	/** The Constant settings. */
 	private final static Settings settings = new Settings(Spawnegg.p);
-	
+
 	/** The Constant login. */
 	private final static LoginListener login = new LoginListener(Spawnegg.p);
 
@@ -332,19 +332,19 @@ public class EntityManager {
 		return !Settings.getConfig().getBoolean(
 				"disabled.mobs." + mob.name().toLowerCase());
 	}
-	
+
 	/**
 	 * Checks if is sending alerts.
-	 *
+	 * 
 	 * @return true, if is sending alerts
 	 */
 	public boolean isSendingAlerts() {
 		return Settings.alertz;
 	}
-	
+
 	/**
 	 * Checks if is motd enabled.
-	 *
+	 * 
 	 * @return true, if is motd enabled
 	 */
 	public boolean isMotdEnabled() {
@@ -401,12 +401,13 @@ public class EntityManager {
 
 	/**
 	 * Gets the login listener.
-	 *
+	 * 
 	 * @return the login listener
 	 */
 	public LoginListener getLoginListener() {
 		return login;
 	}
+
 	/**
 	 * Gets the settings.
 	 * 

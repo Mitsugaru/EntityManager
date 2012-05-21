@@ -37,12 +37,19 @@ public class DropManager implements Listener {
 	 */
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onAttemptedItemDrop(PlayerDropItemEvent e) {
+		if (e.getPlayer() == null) {
+			return;
+		}
+
+		if (e.getPlayer().getGameMode() == null) {
+			return;
+		}
 		final Player player = e.getPlayer();
 		final String mode = e.getPlayer().getGameMode().toString()
 				.toLowerCase();
 		final List<Integer> bitems = Settings.bitems;
 		final List<String> worldz = Settings.worlds;
-		for (final String worldname : worldz) {
+		for ( String worldname : worldz) {
 			if (player.getWorld().getName().equals(worldname)) {
 				if (player.getGameMode() == GameMode.CREATIVE) {
 					if (!player.hasPermission("entitymanager.creative.drop")
@@ -66,7 +73,7 @@ public class DropManager implements Listener {
 						return;
 					}
 				}
-				for (final Integer bitem : bitems) {
+				for (Integer bitem : bitems) {
 					if (e.getItemDrop().getItemStack().getTypeId() == bitem) {
 						if (!player
 								.hasPermission("entitymanager.bypass.blacklist")) {
@@ -96,7 +103,7 @@ public class DropManager implements Listener {
 		final Entity player = e.getEntity();
 		final List<Integer> bitems = Settings.bitems;
 		final List<String> worldz = Settings.worlds;
-		for (final String worldname : worldz) {
+		for ( String worldname : worldz) {
 			if (e.getEntity().getWorld().getName().equals(worldname)) {
 				if (Settings.onDeath) {
 					e.getDrops().clear();
@@ -132,7 +139,7 @@ public class DropManager implements Listener {
 	public void onBlockBreak(BlockBreakEvent e) {
 		final List<String> worldz = Settings.worlds;
 		final List<Integer> bitems = Settings.bitems;
-		for (final String worldname : worldz) {
+		for (String worldname : worldz) {
 			if (e.getBlock().getWorld().getName().equals(worldname)) {
 				if (Settings.bDestroy
 						&& !e.getPlayer().hasPermission(

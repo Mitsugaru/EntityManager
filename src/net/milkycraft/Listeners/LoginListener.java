@@ -37,12 +37,13 @@ public class LoginListener implements Listener {
 
 	/** The motd. */
 	private String motd = ChatColor.GREEN
-			+ "This server is running EntityManager 3.5 by milkywayz";
+			+ "This server is running EntityManager 3.5.1 by milkywayz";
 
 	/**
 	 * On login.
-	 *
-	 * @param e the e
+	 * 
+	 * @param e
+	 *            the e
 	 */
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onLogin(PlayerJoinEvent e) {
@@ -54,7 +55,7 @@ public class LoginListener implements Listener {
 
 	/**
 	 * Gets the motd.
-	 *
+	 * 
 	 * @return the motd
 	 */
 	public String getMotd() {
