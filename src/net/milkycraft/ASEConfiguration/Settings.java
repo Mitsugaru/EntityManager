@@ -77,7 +77,7 @@ public class Settings extends ConfigLoader {
 	public static Boolean all;
 
 	/** The godcrops. */
-	public static Boolean godcrops;
+	public static Boolean godcrops, dragegg;
 
 	/* other */
 
@@ -218,6 +218,7 @@ public class Settings extends ConfigLoader {
 		iron = config.getBoolean("disabled.mobs.iron_golen");
 		snow = config.getBoolean("disabled.mobs.snowman");
 		godcrops = config.getBoolean("block.Actions.crop-damage");
+		dragegg = config.getBoolean("block.Place.Dragon-Eggs");
 	}
 
 	/**
