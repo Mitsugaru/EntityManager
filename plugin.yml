@@ -1,11 +1,11 @@
 name: EntityManager
 author: milkywayz 
 main: net.milkycraft.Spawnegg
-version: 3.5.1
+version: 3.6
 softdepend: [WorldGaurd, Vault]
 
 commands:
     entitymanager:
       aliases: em
 
-  
+    
