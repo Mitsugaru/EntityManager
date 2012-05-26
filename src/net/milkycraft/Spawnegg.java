@@ -1,3 +1,4 @@
+
 /*
  *  Spawnegg is licensed under the ISC License
  *  
@@ -18,6 +19,7 @@ import java.util.logging.Logger;
 import net.milkbowl.vault.economy.Economy;
 import net.milkycraft.ASEConfiguration.Settings;
 import net.milkycraft.Enums.EntityType;
+import net.milkycraft.Listeners.BlockListener;
 import net.milkycraft.Listeners.EnchantListener;
 import net.milkycraft.Listeners.EntitiesListener;
 import net.milkycraft.Listeners.ExpListener;
@@ -87,6 +89,8 @@ public class Spawnegg extends JavaPlugin {
 		Spawnegg.config = new Settings(this);
 		Spawnegg.config.load();
 		getServer().getPluginManager().registerEvents(new MyDispenseListener(),
+				this);
+		getServer().getPluginManager().registerEvents(new BlockListener(),
 				this);
 		getServer().getPluginManager().registerEvents(new LoginListener(this),
 				this);
