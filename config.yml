@@ -1,5 +1,5 @@
 
-#  EntityManager Configuration 3.5.1
+#  EntityManager Configuration 3.6
 #  http://dev.bukkit.org/server-mods/entitymanager/pages/configuration/
 #  Advanced-Mob-Remover removes disabled mobs when chunks load and unload, this may cause lag for some servers, recommended to only be used after you make changes to the disabled mobs section of config, otherwise its a waste of server resources.
 #####
@@ -92,6 +92,8 @@ block:
     Block-destroy: false
     Blacklisted-items:
     - 57
+  Place:
+    Dragon-Eggs: true
 #
 # Block fire from igniting portals
 ###
