@@ -75,6 +75,7 @@ public class SpawnListener implements Listener {
 					final Entity target = e.getTarget();
 					if (target instanceof Player) {
 						e.getEntity().remove();
+						break;
 					}
 				}
 			}
@@ -123,6 +124,7 @@ public class SpawnListener implements Listener {
 					final String mob = en.getType().toString().toLowerCase();
 					if (Settings.getConfig().getBoolean("disabled.mobs." + mob)) {
 							en.remove();
+							break;
 					}
 				}
 			}

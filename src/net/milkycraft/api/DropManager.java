@@ -110,8 +110,8 @@ public class DropManager implements Listener {
 					return;
 				}
 				/*
-				 * Filters through the drops of dead entities If its a player,
-				 * check if they have permission, if they dont remove the
+				 * Filters through the drops of dead entities. If its a player,
+				 * check if they have permission; if they don't, remove the
 				 * blacklisted drops If its any other entity, remove the blocked
 				 * items from there droppings
 				 */

@@ -111,6 +111,7 @@ public class SpawnEggEvent {
 
 		default:
 			breed = null;
+			break;
 		}
 	}
 
