@@ -196,6 +196,7 @@ public class EntitiesListener implements Listener {
 				if (e.getReason() == CreateReason.FIRE) {
 					if (Settings.portals) {
 						e.setCancelled(true);
+						
 						return;
 					}
 				}

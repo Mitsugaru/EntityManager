@@ -6,7 +6,6 @@ package net.milkycraft.ASEConfiguration;
 import java.io.File;
 import java.io.InputStream;
 import java.util.List;
-
 import net.milkycraft.Spawnegg;
 
 import org.bukkit.configuration.file.FileConfiguration;
@@ -108,6 +107,9 @@ public class Settings extends ConfigLoader {
 			dataFolder.mkdir();
 			plugin.saveDefaultConfig();
 		}
+		else {
+			plugin.getLogger().info("EntityManager config file nonexistent, creating new one");
+		}
 		addDefaults();
 		loadKeys();
 	}
@@ -120,7 +122,7 @@ public class Settings extends ConfigLoader {
 	@Override
 	protected void loadKeys() {
 		plugin.getLogger().info("Loading EntityManager config");
-
+		//Keys
 		Motd = config.getBoolean("EntityManager.Login-MOTD");
 		alertz = config.getBoolean("EntityManager.Send-Alerts");
 		metrics = config.getBoolean("EntityManager.Metrics");
@@ -250,6 +252,7 @@ public class Settings extends ConfigLoader {
 	public void reload() {
 		if (configFile == null) {
 			configFile = new File(plugin.getDataFolder(), fileName);
+			plugin.getLogger().info("EntityManager config file nonexistent, generating new one");
 		}
 
 		config = YamlConfiguration.loadConfiguration(configFile);
@@ -262,6 +265,7 @@ public class Settings extends ConfigLoader {
 					.loadConfiguration(defConfigStream);
 
 			config.setDefaults(defConfig);
+			plugin.getLogger().info("EntityManager sucessfully reloaded");
 		}
 	}
 }

@@ -79,7 +79,7 @@ public class MySpawnEggListener implements Listener {
 					if (!Spawnegg.worldguardPlugin.canBuild(player, loc)) {
 						e.setCancelled(true);
 						player.sendMessage(ChatColor.YELLOW
-								+ "You cant use spawner eggs in this region!");
+								+ "You cant use spawner eggs in this region!");						
 						return;
 					}
 					
@@ -99,7 +99,9 @@ public class MySpawnEggListener implements Listener {
 															.toString()
 															.toLowerCase()
 													+ ChatColor.RED + " eggs");
-							alerter(seg); // Alert admins
+							alerter(seg);
+							break;
+							// Alert admins
 						} else { // Handle egg charges based on the egg trying
 									// to be used
 							if (!player
@@ -122,6 +124,7 @@ public class MySpawnEggListener implements Listener {
 										.toLowerCase() + " with a "
 								+ seg.getEntityBreed().toString().toLowerCase()
 								+ " egg");
+						break;
 					}
 				} // Item check
 			} // World

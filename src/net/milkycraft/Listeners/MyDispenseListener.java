@@ -57,6 +57,7 @@ public class MyDispenseListener implements Listener {
 					if (Settings.MonsEggs) {
 						event.setCancelled(true);
 						alert(event);
+						log.info("Someone tried to spawn a mob using a Mob Egg (Dispenser)");
 						return;
 					}
 				}
@@ -73,6 +74,7 @@ public class MyDispenseListener implements Listener {
 					if (Settings.potionz) {
 						event.setCancelled(true);
 						alert(event);
+						log.info("Someone tried to use a potion! (Dispenser)");
 						return;
 					}
 				}
@@ -81,6 +83,7 @@ public class MyDispenseListener implements Listener {
 					if (Settings.Fballs) {
 						event.setCancelled(true);
 						alert(event);
+						log.info("Someone tried to shoot a fireball! (Dispenser)");
 						return;
 					}
 				}
@@ -89,6 +92,7 @@ public class MyDispenseListener implements Listener {
 					if (Settings.xBottz) {
 						event.setCancelled(true);
 						alert(event);
+						log.info("Someone tried to use an xp bottle! (Dispenser)");
 						return;
 					}
 				}

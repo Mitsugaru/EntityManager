@@ -437,6 +437,7 @@ public class Spawnegg extends JavaPlugin {
 		final Plugin wg = this.getServer().getPluginManager()
 				.getPlugin("WorldGuard");
 		if (wg == null) {
+			log.info("[EntityManager] Could not hook into WorldGuard, ignoring WorldGuard regions");
 		} else {
 			Spawnegg.worldguardPlugin = (WorldGuardPlugin) wg;
 			log.info("[EntityManager] Hooked into WorldGuard, Respecting Regions");
