@@ -1,14 +1,13 @@
 EntityManager by Milkywayz
 
 Features:
-- Block any type of monster egg
-- Block any mob from being spawned completely
-- Block potions from being thrown
-- Block other projectiles from being thrown.
-- Block projectiles from dispensers.
-- In game alerting and inventory purge command
-- Hostile mobs don't target user if spawned with egg
-- Block items from being dropped in certain game modes
-- Block any items you put on the blacklist
+Block certain monster eggs, or even all of them!
+Permissions for bypassing almost everything this plugin blocks!
+Block potions from dispensers or players
+Block Xp bottles, ender eyes, ender pearls, and fire charges!
+Block exp from dropping from entities that die
+Block enchanting, placing painting, and even fishing!
+Block mobs from targeting you when your in survival, useful for survival players using spawner eggs!
+Everything is extremely customizable and easy to use!
 
 Commands and permissions can be found on bukkitdev
