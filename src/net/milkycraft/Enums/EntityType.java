@@ -1,12 +1,5 @@
-/*
- * 
- */
-package net.milkycraft.Enums;
+package net.milkycraft.enums;
 
-// TODO: Auto-generated Javadoc
-/**
- * The Enum EntityType.
- */
 public enum EntityType {
 
 	/** The CREEPER. */

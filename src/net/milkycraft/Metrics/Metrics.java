@@ -1,7 +1,4 @@
-/*
- * 
- */
-package net.milkycraft.Metrics;
+package net.milkycraft.metrics;
 
 /*
  * Copyright 2011 Tyler Blair. All rights reserved.
@@ -44,13 +41,14 @@ import java.net.URLEncoder;
 import java.util.UUID;
 import java.util.logging.Level;
 
+import net.milkycraft.configuration.Settings;
+
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 
-// TODO: Auto-generated Javadoc
 /**
  * <p>
  * The metrics class obtains data about a plugin and submits statistics about it
@@ -149,7 +147,7 @@ public class Metrics {
 		if (configuration.getBoolean("opt-out", false)) {
 			return;
 		}
-		if (!plugin.getConfig().getBoolean("EntityManager.Metrics")) {
+		if (!Settings.metrics) {
 			return;
 		}
 
@@ -375,5 +373,6 @@ public class Metrics {
 			throws UnsupportedEncodingException {
 		return URLEncoder.encode(text, "UTF-8");
 	}
-
 }
+
+

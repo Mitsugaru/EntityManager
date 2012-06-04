@@ -1,17 +1,11 @@
-/*
- * 
- */
-package net.milkycraft.Listeners;
+package net.milkycraft.listeners;
 
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import net.milkycraft.Spawnegg;
-import net.milkycraft.ASEConfiguration.Settings;
+import net.milkycraft.configuration.Settings;
 
 import org.bukkit.ChatColor;
-import org.bukkit.Difficulty;
 import org.bukkit.entity.Enderman;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -33,23 +27,10 @@ import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.event.world.PortalCreateEvent;
 import org.bukkit.event.world.PortalCreateEvent.CreateReason;
 
-// TODO: Auto-generated Javadoc
-/**
- * The listener interface for receiving entities events. The class that is
- * interested in processing a entities event implements this interface, and the
- * object created with that class is registered with a component using the
- * component's <code>addEntitiesListener<code> method. When
- * the entities event occurs, that object's appropriate
- * method is invoked.
- * 
- * @see EntitiesEvent
- */
 public class EntitiesListener implements Listener {
-
-
 	/** The log. */
 	private static Logger log = Logger.getLogger("Minecraft");
-
+	private final List<String> worldz = Settings.worlds;
 	/**
 	 * Door break.
 	 * 
@@ -58,14 +39,11 @@ public class EntitiesListener implements Listener {
 	 */
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void DoorBreak(EntityBreakDoorEvent e) {
-		final List<String> worldz = Settings.worlds;
 		for (String worldname : worldz) {
 			if (e.getBlock().getWorld().getName().equals(worldname)
 					|| Settings.world) {
-				if (e.getBlock().getWorld().getDifficulty() == Difficulty.HARD) {
-					if (Settings.doorBreak) {
-						e.setCancelled(true);
-					}
+				if (Settings.doorBreak) {
+					e.setCancelled(true);
 				}
 			}
 		}
@@ -79,12 +57,11 @@ public class EntitiesListener implements Listener {
 	 */
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void PlayerDamage(EntityDamageEvent e) {
-		final List<String> worldz = Settings.worlds;
-		for (String worldname : worldz) {
-			if (e.getEntity().getWorld().getName().equals(worldname)
-					|| Settings.world) {
-				if (e.getEntity() instanceof Player) {
-					if (e.getCause() == DamageCause.FALL) {
+		if (e.getCause() == DamageCause.FALL) {
+			for (String worldname : worldz) {
+				if (e.getEntity().getWorld().getName().equals(worldname)
+						|| Settings.world) {
+					if (e.getEntity() instanceof Player) {
 						final Player p = (Player) e.getEntity();
 						if (p.hasPermission("entitymanager.nofall")) {
 							e.setDamage(0);
@@ -123,8 +100,7 @@ public class EntitiesListener implements Listener {
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onEntityRecievingDamage(EntityDamageByEntityEvent e) {
 		final Entity Damaged = e.getEntity();
-		final List<String> worldz = Settings.worlds;
-		for (final String worldname : worldz) {
+		for (String worldname : worldz) {
 			if (Damaged.getWorld().getName().equals(worldname)
 					|| Settings.world) {
 				if (Damaged instanceof LivingEntity) {
@@ -170,7 +146,6 @@ public class EntitiesListener implements Listener {
 	 */
 	@EventHandler(priority = EventPriority.LOW)
 	public void hunger(FoodLevelChangeEvent e) {
-		final List<String> worldz = Settings.worlds;
 		for (String worldname : worldz) {
 			if (e.getEntity().getWorld().getName().equals(worldname)
 					|| Settings.world) {
@@ -190,13 +165,11 @@ public class EntitiesListener implements Listener {
 	 */
 	@EventHandler
 	public void onPortalCreate(PortalCreateEvent e) {
-		final List<String> worldz = Settings.worlds;
 		for (String worldname : worldz) {
 			if (e.getWorld().getName().equals(worldname) || Settings.world) {
 				if (e.getReason() == CreateReason.FIRE) {
 					if (Settings.portals) {
 						e.setCancelled(true);
-						
 						return;
 					}
 				}
@@ -212,7 +185,6 @@ public class EntitiesListener implements Listener {
 	 */
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onPaintingPlace(PaintingPlaceEvent e) {
-		final List<String> worldz = Settings.worlds;
 		if (!Settings.world) {
 			for (String worldname : worldz) {
 				if (!e.getPlayer().getWorld().getName().equals(worldname)) {
@@ -240,23 +212,20 @@ public class EntitiesListener implements Listener {
 	}
 
 	/**
-	 * On pig zap.
+	 * Retarded check, sort of a waste of space. 
 	 * 
 	 * @param e
 	 *            the e
 	 */
-	@EventHandler(priority = EventPriority.LOWEST)
 	public void onPigZap(PigZapEvent e) {
-		final List<String> worldz = Settings.worlds;
-		for ( String wname : worldz) {
-			if (Settings.world || e.getEntity().getWorld().getName().equals(wname)) {
+		for (String wname : worldz) {
+			if (Settings.world
+					|| e.getEntity().getWorld().getName().equals(wname)) {
 				if (Settings.getConfig().getBoolean("disabled.mobs.pig_zombie")) {
 					e.setCancelled(true);
 					e.getEntity().remove();
 					if (Settings.logging) {
-						Spawnegg.log
-								.log(Level.WARNING,
-										"[EM] pigmans disabled so zapped pig was removed");
+						log.info("[EM] pigmans disabled so zapped pig was removed");
 					}
 				}
 			}
@@ -272,9 +241,8 @@ public class EntitiesListener implements Listener {
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onFishingAttempt(PlayerFishEvent e) {
 		final Player player = e.getPlayer();
-		final List<String> worldz = Settings.worlds;
 		if (!Settings.world) {
-			for ( String worldname : worldz) {
+			for (String worldname : worldz) {
 				if (!player.getWorld().getName().equals(worldname)) {
 					return;
 				} else {
@@ -300,10 +268,8 @@ public class EntitiesListener implements Listener {
 	 * @param e
 	 *            the e
 	 */
-	@EventHandler(priority = EventPriority.NORMAL)
-	public void onarrowshoot(EntityShootBowEvent e) {
-		final List<String> worldz = Settings.worlds;
-		for ( String worldname : worldz) {
+	public void onArrowShoot(EntityShootBowEvent e) {
+		for (String worldname : worldz) {
 			if (Settings.world
 					|| e.getEntity().getWorld().getName().equals(worldname)) {
 				if (e.getEntity() instanceof Player) {
@@ -320,26 +286,15 @@ public class EntitiesListener implements Listener {
 		}
 	}
 
-	/**
-	 * On vehicle destroy.
-	 * 
-	 * @param event
-	 *            the event
-	 */
-	@EventHandler(priority = EventPriority.LOW)
 	public void onCropDestroy(EntityInteractEvent event) {
-		final List<String> worldz = Settings.worlds;
-		if (!Settings.world) {
-			for ( String worldname : worldz) {
-				if (!event.getBlock().getWorld().getName().equals(worldname)) {
-					return;
-				} else {
+			for (String worldname : worldz) {
+				if (Settings.world || event.getBlock().getWorld().getName().equals(worldname)) {
 					if (Settings.godcrops) {
 						event.setCancelled(true);
 					}
-				}
 			}
 		}
 	}
 
 }
+

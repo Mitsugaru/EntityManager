@@ -1,11 +1,8 @@
-/*
- * 
- */
 package net.milkycraft.api;
 
 import java.util.List;
 
-import net.milkycraft.ASEConfiguration.Settings;
+import net.milkycraft.configuration.Settings;
 
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -20,10 +17,6 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.inventory.ItemStack;
 
-// TODO: Auto-generated Javadoc
-/**
- * The Class DropManager.
- */
 public class DropManager implements Listener {
 
 	/** The Constant instance. */
@@ -49,7 +42,7 @@ public class DropManager implements Listener {
 				.toLowerCase();
 		final List<Integer> bitems = Settings.bitems;
 		final List<String> worldz = Settings.worlds;
-		for ( String worldname : worldz) {
+		for (String worldname : worldz) {
 			if (player.getWorld().getName().equals(worldname)) {
 				if (player.getGameMode() == GameMode.CREATIVE) {
 					if (!player.hasPermission("entitymanager.creative.drop")
@@ -103,15 +96,15 @@ public class DropManager implements Listener {
 		final Entity player = e.getEntity();
 		final List<Integer> bitems = Settings.bitems;
 		final List<String> worldz = Settings.worlds;
-		for ( String worldname : worldz) {
+		for (String worldname : worldz) {
 			if (e.getEntity().getWorld().getName().equals(worldname)) {
 				if (Settings.onDeath) {
 					e.getDrops().clear();
 					return;
 				}
 				/*
-				 * Filters through the drops of dead entities. If its a player,
-				 * check if they have permission; if they don't, remove the
+				 * Filters through the drops of dead entities If its a player,
+				 * check if they have permission, if they dont remove the
 				 * blacklisted drops If its any other entity, remove the blocked
 				 * items from there droppings
 				 */

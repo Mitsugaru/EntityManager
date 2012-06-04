@@ -1,13 +1,10 @@
-/*
- * 
- */
-package net.milkycraft.Listeners;
+package net.milkycraft.listeners;
 
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import net.milkycraft.ASEConfiguration.Settings;
+import net.milkycraft.configuration.Settings;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -21,33 +18,43 @@ import org.bukkit.inventory.ItemStack;
 
 public class ThrowListener implements Listener {
 
-	/* Random note.. im tired right now*/
-	/** The log. */
-	public final Logger log = Logger.getLogger("Minecraft");
+	public final static Logger log = Logger.getLogger("Minecraft");
+	private final List<String> worldz = Settings.worlds;
 
 	/**
-	 * On throw.
+	 * On attempted throw
 	 * 
 	 * @param e
-	 *            the e
+	 *            the PlayerInteractEvent
 	 */
-	@EventHandler(priority = EventPriority.LOWEST)
+	@EventHandler(priority = EventPriority.HIGHEST)
 	public void OnThrow(PlayerInteractEvent e) {
 		final Player player = e.getPlayer();
 		final ItemStack item = e.getItem();
-		final List<String> worldz = Settings.worlds;
 		if (item == null) {
 			return;
 		}
-
+		if (player.hasPermission("entitymanager.throw.*")) {
+			return;
+		}
+		if (!(item.getType() == Material.EXP_BOTTLE
+				|| item.getType() == Material.FIREBALL
+				|| item.getType() == Material.EGG
+				|| item.getType() == Material.ENDER_PEARL
+				|| item.getType() == Material.EYE_OF_ENDER
+				|| item.getType() == Material.BOAT
+				|| item.getType() == Material.POTION 
+				|| item.getType() == Material.MINECART)) {
+			return;
+		}
 		for (String worldname : worldz) {
-			if (player.getWorld().getName().equals(worldname)) {
+			if (Settings.world || player.getWorld().getName().equals(worldname)) {
 				if (e.getAction() == Action.RIGHT_CLICK_BLOCK
 						|| e.getAction() == Action.RIGHT_CLICK_AIR) {
 					if (item.getType() == Material.EXP_BOTTLE) {
 						if (Settings.xpbott
 								&& !player
-										.hasPermission("entitymanager.xpbottles")) {
+										.hasPermission("entitymanager.throw.xpbottles")) {
 							e.setCancelled(true);
 							messager(e);
 							return;
@@ -55,7 +62,7 @@ public class ThrowListener implements Listener {
 					} else if (item.getType() == Material.FIREBALL) {
 						if (Settings.fire
 								&& !player
-										.hasPermission("entitymanager.firecharges")) {
+										.hasPermission("entitymanager.throw.firecharges")) {
 							e.setCancelled(true);
 							messager(e);
 							return;
@@ -63,7 +70,7 @@ public class ThrowListener implements Listener {
 					} else if (item.getType() == Material.EGG) {
 						if (Settings.egg
 								&& !player
-										.hasPermission("entitymanager.chickeneggs")) {
+										.hasPermission("entitymanager.throw.chickeneggs")) {
 							e.setCancelled(true);
 							messager(e);
 							return;
@@ -71,7 +78,7 @@ public class ThrowListener implements Listener {
 					} else if (item.getType() == Material.ENDER_PEARL) {
 						if (Settings.pearl
 								&& !player
-										.hasPermission("entitymanager.enderpearls")) {
+										.hasPermission("entitymanager.throw.enderpearls")) {
 							e.setCancelled(true);
 							messager(e);
 							return;
@@ -79,14 +86,15 @@ public class ThrowListener implements Listener {
 					} else if (item.getType() == Material.EYE_OF_ENDER) {
 						if (Settings.eye
 								&& !player
-										.hasPermission("entitymanager.endereyes")) {
+										.hasPermission("entitymanager.throw.endereyes")) {
 							e.setCancelled(true);
 							messager(e);
 							return;
 						}
 					} else if (item.getType() == Material.BOAT) {
 						if (Settings.boatz
-								&& !player.hasPermission("entitymanager.boats")) {
+								&& !player
+										.hasPermission("entitymanager.throw.boats")) {
 							e.setCancelled(true);
 							messager(e);
 							return;
@@ -94,7 +102,7 @@ public class ThrowListener implements Listener {
 					} else if (item.getType() == Material.MINECART) {
 						if (Settings.cartz
 								&& !player
-										.hasPermission("entitymanager.minecarts")) {
+										.hasPermission("entitymanager.throw.minecarts")) {
 							e.setCancelled(true);
 							messager(e);
 							return;
@@ -102,7 +110,7 @@ public class ThrowListener implements Listener {
 					} else if (item.getType() == Material.POTION) {
 						if (Settings.potion
 								&& !player
-										.hasPermission("entitymanager.potions")) {
+										.hasPermission("entitymanager.throw.potions")) {
 							e.setCancelled(true);
 							messager(e);
 							return;
@@ -113,7 +121,6 @@ public class ThrowListener implements Listener {
 			} // World
 		}
 	}
-
 
 	/**
 	 * Alerts player they cant do an action.
@@ -133,7 +140,7 @@ public class ThrowListener implements Listener {
 					+ e.getItem().getType().toString().toLowerCase());
 		}
 		if (Settings.alertz) {
-			for (Player  p : player.getServer().getOnlinePlayers()) {
+			for (Player p : player.getServer().getOnlinePlayers()) {
 				if (p.hasPermission("entitymanager.admin")) {
 					p.sendMessage(ChatColor.GREEN + "[EM] "
 							+ ChatColor.DARK_RED
