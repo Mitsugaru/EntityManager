@@ -1,41 +1,21 @@
-
-#  EntityManager Configuration 3.6
+#  EntityManager Configuration 3.6.2
 #  http://dev.bukkit.org/server-mods/entitymanager/pages/configuration/
-#  Advanced-Mob-Remover removes disabled mobs when chunks load and unload, this may cause lag for some servers, recommended to only be used after you make changes to the disabled mobs section of config, otherwise its a waste of server resources.
-#####
-
-#
-#   General settings for EntityManager
-###
+#  For help on the configuration go to the url above.
 EntityManager:
   Login-MOTD: true
   Send-Alerts: true
   Metrics: true
   Logging: true
   Advanced-Mob-Remover: false
-#
-# Put the names of the worlds you want the plugin to work in
-# Worlds not in this list will be completely ignored
-### 
 World:
   All: true
   Worlds:
   - world
   - world_nether
   - world_end
-
-#
-# Settings for EXP drops and Enchanting
-# You can disable enchanting to require permissions to enchant
-# You can disable experience so exp orbs never drop
-###
 Disable:
   Experience: false
   Enchanting: false
-
-#
-# Settings for EntityManager blocking 
-###
 block:
   Actions:
     zombie-door-break: false
@@ -45,10 +25,6 @@ block:
     fishing: false
     arrows: false
     crop-damage: false
-#
-# Block the dispense of the item completely
-# Add items to the blacklist and they won't dispense either
-###
   Dispense:
     SpawnerEggs: true
     ChickenEggs: true
@@ -58,12 +34,6 @@ block:
     Items:
     - 7
     - 57
-
-#
-# Block players from throwing the below items
-# If true, player needs to permission to use the below items
-###
-
   Throw:
     XpBottles: true
     FireCharges: true
@@ -71,20 +41,10 @@ block:
     EnderPearls: false
     EnderEyes: false
     Potions: false
-
-#
-# Block Entities from being placing
-###
   Entities:
     Boats: false
     Minecarts: false
     Paintings: false
-
-#
-# Control the dropping of items in:
-# Gamemodes, on death, when a block is broken
-# You can make blacklisted items that are blocked from players without permission
-###
   ItemDrop:
     Creative-mode: true
     Survival-mode: false
@@ -94,28 +54,13 @@ block:
     - 57
   Place:
     Dragon-Eggs: true
-#
-# Block fire from igniting portals
-###
   Creation-of:
     portals: false
-
-
-
-#
-# Used when a player uses an monster egg that isnt blocked
-# Uses vault to charge them per use , if vault isnt installed, economy doesn't matter
-###
 Economy:
   charge:
     monster: 15
     animal: 5
     npc: 10
-
-#
-# Disabling an egg makes the egg be blocked unless:
-# The player has permission for that egg
-###
 disabled:
   eggs:
     creeper: true
@@ -139,12 +84,6 @@ disabled:
     mooshroom: false
     ocelot: false
     villager: true
-
-#
-# Disabling an mob makes the mob completely blocked from the world
-# -Remember all aspects of EntityManager are with the World list at the top
-# Once you reload, the mobs will disappear rather quickly, but not immediately
-###
   mobs:
     creeper: false 
     skeleton: false
