@@ -1,7 +1,5 @@
 package net.milkycraft.api;
 
-import java.util.List;
-
 import net.milkycraft.configuration.Settings;
 
 import org.bukkit.ChatColor;
@@ -12,23 +10,24 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.inventory.ItemStack;
 
+/**
+ * The Class DropManager.
+ */
 public class DropManager implements Listener {
 
 	/** The Constant instance. */
-	private final static DropManager instance = new DropManager();
-
+	protected static final DropManager instance = new DropManager();
+	
 	/**
 	 * On attempted item drop.
-	 * 
-	 * @param e
-	 *            the e
+	 *
+	 * @param e the e
 	 */
-	@EventHandler(priority = EventPriority.LOWEST)
+	@EventHandler(priority = EventPriority.HIGH)
 	public void onAttemptedItemDrop(PlayerDropItemEvent e) {
 		if (e.getPlayer() == null) {
 			return;
@@ -40,9 +39,7 @@ public class DropManager implements Listener {
 		final Player player = e.getPlayer();
 		final String mode = e.getPlayer().getGameMode().toString()
 				.toLowerCase();
-		final List<Integer> bitems = Settings.bitems;
-		final List<String> worldz = Settings.worlds;
-		for (String worldname : worldz) {
+		for (String worldname : Settings.worlds) {
 			if (player.getWorld().getName().equals(worldname)) {
 				if (player.getGameMode() == GameMode.CREATIVE) {
 					if (!player.hasPermission("entitymanager.creative.drop")
@@ -66,7 +63,7 @@ public class DropManager implements Listener {
 						return;
 					}
 				}
-				for (Integer bitem : bitems) {
+				for (Integer bitem : Settings.bitems) {
 					if (e.getItemDrop().getItemStack().getTypeId() == bitem) {
 						if (!player
 								.hasPermission("entitymanager.bypass.blacklist")) {
@@ -94,9 +91,7 @@ public class DropManager implements Listener {
 	@EventHandler(priority = EventPriority.LOW)
 	public void onEntityDeath(EntityDeathEvent e) {
 		final Entity player = e.getEntity();
-		final List<Integer> bitems = Settings.bitems;
-		final List<String> worldz = Settings.worlds;
-		for (String worldname : worldz) {
+		for (String worldname : Settings.worlds) {
 			if (e.getEntity().getWorld().getName().equals(worldname)) {
 				if (Settings.onDeath) {
 					e.getDrops().clear();
@@ -108,7 +103,7 @@ public class DropManager implements Listener {
 				 * blacklisted drops If its any other entity, remove the blocked
 				 * items from there droppings
 				 */
-				for (final Integer bitem : bitems) {
+				for (Integer bitem : Settings.bitems) {
 					if (e.getEntity() instanceof Player) {
 						if (!((Player) player)
 								.hasPermission("entitymanager.bypass.blacklist")) {
@@ -121,38 +116,40 @@ public class DropManager implements Listener {
 			}
 		}
 	}
-
+	
 	/**
-	 * On block break.
-	 * 
-	 * @param e
-	 *            the e
+	 * Adds a item to the item drop blacklist.
+	 *
+	 * @param itemid the item id of the item / block you want to block from being dropped
+	 * @deprecated Only way for method to reflect changes is to reload server.
 	 */
-	@EventHandler(priority = EventPriority.LOWEST)
-	public void onBlockBreak(BlockBreakEvent e) {
-		final List<String> worldz = Settings.worlds;
-		final List<Integer> bitems = Settings.bitems;
-		for (String worldname : worldz) {
-			if (e.getBlock().getWorld().getName().equals(worldname)) {
-				if (Settings.bDestroy
-						&& !e.getPlayer().hasPermission(
-								"entitymanager.block.drop")) {
-					e.getBlock().getDrops().clear();
-					return;
-				}
-				for (final Integer bitem : bitems) {
-					if (e.getBlock().getTypeId() == bitem) {
-						e.getBlock().getDrops().remove(bitem);
-					}
-				}
-			}
+	public void addBitem(Integer itemid) {
+		if(itemid == null || itemid == 0) {
+			return;
 		}
+		Settings.getConfig().getIntegerList("block.ItemDrop.Blacklisted-items").add(itemid);
+	}
+	
+	/**
+	 * Adds a item to the dispenser blacklist.
+	 *
+	 * @param itemid the item id of the item / block you want to block from being dispensed
+	 * @deprecated Only way for method to reflect changes is to reload server.
+	 */
+	public void addBDItem(Integer itemid) {
+		if(itemid == null || itemid == 0) {
+			return;
+		}
+		Settings.getConfig().getIntegerList("block.Dispense.Items").add(itemid);
 	}
 
 	/**
 	 * Gets the drop manager.
-	 * 
-	 * @return The dropmanager, so far nothing to get...
+	 * @author milkywayz
+	 * @category DropManager
+	 * @since 3.5ish
+	 * @see DropManager
+	 * @return the drop manager class
 	 */
 	public static DropManager getDropManager() {
 		return instance;
