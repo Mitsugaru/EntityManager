@@ -2,52 +2,59 @@ package net.milkycraft.configuration;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 import net.milkycraft.EntityManager;
 
 import org.bukkit.configuration.file.FileConfiguration;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ConfigLoader.
+ */
 public abstract class ConfigLoader {
 
 	/** The config file. */
 	protected static File configFile;
-
+	
 	/** The data folder. */
 	protected static File dataFolder;
-
+	
 	/** The plugin. */
 	protected final EntityManager plugin;
-
+	
 	/** The config. */
 	protected static FileConfiguration config;
-
+	
 	/** The file name. */
-	protected String fileName;
+	protected static String fileName;
+	
+	/** The resource. */
+	protected static InputStream resource;
 
 	/**
 	 * Instantiates a new config loader.
-	 * 
-	 * @param plugin
-	 *            the plugin
-	 * @param fileName
-	 *            the file name
+	 *
+	 * @param plugin the plugin
+	 * @param fileName the file name
 	 */
 	public ConfigLoader(EntityManager plugin, String fileName) {
 		this.plugin = plugin;
-		this.fileName = fileName;
+		ConfigLoader.fileName = fileName;
 		dataFolder = plugin.getDataFolder();
 		configFile = new File(dataFolder, File.separator + fileName);
+		resource = plugin.getResource(fileName);
 	}
 
 	/**
-	 * Load the config file.
+	 * Load.
 	 */
 	protected abstract void load();
 
 	/**
-	 * Save the config file.
+	 * Save config.
 	 */
-	private static void saveConfig() {
+	public static void saveConfig() {
 		try {
 			config.save(configFile);
 		} catch (final IOException e) {
@@ -56,7 +63,7 @@ public abstract class ConfigLoader {
 	}
 
 	/**
-	 * Add the defaults to the config file.
+	 * Adds the defaults.
 	 */
 	protected void addDefaults() {
 
@@ -64,9 +71,9 @@ public abstract class ConfigLoader {
 		config.options().copyDefaults(true);
 		saveConfig();
 	}
-
+	
 	/**
-	 * Load the keys from this config file.
+	 * Load keys.
 	 */
 	protected abstract void loadKeys();
 
