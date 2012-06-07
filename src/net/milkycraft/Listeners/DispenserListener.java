@@ -1,9 +1,6 @@
 package net.milkycraft.listeners;
 
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
+import net.milkycraft.EntityManager;
 import net.milkycraft.configuration.Settings;
 
 import org.bukkit.Bukkit;
@@ -14,9 +11,19 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockDispenseEvent;
 
-public class DispenserListener implements Listener {
-	private final List<Integer> itemz = Settings.items;
-	private final List<String> worldz = Settings.worlds;
+// TODO: Auto-generated Javadoc
+/**
+ * The listener interface for receiving dispenser events.
+ * The class that is interested in processing a dispenser
+ * event implements this interface, and the object created
+ * with that class is registered with a component using the
+ * component's <code>addDispenserListener<code> method. When
+ * the dispenser event occurs, that object's appropriate
+ * method is invoked.
+ *
+ * @see DispenserEvent
+ */
+public class DispenserListener extends EntityManager implements Listener {
 	/** The red. */
 	private final ChatColor red = ChatColor.DARK_RED;
 
@@ -26,9 +33,6 @@ public class DispenserListener implements Listener {
 	/** The green. */
 	private final ChatColor green = ChatColor.GREEN;
 
-	/** The Constant log. */
-	private final static Logger log = Logger.getLogger("Minecraft");
-
 	/**
 	 * On dispense.
 	 * 
@@ -37,8 +41,8 @@ public class DispenserListener implements Listener {
 	 */
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onDispense(BlockDispenseEvent event) {
-		final Integer item = event.getItem().getTypeId();	
-		for (String worldname : worldz) {
+		final Integer item = event.getItem().getTypeId();
+		for (String worldname : Settings.worlds) {
 			if (Settings.world
 					|| event.getBlock().getWorld().getName().equals(worldname)) {
 				/* Monster egg */
@@ -81,8 +85,24 @@ public class DispenserListener implements Listener {
 						return;
 					}
 				}
+				/* Water */
+				else if (item == 8 || item == 9) {
+					if (Settings.water) {
+						event.setCancelled(true);
+						alert(event);
+						return;
+					}
+				}
+				/* Lava */
+				else if (item == 10 || item == 11) {
+					if (Settings.lava) {
+						event.setCancelled(true);
+						alert(event);
+						return;
+					}
+				}
 				/* Dispense blacklist check */
-				for (Integer itemx : itemz) {
+				for (Integer itemx : Settings.items) {
 					if (event.getItem().getTypeId() == itemx) {
 						event.setCancelled(true);
 						alert(event);
@@ -104,8 +124,8 @@ public class DispenserListener implements Listener {
 		final int zz = (int) event.getBlock().getLocation().getZ();
 		final String item = event.getItem().getType().toString().toLowerCase();
 		if (Settings.logging) {
-			log.log(Level.WARNING, "[EM]" + "Failed dispense of " + item
-					+ " at: " + xx + "," + yy + "," + zz + ".");
+			writeLog("[EM]" + "Failed dispense of " + item + " at: " + xx + ","
+					+ yy + "," + zz + ".");
 		}
 		if (Settings.alertz) {
 			for (Player p : Bukkit.getServer().getOnlinePlayers()) {
@@ -118,4 +138,3 @@ public class DispenserListener implements Listener {
 		}
 	}
 }
-
