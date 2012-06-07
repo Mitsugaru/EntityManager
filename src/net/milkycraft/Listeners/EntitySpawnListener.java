@@ -1,7 +1,6 @@
 package net.milkycraft.listeners;
 
-import java.util.List;
-
+import net.milkycraft.EntityManager;
 import net.milkycraft.configuration.Settings;
 
 import org.bukkit.entity.Entity;
@@ -15,9 +14,23 @@ import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.event.world.ChunkLoadEvent;
 import org.bukkit.event.world.ChunkUnloadEvent;
 
-public class EntitySpawnListener implements Listener {
+// TODO: Auto-generated Javadoc
+/**
+ * The listener interface for receiving entitySpawn events.
+ * The class that is interested in processing a entitySpawn
+ * event implements this interface, and the object created
+ * with that class is registered with a component using the
+ * component's <code>addEntitySpawnListener<code> method. When
+ * the entitySpawn event occurs, that object's appropriate
+ * method is invoked.
+ *
+ * @see EntitySpawnEvent
+ */
+public class EntitySpawnListener extends EntityManager implements Listener {
+	
+	/** The counter. */
+	private int counter = 0;
 
-	private final List<String> worldz = Settings.worlds;
 	/**
 	 * On spawn.
 	 * 
@@ -26,7 +39,7 @@ public class EntitySpawnListener implements Listener {
 	 */
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onSpawn(CreatureSpawnEvent e) {
-		for (String worldname : worldz) {
+		for (String worldname : Settings.worlds) {
 			if (Settings.world
 					|| e.getEntity().getWorld().getName().equals(worldname)) {
 				e.setCancelled(Settings.getConfig().getBoolean(
@@ -53,7 +66,7 @@ public class EntitySpawnListener implements Listener {
 		if (!Settings.amrs) {
 			return;
 		}
-		for (String worldname : worldz) {
+		for (String worldname : Settings.worlds) {
 			if (Settings.world
 					|| e.getEntity().getWorld().getName().equals(worldname)) {
 				final String mob = e.getEntityType().toString().toLowerCase();
@@ -61,6 +74,7 @@ public class EntitySpawnListener implements Listener {
 					final Entity target = e.getTarget();
 					if (target instanceof Player) {
 						e.getEntity().remove();
+						return;
 					}
 				}
 			}
@@ -78,12 +92,13 @@ public class EntitySpawnListener implements Listener {
 		if (!Settings.amrs) {
 			return;
 		}
-		for (String worldname : worldz) {
+		for (String worldname : Settings.worlds) {
 			if (Settings.world
 					|| e.getEntity().getWorld().getName().equals(worldname)) {
 				final String mob = e.getEntityType().toString().toLowerCase();
 				if (Settings.getConfig().getBoolean("disabled.mobs." + mob)) {
 					e.getEntity().remove();
+					return;
 				}
 			}
 		}
@@ -100,13 +115,22 @@ public class EntitySpawnListener implements Listener {
 		if (!Settings.amrs) {
 			return;
 		}
-		for (String worldname : worldz) {
+		for (String worldname : Settings.worlds) {
 			if (Settings.world || e.getWorld().getName().equals(worldname)) {
 				// Iterate through the entities in the chunk
 				for (Entity en : e.getChunk().getEntities()) {
 					final String mob = en.getType().toString().toLowerCase();
 					if (Settings.getConfig().getBoolean("disabled.mobs." + mob)) {
 						en.remove();
+						counter++;
+						if (Settings.logging && counter >= 10) {
+							writeWarn("[EM] 10 entities were removed using Advanced Mob Removal System!");
+							writeWarn("[EM] Remember to turn off AMRS shortly after config changes");
+							writeWarn("[EM] AMRS can cause lag because it scans through chunks!");
+							counter -= 10;
+						} else if (counter > 10) {
+							counter -= 20;
+						}
 					}
 				}
 			}
@@ -124,13 +148,22 @@ public class EntitySpawnListener implements Listener {
 		if (!Settings.amrs) {
 			return;
 		}
-		for (String worldname : worldz) {
+		for (String worldname : Settings.worlds) {
 			if (Settings.world || e.getWorld().getName().equals(worldname)) {
 				// Iterate through the entities in the chunk
 				for (Entity en : e.getChunk().getEntities()) {
 					final String mob = en.getType().toString().toLowerCase();
 					if (Settings.getConfig().getBoolean("disabled.mobs." + mob)) {
 						en.remove();
+						counter++;
+						if (Settings.logging && counter == 10) {
+							writeWarn("[EM] 10 entities were removed using Advanced Mob Removal System!");
+							writeWarn("[EM] Remember to turn off AMRS shortly after config changes");
+							writeWarn("[EM] AMRS can cause lag because it scans through chunks!");
+							counter -= 10;
+						} else if (counter > 10) {
+							counter -= 20;
+						}
 					}
 				}
 			}
