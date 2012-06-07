@@ -1,8 +1,6 @@
 package net.milkycraft.listeners;
 
-import java.util.List;
-import java.util.logging.Logger;
-
+import net.milkycraft.EntityManager;
 import net.milkycraft.configuration.Settings;
 
 import org.bukkit.ChatColor;
@@ -27,10 +25,20 @@ import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.event.world.PortalCreateEvent;
 import org.bukkit.event.world.PortalCreateEvent.CreateReason;
 
-public class EntitiesListener implements Listener {
-	/** The log. */
-	private static Logger log = Logger.getLogger("Minecraft");
-	private final List<String> worldz = Settings.worlds;
+// TODO: Auto-generated Javadoc
+/**
+ * The listener interface for receiving entities events.
+ * The class that is interested in processing a entities
+ * event implements this interface, and the object created
+ * with that class is registered with a component using the
+ * component's <code>addEntitiesListener<code> method. When
+ * the entities event occurs, that object's appropriate
+ * method is invoked.
+ *
+ * @see EntitiesEvent
+ */
+public class EntitiesListener extends EntityManager implements Listener {
+
 	/**
 	 * Door break.
 	 * 
@@ -39,11 +47,12 @@ public class EntitiesListener implements Listener {
 	 */
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void DoorBreak(EntityBreakDoorEvent e) {
-		for (String worldname : worldz) {
+		for (String worldname : Settings.worlds) {
 			if (e.getBlock().getWorld().getName().equals(worldname)
 					|| Settings.world) {
 				if (Settings.doorBreak) {
 					e.setCancelled(true);
+					return;
 				}
 			}
 		}
@@ -58,7 +67,7 @@ public class EntitiesListener implements Listener {
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void PlayerDamage(EntityDamageEvent e) {
 		if (e.getCause() == DamageCause.FALL) {
-			for (String worldname : worldz) {
+			for (String worldname : Settings.worlds) {
 				if (e.getEntity().getWorld().getName().equals(worldname)
 						|| Settings.world) {
 					if (e.getEntity() instanceof Player) {
@@ -100,9 +109,9 @@ public class EntitiesListener implements Listener {
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onEntityRecievingDamage(EntityDamageByEntityEvent e) {
 		final Entity Damaged = e.getEntity();
-		for (String worldname : worldz) {
-			if (Damaged.getWorld().getName().equals(worldname)
-					|| Settings.world) {
+		for (String worldname : Settings.worlds) {
+			if (Settings.world
+					|| Damaged.getWorld().getName().equals(worldname)) {
 				if (Damaged instanceof LivingEntity) {
 					if (!(Damaged instanceof Player)) {
 						if (e.getDamager() instanceof Player) {
@@ -118,7 +127,7 @@ public class EntitiesListener implements Listener {
 							if (Settings.pvp) {
 								if (e.getDamager() instanceof Player) {
 									final Player p = (Player) e.getDamager();
-									if (!p.hasPermission("entitymanager.pvp")) {
+									if (!p.hasPermission("entitymanager.allow.pvp")) {
 										e.setCancelled(true);
 										p.sendMessage(ChatColor.GREEN
 												+ "[EM]"
@@ -146,7 +155,7 @@ public class EntitiesListener implements Listener {
 	 */
 	@EventHandler(priority = EventPriority.LOW)
 	public void hunger(FoodLevelChangeEvent e) {
-		for (String worldname : worldz) {
+		for (String worldname : Settings.worlds) {
 			if (e.getEntity().getWorld().getName().equals(worldname)
 					|| Settings.world) {
 				if (e.getEntity().hasPermission("entitymanager.nohunger")) {
@@ -165,7 +174,7 @@ public class EntitiesListener implements Listener {
 	 */
 	@EventHandler
 	public void onPortalCreate(PortalCreateEvent e) {
-		for (String worldname : worldz) {
+		for (String worldname : Settings.worlds) {
 			if (e.getWorld().getName().equals(worldname) || Settings.world) {
 				if (e.getReason() == CreateReason.FIRE) {
 					if (Settings.portals) {
@@ -186,13 +195,13 @@ public class EntitiesListener implements Listener {
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onPaintingPlace(PaintingPlaceEvent e) {
 		if (!Settings.world) {
-			for (String worldname : worldz) {
+			for (String worldname : Settings.worlds) {
 				if (!e.getPlayer().getWorld().getName().equals(worldname)) {
 					return;
 				} else {
 					if (Settings.paintz
 							&& !e.getPlayer().hasPermission(
-									"entitymanager.painting")) {
+									"entitymanager.allow.paintings")) {
 						e.setCancelled(true);
 						e.getPlayer()
 								.sendMessage(
@@ -201,7 +210,7 @@ public class EntitiesListener implements Listener {
 												+ ChatColor.RED
 												+ "You dont have permission to place paintings");
 						if (Settings.logging) {
-							log.info(e.getPlayer().getDisplayName()
+							writeLog(e.getPlayer().getDisplayName()
 									+ " tried to place a painting");
 							return;
 						}
@@ -212,20 +221,21 @@ public class EntitiesListener implements Listener {
 	}
 
 	/**
-	 * Retarded check, sort of a waste of space. 
+	 * Retarded check, sort of a waste of space.
 	 * 
 	 * @param e
 	 *            the e
 	 */
 	public void onPigZap(PigZapEvent e) {
-		for (String wname : worldz) {
+		for (String wname : Settings.worlds) {
 			if (Settings.world
 					|| e.getEntity().getWorld().getName().equals(wname)) {
 				if (Settings.getConfig().getBoolean("disabled.mobs.pig_zombie")) {
 					e.setCancelled(true);
 					e.getEntity().remove();
 					if (Settings.logging) {
-						log.info("[EM] pigmans disabled so zapped pig was removed");
+						writeLog("[EM] pigmans disabled so zapped pig was removed");
+						return;
 					}
 				}
 			}
@@ -242,19 +252,20 @@ public class EntitiesListener implements Listener {
 	public void onFishingAttempt(PlayerFishEvent e) {
 		final Player player = e.getPlayer();
 		if (!Settings.world) {
-			for (String worldname : worldz) {
+			for (String worldname : Settings.worlds) {
 				if (!player.getWorld().getName().equals(worldname)) {
 					return;
 				} else {
 					if (Settings.fishing
-							&& !player.hasPermission("entitymanager.fishing")) {
+							&& !player.hasPermission("entitymanager.allow.fishing")) {
 						e.setCancelled(true);
 						player.sendMessage(ChatColor.GREEN + "[EM] "
 								+ ChatColor.RED
 								+ "You dont have permission to fish");
 						if (Settings.logging) {
-							log.info(e.getPlayer().getDisplayName()
+							writeLog(e.getPlayer().getDisplayName()
 									+ " tried to fish");
+							return;
 						}
 					}
 				}
@@ -269,13 +280,13 @@ public class EntitiesListener implements Listener {
 	 *            the e
 	 */
 	public void onArrowShoot(EntityShootBowEvent e) {
-		for (String worldname : worldz) {
+		for (String worldname : Settings.worlds) {
 			if (Settings.world
 					|| e.getEntity().getWorld().getName().equals(worldname)) {
 				if (e.getEntity() instanceof Player) {
 					final Player p = (Player) e.getEntity();
 					if (Settings.arrowz
-							&& !p.hasPermission("entitymanager.arrows")) {
+							&& !p.hasPermission("entitymanager.allow.arrows")) {
 						e.setCancelled(true);
 						p.sendMessage(ChatColor.GREEN + "[EM] " + ChatColor.RED
 								+ "You dont have permission to shoot arrows");
@@ -286,15 +297,21 @@ public class EntitiesListener implements Listener {
 		}
 	}
 
+	/**
+	 * On crop destroy.
+	 *
+	 * @param event the event
+	 */
 	public void onCropDestroy(EntityInteractEvent event) {
-			for (String worldname : worldz) {
-				if (Settings.world || event.getBlock().getWorld().getName().equals(worldname)) {
-					if (Settings.godcrops) {
-						event.setCancelled(true);
-					}
+		for (String worldname : Settings.worlds) {
+			if (Settings.world
+					|| event.getBlock().getWorld().getName().equals(worldname)) {
+				if (Settings.godcrops) {
+					event.setCancelled(true);
+					return;
+				}
 			}
 		}
 	}
 
 }
-
