@@ -1,8 +1,6 @@
 package net.milkycraft.listeners;
 
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import net.milkycraft.EntityManager;
 import net.milkycraft.configuration.Settings;
@@ -21,13 +19,32 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-public class SpawnEggListener implements Listener {
-	/** The log. */
-	private static Logger log = Logger.getLogger("Minecraft");
-	private final List<String> worldz = Settings.worlds;
-	private final static int monster = Settings.mons;
-	private final static int animal = Settings.animal;
-	private final static int npc = Settings.npc;
+// TODO: Auto-generated Javadoc
+/**
+ * The listener interface for receiving spawnEgg events.
+ * The class that is interested in processing a spawnEgg
+ * event implements this interface, and the object created
+ * with that class is registered with a component using the
+ * component's <code>addSpawnEggListener<code> method. When
+ * the spawnEgg event occurs, that object's appropriate
+ * method is invoked.
+ *
+ * @see SpawnEggEvent
+ */
+public class SpawnEggListener extends EntityManager implements Listener {
+	
+	/** The worldz. */
+	private List<String> worldz = Settings.worlds;
+	
+	/** The monster. */
+	private static int monster = Settings.mons;
+	
+	/** The animal. */
+	private static int animal = Settings.animal;
+	
+	/** The npc. */
+	private static int npc = Settings.npc;
+
 	/**
 	 * On spawn attempt.
 	 * 
@@ -45,7 +62,7 @@ public class SpawnEggListener implements Listener {
 		if (e.getItem() == null) {
 			return;
 		}
-		if(!(e.getItem().getTypeId() == 383)) {
+		if (!(e.getItem().getTypeId() == 383)) {
 			return;
 		}
 		if (e.getClickedBlock() == null) {
@@ -63,10 +80,17 @@ public class SpawnEggListener implements Listener {
 		for (String wname : worldz) {
 			if (Settings.world || player.getWorld().getName().equals(wname)) {
 				if (player.getItemInHand().getTypeId() == 383) {
-					if (!EntityManager.worldguardPlugin.canBuild(player, loc)) {
+					if (!worldguardPlugin.canBuild(player, loc)) {
 						e.setCancelled(true);
 						player.sendMessage(ChatColor.YELLOW
 								+ "You cant use spawner eggs in this region!");
+						if (Settings.logging) {
+							writeLog(e.getPlayer()
+									+ " tried to throw a spawner egg in "
+									+ worldguardPlugin.getRegionManager(
+											e.getPlayer().getWorld())
+											.getApplicableRegions(loc));
+						}
 						return;
 					}
 
@@ -91,14 +115,13 @@ public class SpawnEggListener implements Listener {
 									// to be used
 							if (!player
 									.hasPermission("entitymanager.bypass.charge")
-									&& EntityManager.econ != null) {
+									&& econ != null) {
 								if (seg.getEntityBreed().getCategory() == EntityCategory.ANIMAL) {
-									EntityManager.econ.withdrawPlayer(playa, animal);
+									econ.withdrawPlayer(playa, animal);
 								} else if (seg.getEntityBreed().getCategory() == EntityCategory.MONSTER) {
-									EntityManager.econ
-											.withdrawPlayer(playa, monster);
+									econ.withdrawPlayer(playa, monster);
 								} else if (seg.getEntityBreed().getCategory() == EntityCategory.NPC) {
-									EntityManager.econ.withdrawPlayer(playa, npc);
+									econ.withdrawPlayer(playa, npc);
 								} // end of specific charge block
 							} // end of bypass perm charge block
 						} // End of charges
@@ -180,7 +203,7 @@ public class SpawnEggListener implements Listener {
 											+ "[EM]"
 											+ "You don't have permission to place ender crystals!");
 					if (Settings.logging) {
-						log.log(Level.WARNING, "[EntityManager] "
+						writeLog("[EntityManager] "
 								+ player.getDisplayName().toLowerCase()
 								+ " tried to place a Ender Crystal");
 					}
@@ -197,7 +220,7 @@ public class SpawnEggListener implements Listener {
 	 */
 	public final void alerter(SpawnEggEvent ev) {
 		if (Settings.logging) {
-			log.log(Level.WARNING, "[EntityManager] "
+			writeWarn("[EntityManager] "
 					+ ev.getPlayer().getDisplayName().toLowerCase()
 					+ " tried to use an "
 					+ ev.getEntityBreed().toString().toLowerCase() + " egg");
