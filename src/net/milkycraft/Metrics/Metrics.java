@@ -49,6 +49,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 
+// TODO: Auto-generated Javadoc
 /**
  * <p>
  * The metrics class obtains data about a plugin and submits statistics about it
@@ -63,7 +64,7 @@ import org.bukkit.plugin.PluginDescriptionFile;
  * void start(); <br/>
  * </code>
  */
-public class Metrics {
+public final class Metrics {
 
 	/** The current revision number. */
 	private final static int REVISION = 5;
@@ -374,5 +375,3 @@ public class Metrics {
 		return URLEncoder.encode(text, "UTF-8");
 	}
 }
-
-
