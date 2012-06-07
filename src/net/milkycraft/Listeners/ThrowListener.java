@@ -1,9 +1,6 @@
 package net.milkycraft.listeners;
 
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
+import net.milkycraft.EntityManager;
 import net.milkycraft.configuration.Settings;
 
 import org.bukkit.ChatColor;
@@ -16,16 +13,24 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
-public class ThrowListener implements Listener {
-
-	public final static Logger log = Logger.getLogger("Minecraft");
-	private final List<String> worldz = Settings.worlds;
+// TODO: Auto-generated Javadoc
+/**
+ * The listener interface for receiving throw events.
+ * The class that is interested in processing a throw
+ * event implements this interface, and the object created
+ * with that class is registered with a component using the
+ * component's <code>addThrowListener<code> method. When
+ * the throw event occurs, that object's appropriate
+ * method is invoked.
+ *
+ * @see ThrowEvent
+ */
+public class ThrowListener extends EntityManager implements Listener {
 
 	/**
-	 * On attempted throw
-	 * 
-	 * @param e
-	 *            the PlayerInteractEvent
+	 * On attempted throw.
+	 *
+	 * @param e the PlayerInteractEvent
 	 */
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void OnThrow(PlayerInteractEvent e) {
@@ -43,11 +48,10 @@ public class ThrowListener implements Listener {
 				|| item.getType() == Material.ENDER_PEARL
 				|| item.getType() == Material.EYE_OF_ENDER
 				|| item.getType() == Material.BOAT
-				|| item.getType() == Material.POTION 
-				|| item.getType() == Material.MINECART)) {
+				|| item.getType() == Material.POTION || item.getType() == Material.MINECART)) {
 			return;
 		}
-		for (String worldname : worldz) {
+		for (String worldname : Settings.worlds) {
 			if (Settings.world || player.getWorld().getName().equals(worldname)) {
 				if (e.getAction() == Action.RIGHT_CLICK_BLOCK
 						|| e.getAction() == Action.RIGHT_CLICK_AIR) {
@@ -134,8 +138,7 @@ public class ThrowListener implements Listener {
 				+ "You dont have permission for "
 				+ e.getItem().getType().toString().toLowerCase() + "'s.");
 		if (Settings.logging) {
-			log.log(Level.WARNING, "[EntityManager] "
-					+ player.getDisplayName().toLowerCase()
+			writeLog("[EntityManager] " + player.getDisplayName().toLowerCase()
 					+ " tried to use a "
 					+ e.getItem().getType().toString().toLowerCase());
 		}
