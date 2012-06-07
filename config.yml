@@ -1,4 +1,4 @@
-#  EntityManager Configuration 3.6.2
+#  EntityManager Configuration 3.7
 #  http://dev.bukkit.org/server-mods/entitymanager/pages/configuration/
 #  For help on the configuration go to the url above.
 EntityManager:
@@ -31,6 +31,8 @@ block:
     FireBalls: true
     XpBottles: true
     Potions: true
+    Water-Blocks: true
+    Lava-Blocks: true
     Items:
     - 7
     - 57
@@ -48,14 +50,22 @@ block:
   ItemDrop:
     Creative-mode: true
     Survival-mode: false
-    On-Death: false
     Block-destroy: false
     Blacklisted-items:
     - 57
   Place:
     Dragon-Eggs: true
+    Ender-Chests: true
+    Trip-Wires: false
   Creation-of:
     portals: false
+Explosions:
+  Level: 0
+WorldManager:
+  Always: night
+  Worlds:
+  - add_a_world_u_always_want_to_be_night_or_whatever_you_pick
+  - add_a_world_u_always_want_to_be_night_or_whatever_you_pick
 Economy:
   charge:
     monster: 15
