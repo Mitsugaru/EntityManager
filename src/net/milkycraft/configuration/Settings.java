@@ -6,20 +6,42 @@ import net.milkycraft.EntityManager;
 
 import org.bukkit.configuration.file.FileConfiguration;
 
+/**
+ * The Class Settings.
+ */
 public class Settings extends ConfigLoader {
-	public static Boolean Motd, alertz, metrics, logging, amrs;
-	public static Boolean world;
-	public static Boolean totalexp, totalenchant;
+	
+	/** The totalenchant. */
+	public static Boolean Motd, alertz, metrics, logging, amrs, world,
+			totalexp, totalenchant;
+	public static String time;
+	/** The arrowz. */
 	public static Boolean doorBreak, enderPickup, pvp, mobdmg, fishing, arrowz;
-	public static Boolean MonsEggs, ChickEggs, Fballs, xBottz, potionz;
-	public static List<String> worlds;
-	public static List<Integer> items;
+	
+	/** The lava. */
+	public static Boolean MonsEggs, ChickEggs, Fballs, xBottz, potionz, water,
+			lava;
+	
+	/** The worlds. */
+	public static List<String> worlds, worldz;
+	
+	/** The bitems. */
+	public static List<Integer> items, bitems;
+	
+	/** The potion. */
 	public static Boolean xpbott, fire, egg, pearl, eye, potion;
+	
+	/** The paintz. */
 	public static Boolean boatz, cartz, paintz;
-	public static Boolean cDrop, sDrop, onDeath, bDestroy;
-	public static List<Integer> bitems;
-	public static Boolean portals;
-	public static Integer mons, animal, npc;
+	
+	/** The on death. */
+	public static Boolean cDrop, sDrop, onDeath;
+	
+	/** The tripwires. */
+	public static Boolean portals, tripwires;
+	
+	/** The npc. */
+	public static Integer mons, animal, npc, expwr;
 	/** Disabled eggs. */
 	public static Boolean creep, skele, spider, zombie, slime, ghast, pigman,
 			ender, cave, fish, blaze, cube, pig, sheep, cow, chick, squid,
@@ -29,8 +51,9 @@ public class Settings extends ConfigLoader {
 			pigmans, enders, caves, fishs, blazes, cubes, pigs, sheeps, cows,
 			chicks, squids, snow, dragons, iron, wolfs, mooshs, ocelots,
 			villas;
-	public static Boolean all, godcrops, dragegg;;
-
+	
+	/** The enderchest. */
+	public static Boolean all, godcrops, dragegg, enderchest;
 
 	/**
 	 * Instantiates a new settings.
@@ -65,9 +88,9 @@ public class Settings extends ConfigLoader {
 	 * @see net.milkycraft.configuration.ConfigLoader#loadKeys()
 	 */
 	@Override
-	protected void loadKeys() {
+	public void loadKeys() {
 		plugin.getLogger().info("Loading EntityManager config");
-	    Motd = config.getBoolean("EntityManager.Login-MOTD");
+		Motd = config.getBoolean("EntityManager.Login-MOTD");
 		alertz = config.getBoolean("EntityManager.Send-Alerts");
 		metrics = config.getBoolean("EntityManager.Metrics");
 		logging = config.getBoolean("EntityManager.Logging");
@@ -87,6 +110,8 @@ public class Settings extends ConfigLoader {
 		Fballs = config.getBoolean("block.Dispense.Fireballs");
 		xBottz = config.getBoolean("block.Dispense.XpBottles");
 		potionz = config.getBoolean("block.Dispense.Potions");
+		water = config.getBoolean("block.Dispense.Water-Blocks");
+		lava = config.getBoolean("block.Dispense.Lava-Blocks");
 		items = config.getIntegerList("block.Dispense.Items");
 		xpbott = config.getBoolean("block.Throw.XpBottles");
 		fire = config.getBoolean("block.Throw.FireCharges");
@@ -100,7 +125,6 @@ public class Settings extends ConfigLoader {
 		cDrop = config.getBoolean("block.ItemDrop.Creative-mode");
 		sDrop = config.getBoolean("block.ItemDrop.Survival-mode");
 		onDeath = config.getBoolean("block.ItemDrop.On-Death");
-		bDestroy = config.getBoolean("block.ItemDrop.Block-destroy");
 		bitems = config.getIntegerList("block.ItemDrop.Blacklisted-items");
 		portals = config.getBoolean("block.Creation-of.portals");
 		mons = config.getInt("Economy.charge.monster");
@@ -153,9 +177,14 @@ public class Settings extends ConfigLoader {
 		snow = config.getBoolean("disabled.mobs.snowman");
 		godcrops = config.getBoolean("block.Actions.crop-damage");
 		dragegg = config.getBoolean("block.Place.Dragon-Eggs");
-		if(worlds.size() > 10) {
-			EntityManager.log.info("[EntityManager] Woah, 10 worlds! Congratulations ^_^");
-		}
+		enderchest = config.getBoolean("block.Place.Ender-Chests");
+		tripwires = config.getBoolean("block.Place.Trip-Wires");
+		worldz = config.getStringList("WorldManager.Worlds");
+		expwr = config.getInt("Explosions.Level");
+		time = config.getString("WorldManager.Always");
+	}
+	public static final void save() {
+		saveConfig();
 	}
 
 	/**
@@ -163,10 +192,9 @@ public class Settings extends ConfigLoader {
 	 * ev.getEntityType().toLowerCase())
 	 * 
 	 * @return Return the config
-	 * @author milkywayz
 	 */
 	public static FileConfiguration getConfig() {
 		return config;
 	}
-
+	
 }
