@@ -8,12 +8,12 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
-public class EntityManagerAPI {
+/**
+ * The Class EntityManagerAPI.
+ */
+public class EntityManagerAPI extends EntityManager {
 	/** The Constant instance. */
 	private final static EntityManagerAPI instance = new EntityManagerAPI();
-
-	/** The Constant settings. */
-	private final static Settings settings = new Settings(EntityManager.p);
 
 	/**
 	 * Get if that player can use fishing poles.
@@ -370,12 +370,13 @@ public class EntityManagerAPI {
 	/**
 	 * Get if player has a permission dedicated to entitymanager Typical
 	 * permission: entitymanager.fishing or entitymanager.throw.xpbottles
-	 * 
+	 * @author milkywayz
+	 * @throws IllgalArgumentException if permission is null
+	 * @since 3.4
 	 * @param player
 	 *            The player
 	 * @param permission
-	 *            The second half of a permission node (.admin, .throw.xpbottle,
-	 *            etc)
+	 *            The second half of a permission node (eg: .throw.xpbottle)
 	 * @return wether player has permission or not for the specified permission
 	 */
 	public boolean hasEmPerms(Player player, String permission) {
@@ -387,19 +388,14 @@ public class EntityManagerAPI {
 	
 
 	/**
-	 * Gets the settings.
-	 * 
-	 * @return The settings class, EntityManager.getManager().getSettings()
-	 */
-	public Settings getSettings() {
-		return settings;
-	}
-
-	/**
 	 * Get this class so you can use the public values Proper use of API:
 	 * EntityManager.getManager().canSpawn() - For example...
 	 * 
 	 * @return The EntityManager Official API
+	 * @author milkywayz
+	 * @category API
+	 * @since 3.4
+	 * @see EntityManagerAPI
 	 */
 	public static EntityManagerAPI getManager() {
 		return instance;
