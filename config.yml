@@ -1,4 +1,4 @@
-#  EntityManager Configuration 3.7
+#  EntityManager Configuration 3.7.2
 #  http://dev.bukkit.org/server-mods/entitymanager/pages/configuration/
 #  For help on the configuration go to the url above.
 EntityManager:
@@ -7,15 +7,6 @@ EntityManager:
   Metrics: true
   Logging: true
   Advanced-Mob-Remover: false
-World:
-  All: true
-  Worlds:
-  - world
-  - world_nether
-  - world_end
-Disable:
-  Experience: false
-  Enchanting: false
 block:
   Actions:
     zombie-door-break: false
@@ -25,6 +16,8 @@ block:
     fishing: false
     arrows: false
     crop-damage: false
+    enchantment: false
+    exp-drops: false
   Dispense:
     SpawnerEggs: true
     ChickenEggs: true
@@ -57,15 +50,19 @@ block:
     Dragon-Eggs: true
     Ender-Chests: true
     Trip-Wires: false
+  Monster-Spawner:
+    Mob-Drops: false
+    Xp-Drops: false
   Creation-of:
     portals: false
 Explosions:
   Level: 0
 WorldManager:
+  Enabled: false
   Always: night
   Worlds:
-  - add_a_world_u_always_want_to_be_night_or_whatever_you_pick
-  - add_a_world_u_always_want_to_be_night_or_whatever_you_pick
+  - world
+  - world_nether
 Economy:
   charge:
     monster: 15
