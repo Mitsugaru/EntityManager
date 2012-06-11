@@ -1,29 +1,28 @@
 package net.milkycraft.configuration;
 
+import java.io.InputStream;
 import java.util.List;
 
 import net.milkycraft.EntityManager;
 
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 
 /**
  * The Class Settings.
  */
 public class Settings extends ConfigLoader {
-	
+	private FileConfiguration newConfig = null;
 	/** The totalenchant. */
 	public static Boolean Motd, alertz, metrics, logging, amrs, world,
 			totalexp, totalenchant;
 	public static String time;
 	/** The arrowz. */
-	public static Boolean doorBreak, enderPickup, pvp, mobdmg, fishing, arrowz;
+	public static Boolean doorBreak, enderPickup, pvp, mobdmg, fishing, arrowz, wmanager;
 	
 	/** The lava. */
 	public static Boolean MonsEggs, ChickEggs, Fballs, xBottz, potionz, water,
 			lava;
-	
-	/** The worlds. */
-	public static List<String> worlds, worldz;
 	
 	/** The bitems. */
 	public static List<Integer> items, bitems;
@@ -38,7 +37,7 @@ public class Settings extends ConfigLoader {
 	public static Boolean cDrop, sDrop, onDeath;
 	
 	/** The tripwires. */
-	public static Boolean portals, tripwires;
+	public static Boolean portals, tripwires, msdrops, msxp;
 	
 	/** The npc. */
 	public static Integer mons, animal, npc, expwr;
@@ -64,6 +63,7 @@ public class Settings extends ConfigLoader {
 	public Settings(EntityManager plugin) {
 		super(plugin, "config.yml");
 		config = plugin.getConfig();
+		saveIfNotExist();
 	}
 
 	/*
@@ -89,16 +89,15 @@ public class Settings extends ConfigLoader {
 	 */
 	@Override
 	public void loadKeys() {
-		plugin.getLogger().info("Loading EntityManager config");
+		plugin.writeLog("[EntityManager] Loading EntityManager config");
 		Motd = config.getBoolean("EntityManager.Login-MOTD");
 		alertz = config.getBoolean("EntityManager.Send-Alerts");
 		metrics = config.getBoolean("EntityManager.Metrics");
 		logging = config.getBoolean("EntityManager.Logging");
 		amrs = config.getBoolean("EntityManager.Advanced-Mob-Remover");
-		worlds = config.getStringList("World.Worlds");
-		world = config.getBoolean("World.All");
-		totalexp = config.getBoolean("Disable.Experience");
-		totalenchant = config.getBoolean("Disable.Enchanting");
+		world = WorldSettings.allworlds;
+		totalexp = config.getBoolean("block.Actions.exp-drops");
+		totalenchant = config.getBoolean("block.Actions.enchantmenet");
 		doorBreak = config.getBoolean("block.Actions.zombie-door-break");
 		enderPickup = config.getBoolean("block.Actions.ender-pickup");
 		pvp = config.getBoolean("block.Actions.pvp");
@@ -179,12 +178,11 @@ public class Settings extends ConfigLoader {
 		dragegg = config.getBoolean("block.Place.Dragon-Eggs");
 		enderchest = config.getBoolean("block.Place.Ender-Chests");
 		tripwires = config.getBoolean("block.Place.Trip-Wires");
-		worldz = config.getStringList("WorldManager.Worlds");
 		expwr = config.getInt("Explosions.Level");
 		time = config.getString("WorldManager.Always");
-	}
-	public static final void save() {
-		saveConfig();
+		msxp = config.getBoolean("block.Monster-Spawner.Xp-Drops");
+		msdrops = config.getBoolean("block.Monster-Spawner.Mob-Drops");
+		wmanager = config.getBoolean("WorldManager.Enabled");
 	}
 
 	/**
