@@ -5,6 +5,7 @@ import org.bukkit.World;
 
 import net.milkycraft.EntityManager;
 import net.milkycraft.configuration.Settings;
+import net.milkycraft.configuration.WorldSettings;
 
 public class TimeManager extends EntityManager {
 	private String st = Settings.time;
@@ -17,12 +18,12 @@ public class TimeManager extends EntityManager {
 	 * @since 3.7
 	 */
 	public void adjustTime() {
-		for(String s : Settings.worldz) {
+		for(String s : WorldSettings.worldz) {
 			try {
 			World world = Bukkit.getServer().getWorld(s);
 			world.setFullTime(getTime());
 			} catch (NullPointerException x) {
-				writeWarn("The world name : " + s +" is not a valid world!");
+				writeWarn("The world: (" + s +") is not a valid world!");
 			}
 		}
 	}
@@ -54,7 +55,7 @@ public class TimeManager extends EntityManager {
 			return 23000L;
 		}
 		/*
-		 * Just set to day if they made a mistake
+		 * Just set to 0 if they made a mistake
 		 */
 		writeWarn("Always: " + st + " ,is not a valid time!");
 		return 0L;

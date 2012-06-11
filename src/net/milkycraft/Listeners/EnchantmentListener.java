@@ -2,6 +2,7 @@ package net.milkycraft.listeners;
 
 import net.milkycraft.EntityManager;
 import net.milkycraft.configuration.Settings;
+import net.milkycraft.configuration.WorldSettings;
 
 import org.bukkit.ChatColor;
 import org.bukkit.World;
@@ -33,7 +34,7 @@ public class EnchantmentListener extends EntityManager implements Listener {
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onEnchantAttempt(PrepareItemEnchantEvent e) {
 		final World world = e.getEnchantBlock().getWorld();
-		for (String worldname : Settings.worlds) {
+		for (String worldname : WorldSettings.worlds) {
 			if (Settings.world || world.getName() == worldname) {
 				if (Settings.totalenchant
 						&& !e.getEnchanter().hasPermission(

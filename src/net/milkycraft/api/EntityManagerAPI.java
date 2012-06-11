@@ -2,6 +2,7 @@ package net.milkycraft.api;
 
 import net.milkycraft.EntityManager;
 import net.milkycraft.configuration.Settings;
+import net.milkycraft.configuration.WorldSettings;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
@@ -207,7 +208,7 @@ public class EntityManagerAPI extends EntityManager {
 	 * @return list of applicable worlds
 	 */
 	public java.util.List<String> getWorlds() {
-		return Settings.worlds;
+		return WorldSettings.worlds;
 	}
 
 	/**

@@ -4,6 +4,7 @@ import java.util.List;
 
 import net.milkycraft.EntityManager;
 import net.milkycraft.configuration.Settings;
+import net.milkycraft.configuration.WorldSettings;
 import net.milkycraft.enums.EntityCategory;
 import net.milkycraft.events.SpawnEggEvent;
 
@@ -34,7 +35,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 public class SpawnEggListener extends EntityManager implements Listener {
 	
 	/** The worldz. */
-	private List<String> worldz = Settings.worlds;
+	private List<String> worldz = WorldSettings.worlds;
 	
 	/** The monster. */
 	private static int monster = Settings.mons;

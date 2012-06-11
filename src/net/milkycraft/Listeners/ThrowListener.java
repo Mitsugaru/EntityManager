@@ -2,6 +2,7 @@ package net.milkycraft.listeners;
 
 import net.milkycraft.EntityManager;
 import net.milkycraft.configuration.Settings;
+import net.milkycraft.configuration.WorldSettings;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -51,7 +52,7 @@ public class ThrowListener extends EntityManager implements Listener {
 				|| item.getType() == Material.POTION || item.getType() == Material.MINECART)) {
 			return;
 		}
-		for (String worldname : Settings.worlds) {
+		for (String worldname : WorldSettings.worlds) {
 			if (Settings.world || player.getWorld().getName().equals(worldname)) {
 				if (e.getAction() == Action.RIGHT_CLICK_BLOCK
 						|| e.getAction() == Action.RIGHT_CLICK_AIR) {

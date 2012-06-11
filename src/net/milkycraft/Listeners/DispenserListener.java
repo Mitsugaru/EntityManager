@@ -2,6 +2,7 @@ package net.milkycraft.listeners;
 
 import net.milkycraft.EntityManager;
 import net.milkycraft.configuration.Settings;
+import net.milkycraft.configuration.WorldSettings;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -42,7 +43,7 @@ public class DispenserListener extends EntityManager implements Listener {
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onDispense(BlockDispenseEvent event) {
 		final Integer item = event.getItem().getTypeId();
-		for (String worldname : Settings.worlds) {
+		for (String worldname : WorldSettings.worlds) {
 			if (Settings.world
 					|| event.getBlock().getWorld().getName().equals(worldname)) {
 				/* Monster egg */

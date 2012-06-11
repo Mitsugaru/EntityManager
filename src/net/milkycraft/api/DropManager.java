@@ -1,6 +1,7 @@
 package net.milkycraft.api;
 
 import net.milkycraft.configuration.Settings;
+import net.milkycraft.configuration.WorldSettings;
 
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -39,7 +40,7 @@ public class DropManager implements Listener {
 		final Player player = e.getPlayer();
 		final String mode = e.getPlayer().getGameMode().toString()
 				.toLowerCase();
-		for (String worldname : Settings.worlds) {
+		for (String worldname : WorldSettings.worlds) {
 			if (player.getWorld().getName().equals(worldname)) {
 				if (player.getGameMode() == GameMode.CREATIVE) {
 					if (!player.hasPermission("entitymanager.creative.drop")
@@ -91,7 +92,7 @@ public class DropManager implements Listener {
 	@EventHandler(priority = EventPriority.LOW)
 	public void onEntityDeath(EntityDeathEvent e) {
 		final Entity player = e.getEntity();
-		for (String worldname : Settings.worlds) {
+		for (String worldname : WorldSettings.worlds) {
 			if (e.getEntity().getWorld().getName().equals(worldname)) {
 				if (Settings.onDeath) {
 					e.getDrops().clear();

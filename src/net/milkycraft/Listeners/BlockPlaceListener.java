@@ -4,6 +4,7 @@ import java.util.List;
 
 import net.milkycraft.EntityManager;
 import net.milkycraft.configuration.Settings;
+import net.milkycraft.configuration.WorldSettings;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -13,7 +14,6 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 
-// TODO: Auto-generated Javadoc
 /**
  * The listener interface for receiving blockPlace events.
  * The class that is interested in processing a blockPlace
@@ -28,7 +28,7 @@ import org.bukkit.event.block.BlockPlaceEvent;
 public class BlockPlaceListener extends EntityManager implements Listener {
 	
 	/** The worldz. */
-	private static List<String> worldz = Settings.worlds;
+	private static List<String> worldz = WorldSettings.worlds;
 
 	/**
 	 * Block placement.

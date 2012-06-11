@@ -25,7 +25,7 @@ public class LoginListener extends EntityManager implements Listener {
 
 	/** The motd. */
 	private String motd = ChatColor.GREEN
-			+ "This server is running EntityManager 3.7 by milkywayz";
+			+ "This server is running EntityManager 3.7.2 by milkywayz";
 
 	/**
 	 * On login.

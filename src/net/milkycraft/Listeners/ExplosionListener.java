@@ -2,6 +2,7 @@ package net.milkycraft.listeners;
 
 import net.milkycraft.EntityManager;
 import net.milkycraft.configuration.Settings;
+import net.milkycraft.configuration.WorldSettings;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -13,7 +14,7 @@ public class ExplosionListener extends EntityManager implements Listener {
 
 	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
 	public void onExplode(ExplosionPrimeEvent e) {
-		for (String world : Settings.worlds) {
+		for (String world : WorldSettings.worlds) {
 			if (e.getEntity().getWorld().getName().equals(world)) {
 				if (Settings.expwr == 3) {
 					e.getEntity().remove();
@@ -25,7 +26,7 @@ public class ExplosionListener extends EntityManager implements Listener {
 	}
 	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
 	public void onEntityExplode(EntityExplodeEvent e) {
-		for (String world : Settings.worlds) {
+		for (String world : WorldSettings.worlds) {
 			if (e.getEntity().getWorld().getName().equals(world)) {
 				if(Settings.expwr > 3 || Settings.expwr < 0) {
 					writeWarn("[EM] Explosion level is invalid!");

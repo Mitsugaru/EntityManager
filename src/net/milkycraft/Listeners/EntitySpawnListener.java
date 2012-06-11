@@ -2,6 +2,7 @@ package net.milkycraft.listeners;
 
 import net.milkycraft.EntityManager;
 import net.milkycraft.configuration.Settings;
+import net.milkycraft.configuration.WorldSettings;
 
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -39,7 +40,7 @@ public class EntitySpawnListener extends EntityManager implements Listener {
 	 */
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onSpawn(CreatureSpawnEvent e) {
-		for (String worldname : Settings.worlds) {
+		for (String worldname : WorldSettings.worlds) {
 			if (Settings.world
 					|| e.getEntity().getWorld().getName().equals(worldname)) {
 				e.setCancelled(Settings.getConfig().getBoolean(
@@ -66,7 +67,7 @@ public class EntitySpawnListener extends EntityManager implements Listener {
 		if (!Settings.amrs) {
 			return;
 		}
-		for (String worldname : Settings.worlds) {
+		for (String worldname : WorldSettings.worlds) {
 			if (Settings.world
 					|| e.getEntity().getWorld().getName().equals(worldname)) {
 				final String mob = e.getEntityType().toString().toLowerCase();
@@ -92,7 +93,7 @@ public class EntitySpawnListener extends EntityManager implements Listener {
 		if (!Settings.amrs) {
 			return;
 		}
-		for (String worldname : Settings.worlds) {
+		for (String worldname : WorldSettings.worlds) {
 			if (Settings.world
 					|| e.getEntity().getWorld().getName().equals(worldname)) {
 				final String mob = e.getEntityType().toString().toLowerCase();
@@ -115,7 +116,7 @@ public class EntitySpawnListener extends EntityManager implements Listener {
 		if (!Settings.amrs) {
 			return;
 		}
-		for (String worldname : Settings.worlds) {
+		for (String worldname : WorldSettings.worlds) {
 			if (Settings.world || e.getWorld().getName().equals(worldname)) {
 				// Iterate through the entities in the chunk
 				for (Entity en : e.getChunk().getEntities()) {
@@ -148,7 +149,7 @@ public class EntitySpawnListener extends EntityManager implements Listener {
 		if (!Settings.amrs) {
 			return;
 		}
-		for (String worldname : Settings.worlds) {
+		for (String worldname : WorldSettings.worlds) {
 			if (Settings.world || e.getWorld().getName().equals(worldname)) {
 				// Iterate through the entities in the chunk
 				for (Entity en : e.getChunk().getEntities()) {
