@@ -1,29 +1,28 @@
 package net.milkycraft.listeners;
 
+import java.util.ArrayList;
 import net.milkycraft.EntityManager;
 import net.milkycraft.configuration.Settings;
+import net.milkycraft.configuration.WorldSettings;
 
 import org.bukkit.World;
+import org.bukkit.entity.Entity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.ExpBottleEvent;
 
-// TODO: Auto-generated Javadoc
 /**
- * The listener interface for receiving exp events.
- * The class that is interested in processing a exp
- * event implements this interface, and the object created
- * with that class is registered with a component using the
- * component's <code>addExpListener<code> method. When
- * the exp event occurs, that object's appropriate
- * method is invoked.
+ * The listener interface for receiving exp related events.
  *
- * @see ExpEvent
+ * @see EntityDeathEvent
  */
 public class ExpListener extends EntityManager implements Listener {
-
+	
+	protected static ArrayList<Entity> tagged;
 
 	/**
 	 * On xp drop.
@@ -34,14 +33,53 @@ public class ExpListener extends EntityManager implements Listener {
 	public void onXpDrop(EntityDeathEvent e) {
 		final World world = e.getEntity().getWorld();
 		if (Settings.totalexp) {
-			for (String worldname : Settings.worlds) {
+			for (String worldname : WorldSettings.worlds) {
 				if (Settings.world || world.getName().equals(worldname)) {
 					e.setDroppedExp(0);
 				}
 			}
 		}
 	}
-
+	@EventHandler(priority = EventPriority.HIGH)
+	public void onTaggedMobDeath(EntityDeathEvent e) {
+		final World world = e.getEntity().getWorld();
+		if(e.getEntity() == null) {
+			return;
+		}
+		if (Settings.msxp || Settings.msdrops) {
+			for (String worldname : WorldSettings.worlds) {
+				if (Settings.world || world.getName().equals(worldname)) {
+					if(ExpListener.tagged.contains(e.getEntity())) {						
+						if(Settings.msdrops) {
+							e.getDrops().clear();
+							try {
+							ExpListener.tagged.remove(e.getEntity());
+							} catch(NullPointerException ex) {
+								
+							}
+						}
+						if(Settings.msxp) {
+							e.setDroppedExp(0);
+							try {
+								ExpListener.tagged.remove(e.getEntity());
+								} catch(NullPointerException ev) {
+									
+								}
+						}
+					}
+				}
+			}
+		}
+	}
+	@EventHandler(priority = EventPriority.LOWEST)
+	public void tagMob(CreatureSpawnEvent e) {
+		if(ExpListener.tagged == null) {
+			tagged = new ArrayList<Entity>();
+		}
+		if(e.getSpawnReason() == SpawnReason.SPAWNER) {
+			ExpListener.tagged.add(e.getEntity());
+		}
+	}
 	/**
 	 * On exp explode.
 	 * 
@@ -51,7 +89,7 @@ public class ExpListener extends EntityManager implements Listener {
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onExpExplode(ExpBottleEvent e) {
 		final World world = e.getEntity().getWorld();
-		for (final String worldname : Settings.worlds) {
+		for (final String worldname : WorldSettings.worlds) {
 			if (Settings.world || world.getName().equals(worldname)) {
 				if (Settings.totalexp) {
 					e.setExperience(0);
