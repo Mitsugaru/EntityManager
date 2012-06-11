@@ -2,7 +2,6 @@ package net.milkycraft.executors;
 
 import net.milkycraft.api.EntityManagerAPI;
 import net.milkycraft.configuration.Settings;
-
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -103,10 +102,7 @@ public class EntityManagerCommandExecutor  implements CommandExecutor{
 					return true;
 				}
 			}
-		if (args[0].equalsIgnoreCase("reload")
-				&& sender.hasPermission("entitymanager.admin")) {
-			return true;
-		}
+		
 		if (cmd.getName().equalsIgnoreCase("entitymanager")) {
 			if (args.length == 2) {
 				if (args[0].equalsIgnoreCase("canspawn")) {
@@ -129,8 +125,7 @@ public class EntityManagerCommandExecutor  implements CommandExecutor{
 						} catch (IllegalArgumentException e) {
 							sender.sendMessage(ChatColor.RED
 									+ "There is no entity named : " + ChatColor.YELLOW
-									+ args[1].toLowerCase() + ChatColor.WHITE
-									+ ".");
+									+ args[1].toLowerCase());
 						}
 					} else {
 						sender.sendMessage(ChatColor.RED
