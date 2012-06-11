@@ -2,13 +2,13 @@ package net.milkycraft;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import net.milkbowl.vault.economy.Economy;
 import net.milkycraft.api.DropManager;
 import net.milkycraft.api.TimeManager;
 import net.milkycraft.configuration.Settings;
+import net.milkycraft.configuration.WorldSettings;
 import net.milkycraft.executors.EntityManagerCommandExecutor;
 import net.milkycraft.listeners.BlockPlaceListener;
 import net.milkycraft.listeners.DispenserListener;
@@ -35,11 +35,10 @@ import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
  * The Main Class of EntityManager.
  * 
  * @author milkywayz
- * @version 3.7
+ * @version 3.7.2
  */
 public class EntityManager extends JavaPlugin {
-	public static String maindirectory = "plugins" + File.separator
-			+ "EntityManager";
+	public static String maindirectory;
 	public static File file = new File(maindirectory + File.separator
 			+ "config.yml");
 	protected static final Logger log = Logger.getLogger("Minecraft");
@@ -57,10 +56,10 @@ public class EntityManager extends JavaPlugin {
 	@Override
 	public void onEnable() {
 		main = this;
-		entitymanager = this.getFile();
-		new File(maindirectory).mkdir();
+		setUpPaths();
 		Settings config = new Settings(this);
 		config.load();
+		WorldSettings.getInstance();
 		setupPluginDependencies();
 		loadWorlds();
 		setUpListeners();
@@ -81,6 +80,10 @@ public class EntityManager extends JavaPlugin {
 		writeLog("[EntityManager] Scheduled tasks shutting down.");
 		writeLog("[" + getDescription().getName() + "] "
 				+ getDescription().getVersion() + " unloaded.");
+	}
+	private void setUpPaths() {
+		entitymanager = getFile();
+		maindirectory = getDataFolder().getPath() + File.separator;
 	}
 
 	/**
@@ -125,13 +128,13 @@ public class EntityManager extends JavaPlugin {
 	private void setupPluginDependencies() {
 		try {
 			setupWorldGuard();
-		} catch (final Exception e) {
+		} catch (Exception e) {
 			writeWarn("[EntityManager] Failed to load WorldGuard.");
 			e.printStackTrace();
 		}
 		try {
 			setupEconomy();
-		} catch (final Exception e) {
+		} catch (Exception e) {
 			writeWarn("[EntityManager] Failed to load Vault.");
 			e.printStackTrace();
 		}
@@ -143,12 +146,12 @@ public class EntityManager extends JavaPlugin {
 	 * @return true, if successful
 	 * @category Setting up dependencies
 	 */
-	private boolean setupEconomy() {
+	private boolean setupEconomy() {		
 		if (getServer().getPluginManager().getPlugin("Vault") == null) {
 			econ = null;
-			writeLog("[EntityManager] Couldn't hook into Vault.");
+			writeLog("[EntityManager] Failed to hook into Vault");
 		} else {
-			writeLog("[EntityManager] Hooked into Vault!");
+			writeLog("[EntityManager] Sucessfully hooked into Vault");
 		}
 		if (getServer().getPluginManager().getPlugin("Vault") == null) {
 			return false;
@@ -171,8 +174,8 @@ public class EntityManager extends JavaPlugin {
 		if (wg == null) {
 			writeLog("[EntityManager] Didn't find WorldGuard, Ignoring Regions.");
 		} else {
-			EntityManager.worldguardPlugin = (WorldGuardPlugin) wg;
-			log.info("[EntityManager] Hooked into WorldGuard, Respecting Regions.");
+			EntityManager.worldguardPlugin = (WorldGuardPlugin) wg;	
+			log.info("[EntityManager] Sucessfully hooked into WorldGuard");
 		}
 
 	}
@@ -219,28 +222,33 @@ public class EntityManager extends JavaPlugin {
 
 	private void loadWorlds() {
 		int x = 0;
-			for (String s : Settings.worlds) {
-				for(World w : Bukkit.getWorlds()) {
+		for (String s : WorldSettings.worlds) {
+			for (World w : Bukkit.getWorlds()) {
 				if (s.equalsIgnoreCase(w.getName())) {
-					writeLog("[EntityManager] EntityManager will work in the world: (" + s + ")");
+					writeLog("[EntityManager] EntityManager is enabled in the world: ("
+							+ s + ")");
 					x++;
 				}
 			}
-			}
-		writeLog("[EntityManager] A total of " + x + " world(s) were found of " + Bukkit.getWorlds().size() + " total worlds on server");
+		}
+		writeLog("[EntityManager] A total of " + x + " world(s) were found of "
+				+ Bukkit.getWorlds().size() + " total worlds on server");
 	}
 
 	/**
 	 * Schedule the world time changer if needed
 	 */
 	public final void schedule() {
-		if (factors()) {
+		if (factors()) {	
+			for(String s : WorldSettings.worldz) {
+				writeLog("[EntityManager] (" + s + ") is scheduled to always stay " + Settings.time);
+			}
 			getServer().getScheduler().scheduleSyncRepeatingTask(this,
 					new Runnable() {
 						public void run() {
 							TimeManager.getTimeManager().adjustTime();
 						}
-					}, 100L, 1200L);
+					}, 95L, 1200L);
 		}
 	}
 
@@ -253,11 +261,9 @@ public class EntityManager extends JavaPlugin {
 	 * @since 3.7
 	 */
 	public boolean factors() {
-		String st = Settings.time;
-		for (String ws : Settings.worldz) {
-			if (ws.equalsIgnoreCase("add_a_world_u_always_want_to_be_night_or_whatever_you_pick")) {
-				return false;
-			}
+		String st = Settings.time;		
+		if(Settings.wmanager) {
+			return false;
 		}
 		if (st.equalsIgnoreCase("normal") || st.equalsIgnoreCase("regular")) {
 			return false;
@@ -274,10 +280,8 @@ public class EntityManager extends JavaPlugin {
 	 */
 	public final void verify() {
 		if (!Bukkit.getServer().getOnlineMode()) {
-			log.log(Level.SEVERE,
-					"EntityManager does not condone of cracked servers!");
-			log.log(Level.SEVERE,
-					"Cracked servers are breeding ground for hackers!");
+			writeWarn("EntityManager does not condone of cracked servers!");
+			writeWarn("Cracked servers are breeding ground for hackers!");
 		}
 	}
 
