@@ -1,0 +1,9 @@
+# EntityManager worlds file
+# All worlds in the list will be used for entitymanager
+# If you plan on having EntityManager be enabled in all worlds leave all: true
+World:
+  All: true
+  Worlds:
+  - world
+  - world_nether
+  - world_end
