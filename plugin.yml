@@ -1,7 +1,7 @@
 name: EntityManager
 author: milkywayz 
 main: net.milkycraft.EntityManager
-version: 3.6.2
+version: 3.7.2
 softdepend: [WorldGaurd, Vault]
 
 commands:
