@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package net.milkycraft.api;
 
 import org.bukkit.Bukkit;
@@ -7,13 +10,21 @@ import net.milkycraft.EntityManager;
 import net.milkycraft.configuration.Settings;
 import net.milkycraft.configuration.WorldSettings;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class TimeManager.
+ */
 public class TimeManager extends EntityManager {
+	
+	/** The st. */
 	private String st = Settings.time;
+	
+	/** The Constant instance. */
 	private static final TimeManager instance = new TimeManager();
 
 	/**
-	 * Changes time of world based on config
-	 * 
+	 * Changes time of world based on config.
+	 *
 	 * @author milkywayz
 	 * @since 3.7
 	 */
@@ -29,14 +40,12 @@ public class TimeManager extends EntityManager {
 	}
 
 	/**
-	 * Parses the config value into a long usable by the setFullTime() method
-	 * 
+	 * Parses the config value into a long usable by the setFullTime() method.
+	 *
+	 * @return the Long time based on String from config
 	 * @author milkywayz
 	 * @see Settings
 	 * @since 3.7
-	 * @throws NullPointerException
-	 *             if time is null
-	 * @return the Long time based on String from config
 	 */
 	public Long getTime() {
 		if (st == null) {
@@ -70,6 +79,11 @@ public class TimeManager extends EntityManager {
 		return 0L;
 	}
 
+	/**
+	 * Gets the time manager.
+	 *
+	 * @return the time manager
+	 */
 	public static TimeManager getTimeManager() {
 		return instance;
 	}

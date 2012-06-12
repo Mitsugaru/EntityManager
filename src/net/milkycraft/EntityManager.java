@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package net.milkycraft;
 
 import java.io.BufferedReader;
@@ -36,6 +39,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Main Class of EntityManager.
  * 
@@ -44,15 +48,29 @@ import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
  */
 @SuppressWarnings("unused")
 public class EntityManager extends JavaPlugin {	
+	
+	/** The maindirectory. */
 	public static String maindirectory;
+	/** The latest version. */
 	private static String latestVersion = null;
+	/** The version diff. */
 	private static boolean versionDiff = false;
+	/** The file. */
 	public static File file = new File(maindirectory + File.separator
 			+ "config.yml");
+	/** The worldguard plugin. */
 	protected static WorldGuardPlugin worldguardPlugin = null;
+	
+	/** The econ. */
 	public static Economy econ = null;
+	
+	/** The main. */
 	public static EntityManager main;
+	
+	/** The entitymanager. */
 	public static File entitymanager;
+	
+	/** The emce. */
 	private EntityManagerCommandExecutor emce;
 
 	/*
@@ -88,6 +106,9 @@ public class EntityManager extends JavaPlugin {
 		writeLog("Scheduled tasks shutting down.");
 	}
 
+	/**
+	 * Sets the up paths.
+	 */
 	private void setUpPaths() {
 		entitymanager = getFile();
 		maindirectory = getDataFolder().getPath() + File.separator;
@@ -227,6 +248,9 @@ public class EntityManager extends JavaPlugin {
 		}
 	}
 
+	/**
+	 * Load worlds.
+	 */
 	private void loadWorlds() {
 		int x = 0;
 		for (String s : WorldSettings.worlds) {
@@ -243,7 +267,7 @@ public class EntityManager extends JavaPlugin {
 	}
 
 	/**
-	 * Schedule the world time changer if needed
+	 * Schedule the world time changer if needed.
 	 */
 	public final void schedule() {
 		if (factors()) {	
@@ -302,6 +326,10 @@ public class EntityManager extends JavaPlugin {
 			writeWarn("Cracked servers are breeding ground for hackers!");
 		}
 	}
+	
+	/**
+	 * Tell.
+	 */
 	public void tell() {
 		for (Player p : Bukkit.getServer().getOnlinePlayers()) {
 			if (p.hasPermission("entitymanager.admin")) {
@@ -321,7 +349,15 @@ public class EntityManager extends JavaPlugin {
 	public static final EntityManager getMainClass() {
 		return main;
 	}
+	
+	/**
+	 * The Class UpdateCheck.
+	 */
 	private class UpdateCheck implements Runnable {
+		
+		/* (non-Javadoc)
+		 * @see java.lang.Runnable#run()
+		 */
 		@Override
 		public void run() {
 			try {
@@ -343,7 +379,7 @@ public class EntityManager extends JavaPlugin {
 						writeLog("Found a different version available: "
 								+ version);
 						writeLog("Check http://dev.bukkit.org/server-mods/entitymanager/");
-						
+						tell();
 						EntityManager.versionDiff = true;
 					}
 					bufferedReader.close();

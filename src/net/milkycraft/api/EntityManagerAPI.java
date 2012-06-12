@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package net.milkycraft.api;
 
 import net.milkycraft.EntityManager;
@@ -11,6 +14,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class EntityManagerAPI.
  */
@@ -373,14 +377,12 @@ public class EntityManagerAPI extends EntityManager {
 	/**
 	 * Get if player has a permission dedicated to entitymanager Typical
 	 * permission: entitymanager.fishing or entitymanager.throw.xpbottles
-	 * @author milkywayz
-	 * @throws IllgalArgumentException if permission is null
-	 * @since 3.4
-	 * @param player
-	 *            The player
-	 * @param permission
-	 *            The second half of a permission node (eg: .throw.xpbottle)
+	 *
+	 * @param player The player
+	 * @param permission The second half of a permission node (eg: .throw.xpbottle)
 	 * @return wether player has permission or not for the specified permission
+	 * @author milkywayz
+	 * @since 3.4
 	 */
 	public boolean hasEmPerms(Player player, String permission) {
 		if (permission == null) {

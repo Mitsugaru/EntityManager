@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package net.milkycraft.configuration;
 
 import java.util.List;
@@ -6,6 +9,7 @@ import net.milkycraft.EntityManager;
 
 import org.bukkit.configuration.file.FileConfiguration;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class Settings.
  */
@@ -13,6 +17,8 @@ public class Settings extends ConfigLoader {
 	/** The totalenchant. */
 	public static Boolean Motd, alertz, metrics, logging, amrs, world,
 			totalexp, totalenchant, update;
+	
+	/** The time. */
 	public static String time;
 	/** The arrowz. */
 	public static Boolean doorBreak, enderPickup, pvp, mobdmg, fishing, arrowz, wmanager;

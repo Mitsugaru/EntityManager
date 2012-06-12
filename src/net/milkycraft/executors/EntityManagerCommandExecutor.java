@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package net.milkycraft.executors;
 
 import net.milkycraft.api.EntityManagerAPI;
@@ -13,8 +16,11 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
-public class EntityManagerCommandExecutor implements CommandExecutor
-{
+// TODO: Auto-generated Javadoc
+/**
+ * The Class EntityManagerCommandExecutor.
+ */
+public class EntityManagerCommandExecutor  implements CommandExecutor{
 
 	/*
 	 * (non-Javadoc)
