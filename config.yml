@@ -1,9 +1,10 @@
-#  EntityManager Configuration 3.7.2
+#  EntityManager Configuration 3.8
 #  http://dev.bukkit.org/server-mods/entitymanager/pages/configuration/
 #  For help on the configuration go to the url above.
 EntityManager:
   Login-MOTD: true
   Send-Alerts: true
+  Update-Checker: true
   Metrics: true
   Logging: true
   Advanced-Mob-Remover: false
