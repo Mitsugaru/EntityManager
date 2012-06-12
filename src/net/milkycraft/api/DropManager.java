@@ -151,6 +151,7 @@ public class DropManager implements Listener
 	 *            dropped
 	 * @deprecated Only way for method to reflect changes is to reload server.
 	 */
+	@Deprecated
 	public void addBitem(Integer itemid)
 	{
 		if (itemid == null || itemid == 0)
@@ -169,6 +170,7 @@ public class DropManager implements Listener
 	 *            dispensed
 	 * @deprecated Only way for method to reflect changes is to reload server.
 	 */
+	@Deprecated
 	public void addBDItem(Integer itemid)
 	{
 		if (itemid == null || itemid == 0)

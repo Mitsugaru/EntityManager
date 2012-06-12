@@ -185,7 +185,7 @@ public class EntityManagerCommandExecutor implements CommandExecutor
 						try
 						{
 							((Player) sender).getItemInHand().setDurability(
-									(short) Short.valueOf(args[1]));
+									Short.valueOf(args[1]));
 						}
 						catch (ArrayIndexOutOfBoundsException e)
 						{

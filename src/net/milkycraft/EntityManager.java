@@ -252,6 +252,7 @@ public class EntityManager extends JavaPlugin {
 			}
 			getServer().getScheduler().scheduleSyncRepeatingTask(this,
 					new Runnable() {
+						@Override
 						public void run() {
 							TimeManager.getTimeManager().adjustTime();
 						}
