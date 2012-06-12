@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package net.milkycraft.listeners;
 
 import java.util.List;
@@ -14,6 +17,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 
+// TODO: Auto-generated Javadoc
 /**
  * The listener interface for receiving blockPlace events.
  * The class that is interested in processing a blockPlace

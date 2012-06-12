@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package net.milkycraft.listeners;
 
 import java.util.List;
@@ -24,6 +27,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
+// TODO: Auto-generated Javadoc
 /**
  * The listener interface for receiving spawnEgg events. The class that is
  * interested in processing a spawnEgg event implements this interface, and the
@@ -179,10 +183,10 @@ public class SpawnEggListener extends EntityManager implements Listener {
 	/**
 	 * Spawn a entity based on its metadata 383:97 = Snow golem, 383:99 =
 	 * Irongolem, 383:200 = Ender crystal.
+	 *
+	 * @param e the interact event
 	 * @author milkywayz
 	 * @since 3.8.1
-	 * @param e
-	 *            the interact event
 	 */
 	@EventHandler(priority = EventPriority.HIGH)
 	public void spawnNonNaturalEntity(PlayerInteractEvent e) {

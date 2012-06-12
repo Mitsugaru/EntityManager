@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package net.milkycraft.enums;
 
 // TODO: Auto-generated Javadoc

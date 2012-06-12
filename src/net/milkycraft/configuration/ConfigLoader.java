@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package net.milkycraft.configuration;
 
 import java.io.File;
@@ -7,17 +10,34 @@ import net.milkycraft.EntityManager;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class ConfigLoader.
  */
 	public abstract class ConfigLoader{
-	    protected String fileName;
-	    protected File configFile;
-	    protected File dataFolder;
-	    protected final EntityManager plugin;
-	    protected static FileConfiguration config;
+	    
+    	/** The file name. */
+    	protected String fileName;
+	    
+    	/** The config file. */
+    	protected File configFile;
+	    
+    	/** The data folder. */
+    	protected File dataFolder;
+	    
+    	/** The plugin. */
+    	protected final EntityManager plugin;
+	    
+    	/** The config. */
+    	protected static FileConfiguration config;
 
-	    public ConfigLoader(EntityManager plugin, String fileName){
+	    /**
+    	 * Instantiates a new config loader.
+    	 *
+    	 * @param plugin the plugin
+    	 * @param fileName the file name
+    	 */
+    	public ConfigLoader(EntityManager plugin, String fileName){
 	        this.plugin = plugin;
 	        this.fileName = fileName;
 	        dataFolder = plugin.getDataFolder();
@@ -50,7 +70,10 @@ import org.bukkit.configuration.file.YamlConfiguration;
 	        }
 	    }
 
-	    protected void saveIfNotExist() {
+	    /**
+    	 * Save if not exist.
+    	 */
+    	protected void saveIfNotExist() {
 	        if (!configFile.exists()) {
 	            if (plugin.getResource(fileName) != null) {
 	                plugin.saveResource(fileName, false);
@@ -59,7 +82,10 @@ import org.bukkit.configuration.file.YamlConfiguration;
 	        rereadFromDisk();
 	    }
 
-	    protected void rereadFromDisk() {
+	    /**
+    	 * Reread from disk.
+    	 */
+    	protected void rereadFromDisk() {
 	        config = YamlConfiguration.loadConfiguration(configFile);
 	    }
 

@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package net.milkycraft.listeners;
 
 import java.util.ArrayList;
@@ -15,6 +18,7 @@ import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.ExpBottleEvent;
 
+// TODO: Auto-generated Javadoc
 /**
  * The listener interface for receiving exp related events.
  *
@@ -22,6 +26,7 @@ import org.bukkit.event.entity.ExpBottleEvent;
  */
 public class ExpListener extends EntityManager implements Listener {
 	
+	/** The tagged. */
 	protected static ArrayList<Entity> tagged;
 
 	/**
@@ -40,6 +45,12 @@ public class ExpListener extends EntityManager implements Listener {
 			}
 		}
 	}
+	
+	/**
+	 * On tagged mob death.
+	 *
+	 * @param e the e
+	 */
 	@EventHandler(priority = EventPriority.HIGH)
 	public void onTaggedMobDeath(EntityDeathEvent e) {
 		final World world = e.getEntity().getWorld();
@@ -71,6 +82,12 @@ public class ExpListener extends EntityManager implements Listener {
 			}
 		}
 	}
+	
+	/**
+	 * Tag mob.
+	 *
+	 * @param e the e
+	 */
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void tagMob(CreatureSpawnEvent e) {
 		if(ExpListener.tagged == null) {

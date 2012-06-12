@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package net.milkycraft.api;
 
 import net.milkycraft.configuration.Settings;
@@ -15,6 +18,7 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.inventory.ItemStack;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class DropManager.
  */
@@ -146,11 +150,12 @@ public class DropManager implements Listener {
 
 	/**
 	 * Gets the drop manager.
+	 *
+	 * @return the drop manager class
 	 * @author milkywayz
 	 * @category DropManager
 	 * @since 3.5ish
 	 * @see DropManager
-	 * @return the drop manager class
 	 */
 	public static DropManager getDropManager() {
 		return instance;
