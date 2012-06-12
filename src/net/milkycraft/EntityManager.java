@@ -1,7 +1,11 @@
 package net.milkycraft;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.logging.Logger;
 
 import net.milkbowl.vault.economy.Economy;
@@ -25,6 +29,7 @@ import net.milkycraft.metrics.Metrics;
 
 import org.bukkit.Bukkit;
 import org.bukkit.World;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -37,8 +42,12 @@ import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
  * @author milkywayz
  * @version 3.7.2
  */
-public class EntityManager extends JavaPlugin {
+public class EntityManager extends JavaPlugin {	
 	public static String maindirectory;
+	@SuppressWarnings("unused")
+	private static String latestVersion = null;
+	@SuppressWarnings("unused")
+	private static boolean versionDiff = false;
 	public static File file = new File(maindirectory + File.separator
 			+ "config.yml");
 	protected static final Logger log = Logger.getLogger("Minecraft");
@@ -78,9 +87,10 @@ public class EntityManager extends JavaPlugin {
 	public void onDisable() {
 		getServer().getScheduler().cancelTasks(main);
 		writeLog("[EntityManager] Scheduled tasks shutting down.");
-		writeLog("[" + getDescription().getName() + "] "
+		writeLog("[EntityManager] v"
 				+ getDescription().getVersion() + " unloaded.");
 	}
+
 	private void setUpPaths() {
 		entitymanager = getFile();
 		maindirectory = getDataFolder().getPath() + File.separator;
@@ -146,7 +156,7 @@ public class EntityManager extends JavaPlugin {
 	 * @return true, if successful
 	 * @category Setting up dependencies
 	 */
-	private boolean setupEconomy() {		
+	private boolean setupEconomy() {
 		if (getServer().getPluginManager().getPlugin("Vault") == null) {
 			econ = null;
 			writeLog("[EntityManager] Failed to hook into Vault");
@@ -174,7 +184,7 @@ public class EntityManager extends JavaPlugin {
 		if (wg == null) {
 			writeLog("[EntityManager] Didn't find WorldGuard, Ignoring Regions.");
 		} else {
-			EntityManager.worldguardPlugin = (WorldGuardPlugin) wg;	
+			EntityManager.worldguardPlugin = (WorldGuardPlugin) wg;
 			log.info("[EntityManager] Sucessfully hooked into WorldGuard");
 		}
 
@@ -239,9 +249,10 @@ public class EntityManager extends JavaPlugin {
 	 * Schedule the world time changer if needed
 	 */
 	public final void schedule() {
-		if (factors()) {	
-			for(String s : WorldSettings.worldz) {
-				writeLog("[EntityManager] (" + s + ") is scheduled to always stay " + Settings.time);
+		if (factors()) {
+			for (String s : WorldSettings.worldz) {
+				writeLog("[EntityManager] (" + s
+						+ ") is scheduled to always stay " + Settings.time);
 			}
 			getServer().getScheduler().scheduleSyncRepeatingTask(this,
 					new Runnable() {
@@ -249,6 +260,9 @@ public class EntityManager extends JavaPlugin {
 							TimeManager.getTimeManager().adjustTime();
 						}
 					}, 95L, 1200L);
+			if(Settings.update) {
+			getServer().getScheduler().scheduleAsyncRepeatingTask(this, new UpdateCheck(), 40, 432000);
+			}
 		}
 	}
 
@@ -261,8 +275,15 @@ public class EntityManager extends JavaPlugin {
 	 * @since 3.7
 	 */
 	public boolean factors() {
-		String st = Settings.time;		
-		if(Settings.wmanager) {
+		String st = Settings.time;
+		if (Settings.wmanager) {
+			return false;
+		}
+		/*
+		 * In the event of a bad reload/forced restart, etc... st can sometimes
+		 * be null which frucks everything up
+		 */
+		if (st == null) {
 			return false;
 		}
 		if (st.equalsIgnoreCase("normal") || st.equalsIgnoreCase("regular")) {
@@ -284,6 +305,14 @@ public class EntityManager extends JavaPlugin {
 			writeWarn("Cracked servers are breeding ground for hackers!");
 		}
 	}
+	public void tell() {
+		for (Player p : Bukkit.getServer().getOnlinePlayers()) {
+			if (p.hasPermission("entitymanager.admin")) {
+				p.sendMessage("EntityManager has an update available!");
+				p.sendMessage("http://dev.bukkit.org/server-mods/entitymanager/");
+				}
+			}
+	}
 
 	/**
 	 * Get the main class for EntityManager.
@@ -295,5 +324,41 @@ public class EntityManager extends JavaPlugin {
 	public static final EntityManager getMainClass() {
 		return main;
 	}
-
+	private class UpdateCheck implements Runnable {
+		@Override
+		public void run() {
+			try {
+				final String address = "http://updates.milkycraft.net/";
+				final URL url = new URL(address.replace(" ", "%20"));
+				final URLConnection connection = url.openConnection();
+				connection.setConnectTimeout(8000);
+				connection.setReadTimeout(15000);
+				connection.setRequestProperty("User-agent", "EntityManager "
+						+ EntityManager.getMainClass().getDescription()
+								.getVersion());
+				final BufferedReader bufferedReader = new BufferedReader(
+						new InputStreamReader(connection.getInputStream()));
+				String version;
+				if ((version = bufferedReader.readLine()) != null) {
+					EntityManager.latestVersion = version;
+					if (!EntityManager.getMainClass().getDescription()
+							.getVersion().equals(version)) {
+						writeLog("Found a different version available: "
+								+ version);
+						writeLog("Check http://dev.bukkit.org/server-mods/entitymanager/");
+						
+						EntityManager.versionDiff = true;
+					}
+					bufferedReader.close();
+					connection.getInputStream().close();
+					return;
+				} else {
+					bufferedReader.close();
+					connection.getInputStream().close();
+				}
+			} catch (final Exception e) {
+			}
+			writeWarn("Error: Could not check if plugin was up to date. Will try later");
+		}
+	}
 }
