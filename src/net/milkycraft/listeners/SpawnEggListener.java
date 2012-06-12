@@ -7,6 +7,8 @@ import net.milkycraft.configuration.Settings;
 import net.milkycraft.configuration.WorldSettings;
 import net.milkycraft.enums.EntityCategory;
 import net.milkycraft.events.SpawnEggEvent;
+import net.milkycraft.permissions.PermissionHandler;
+import net.milkycraft.permissions.PermissionNode;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -22,27 +24,27 @@ import org.bukkit.event.player.PlayerInteractEvent;
 
 // TODO: Auto-generated Javadoc
 /**
- * The listener interface for receiving spawnEgg events.
- * The class that is interested in processing a spawnEgg
- * event implements this interface, and the object created
- * with that class is registered with a component using the
+ * The listener interface for receiving spawnEgg events. The class that is
+ * interested in processing a spawnEgg event implements this interface, and the
+ * object created with that class is registered with a component using the
  * component's <code>addSpawnEggListener<code> method. When
  * the spawnEgg event occurs, that object's appropriate
  * method is invoked.
- *
+ * 
  * @see SpawnEggEvent
  */
-public class SpawnEggListener extends EntityManager implements Listener {
-	
+public class SpawnEggListener extends EntityManager implements Listener
+{
+
 	/** The worldz. */
 	private List<String> worldz = WorldSettings.worlds;
-	
+
 	/** The monster. */
 	private static int monster = Settings.mons;
-	
+
 	/** The animal. */
 	private static int animal = Settings.animal;
-	
+
 	/** The npc. */
 	private static int npc = Settings.npc;
 
@@ -53,39 +55,50 @@ public class SpawnEggListener extends EntityManager implements Listener {
 	 *            the e
 	 */
 	@EventHandler(priority = EventPriority.LOWEST)
-	public void onSpawnAttempt(PlayerInteractEvent e) {
+	public void onSpawnAttempt(PlayerInteractEvent e)
+	{
 		/* Variables */
 		final Player player = e.getPlayer();
 		final String playa = e.getPlayer().getName();
 		final Location loc = e.getPlayer().getLocation();
 		final SpawnEggEvent seg = new SpawnEggEvent(e);
 		/* Done with variables , Null check time */
-		if (e.getItem() == null) {
+		if (e.getItem() == null)
+		{
 			return;
 		}
-		if (!(e.getItem().getTypeId() == 383)) {
+		if (!(e.getItem().getTypeId() == 383))
+		{
 			return;
 		}
-		if (e.getClickedBlock() == null) {
+		if (e.getClickedBlock() == null)
+		{
 			return;
 		}
 		if (e.getAction() == Action.LEFT_CLICK_AIR
-				|| e.getAction() == Action.RIGHT_CLICK_AIR) {
+				|| e.getAction() == Action.RIGHT_CLICK_AIR)
+		{
 			return;
 		}
 		/* Check if player has the node */
-		if (player.hasPermission("entitymanager.*")) {
+		if (PermissionHandler.has(e.getPlayer(), PermissionNode.ALL))
+		{
 			return;
 		}
 
-		for (String wname : worldz) {
-			if (Settings.world || player.getWorld().getName().equals(wname)) {
-				if (player.getItemInHand().getTypeId() == 383) {
-					if (!worldguardPlugin.canBuild(player, loc)) {
+		for (String wname : worldz)
+		{
+			if (Settings.world || player.getWorld().getName().equals(wname))
+			{
+				if (player.getItemInHand().getTypeId() == 383)
+				{
+					if (!worldguardPlugin.canBuild(player, loc))
+					{
 						e.setCancelled(true);
 						player.sendMessage(ChatColor.YELLOW
 								+ "You cant use spawner eggs in this region!");
-						if (Settings.logging) {
+						if (Settings.logging)
+						{
 							writeLog(e.getPlayer()
 									+ " tried to throw a spawner egg in "
 									+ worldguardPlugin.getRegionManager(
@@ -96,8 +109,10 @@ public class SpawnEggListener extends EntityManager implements Listener {
 					}
 
 					final Material mat = e.getClickedBlock().getType();
-					if (!(mat == Material.CHEST || mat == Material.FURNACE || mat == Material.DISPENSER)) {
-						if (!onDecidingSpawningFactors(seg)) {
+					if (!(mat == Material.CHEST || mat == Material.FURNACE || mat == Material.DISPENSER))
+					{
+						if (!onDecidingSpawningFactors(seg))
+						{
 							e.setCancelled(true); // Cancel
 							e.getPlayer()
 									// Tell player
@@ -112,21 +127,31 @@ public class SpawnEggListener extends EntityManager implements Listener {
 															.toLowerCase()
 													+ ChatColor.RED + " eggs");
 							alerter(seg); // Alert admins
-						} else { // Handle egg charges based on the egg trying
-									// to be used
-							if (!player
-									.hasPermission("entitymanager.bypass.charge")
-									&& econ != null) {
-								if (seg.getEntityBreed().getCategory() == EntityCategory.ANIMAL) {
+						}
+						else
+						{ // Handle egg charges based on the egg trying
+							// to be used
+							if (!PermissionHandler.has(e.getPlayer(),
+									PermissionNode.BYPASS_CHARGE)
+									&& econ != null)
+							{
+								if (seg.getEntityBreed().getCategory() == EntityCategory.ANIMAL)
+								{
 									econ.withdrawPlayer(playa, animal);
-								} else if (seg.getEntityBreed().getCategory() == EntityCategory.MONSTER) {
+								}
+								else if (seg.getEntityBreed().getCategory() == EntityCategory.MONSTER)
+								{
 									econ.withdrawPlayer(playa, monster);
-								} else if (seg.getEntityBreed().getCategory() == EntityCategory.NPC) {
+								}
+								else if (seg.getEntityBreed().getCategory() == EntityCategory.NPC)
+								{
 									econ.withdrawPlayer(playa, npc);
 								} // end of specific charge block
 							} // end of bypass perm charge block
 						} // End of charges
-					} else {
+					}
+					else
+					{
 						player.sendMessage(ChatColor.AQUA
 								+ "Opened that "
 								+ e.getClickedBlock().getType().toString()
@@ -146,28 +171,39 @@ public class SpawnEggListener extends EntityManager implements Listener {
 	 *            the e
 	 * @return true, if successful
 	 */
-	public boolean onDecidingSpawningFactors(SpawnEggEvent e) {
-		if (e.getPlayer().hasPermission("entitymanager.*")) {
+	public boolean onDecidingSpawningFactors(SpawnEggEvent e)
+	{
+		if (PermissionHandler.has(e.getPlayer(), PermissionNode.ALL))
+		{
 			return true;
 		}
-		if (e.getEntityBreed().getCategory() == EntityCategory.SPECIAL) {
+		if (e.getEntityBreed().getCategory() == EntityCategory.SPECIAL)
+		{
 			return true;
 		}
-		if (e.getEntityBreed().getCategory() == EntityCategory.UNKNOWN) {
+		if (e.getEntityBreed().getCategory() == EntityCategory.UNKNOWN)
+		{
 			return true;
 		}
-		if (e.getEntityBreed().getCategory() != EntityCategory.UNKNOWN) {
+		if (e.getEntityBreed().getCategory() != EntityCategory.UNKNOWN)
+		{
 			if (Settings.getConfig().getBoolean(
 					"disabled.eggs."
-							+ e.getEntityBreed().toString().toLowerCase())) {
+							+ e.getEntityBreed().toString().toLowerCase()))
+			{
 				if (e.getPlayer().hasPermission(
 						"entitymanager."
-								+ e.getEntityBreed().toString().toLowerCase())) {
+								+ e.getEntityBreed().toString().toLowerCase()))
+				{
 					return true;
-				} else {
+				}
+				else
+				{
 					return false;
 				}
-			} else {
+			}
+			else
+			{
 				return true;
 			}
 		}
@@ -181,29 +217,39 @@ public class SpawnEggListener extends EntityManager implements Listener {
 	 *            the e
 	 */
 	@EventHandler(priority = EventPriority.LOWEST)
-	public void SpawnEnderCrystal(PlayerInteractEvent e) {
-		if (e.getItem() == null) {
+	public void SpawnEnderCrystal(PlayerInteractEvent e)
+	{
+		if (e.getItem() == null)
+		{
 			return;
 		}
 		if (e.getAction() == Action.LEFT_CLICK_AIR
-				|| e.getAction() == Action.RIGHT_CLICK_AIR) {
+				|| e.getAction() == Action.RIGHT_CLICK_AIR)
+		{
 			return;
 		}
 		final Location loc = e.getClickedBlock().getLocation();
 		final Block block = e.getClickedBlock();
 		final Player player = e.getPlayer();
-		if (e.getItem().getTypeId() == 383) {
-			if (e.getItem().getDurability() == 200) {
-				if (e.getPlayer().hasPermission("entitymanager.crystal")) {
+		if (e.getItem().getTypeId() == 383)
+		{
+			if (e.getItem().getDurability() == 200)
+			{
+				if (PermissionHandler
+						.has(e.getPlayer(), PermissionNode.CRYSTAL))
+				{
 					block.getWorld().spawn(loc, EnderCrystal.class);
 					return;
-				} else {
+				}
+				else
+				{
 					e.getPlayer()
 							.sendMessage(
 									ChatColor.GREEN
 											+ "[EM]"
 											+ "You don't have permission to place ender crystals!");
-					if (Settings.logging) {
+					if (Settings.logging)
+					{
 						writeLog("[EntityManager] "
 								+ player.getDisplayName().toLowerCase()
 								+ " tried to place a Ender Crystal");
@@ -219,16 +265,21 @@ public class SpawnEggListener extends EntityManager implements Listener {
 	 * @param ev
 	 *            the ev
 	 */
-	public final void alerter(SpawnEggEvent ev) {
-		if (Settings.logging) {
+	public final void alerter(SpawnEggEvent ev)
+	{
+		if (Settings.logging)
+		{
 			writeWarn("[EntityManager] "
 					+ ev.getPlayer().getDisplayName().toLowerCase()
 					+ " tried to use an "
 					+ ev.getEntityBreed().toString().toLowerCase() + " egg");
 		}
-		if (Settings.alertz) {
-			for (Player p : ev.getPlayer().getServer().getOnlinePlayers()) {
-				if (p.hasPermission("entitymanager.admin")) {
+		if (Settings.alertz)
+		{
+			for (Player p : ev.getPlayer().getServer().getOnlinePlayers())
+			{
+				if (PermissionHandler.has(p, PermissionNode.ADMIN))
+				{
 					p.sendMessage(ChatColor.GREEN + "[EM] "
 							+ ChatColor.DARK_RED
 							+ ev.getPlayer().getDisplayName()

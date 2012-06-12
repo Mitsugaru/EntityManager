@@ -11,6 +11,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 /**
  * The Class Settings.
  */
+@SuppressWarnings("unused")
 public class Settings extends ConfigLoader {
 	private FileConfiguration newConfig = null;
 	/** The totalenchant. */

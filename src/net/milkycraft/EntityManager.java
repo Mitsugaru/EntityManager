@@ -2,7 +2,6 @@ package net.milkycraft;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.logging.Logger;
 
 import net.milkbowl.vault.economy.Economy;
 import net.milkycraft.api.DropManager;
@@ -22,6 +21,7 @@ import net.milkycraft.listeners.SpawnEggListener;
 import net.milkycraft.listeners.TargetListener;
 import net.milkycraft.listeners.ThrowListener;
 import net.milkycraft.metrics.Metrics;
+import net.milkycraft.permissions.PermissionHandler;
 
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -41,7 +41,6 @@ public class EntityManager extends JavaPlugin {
 	public static String maindirectory;
 	public static File file = new File(maindirectory + File.separator
 			+ "config.yml");
-	protected static final Logger log = Logger.getLogger("Minecraft");
 	protected static WorldGuardPlugin worldguardPlugin = null;
 	public static Economy econ = null;
 	public static EntityManager main;
@@ -59,6 +58,7 @@ public class EntityManager extends JavaPlugin {
 		setUpPaths();
 		Settings config = new Settings(this);
 		config.load();
+		PermissionHandler.init(this);
 		WorldSettings.getInstance();
 		setupPluginDependencies();
 		loadWorlds();
@@ -175,7 +175,7 @@ public class EntityManager extends JavaPlugin {
 			writeLog("[EntityManager] Didn't find WorldGuard, Ignoring Regions.");
 		} else {
 			EntityManager.worldguardPlugin = (WorldGuardPlugin) wg;	
-			log.info("[EntityManager] Sucessfully hooked into WorldGuard");
+			getLogger().info("[EntityManager] Sucessfully hooked into WorldGuard");
 		}
 
 	}
@@ -190,7 +190,7 @@ public class EntityManager extends JavaPlugin {
 	 * @since 3.7
 	 */
 	public void writeLog(String text) {
-		log.info(text);
+		getLogger().info(text);
 	}
 
 	/**
@@ -203,7 +203,7 @@ public class EntityManager extends JavaPlugin {
 	 * @since 3.7
 	 */
 	public void writeWarn(String warning) {
-		log.warning(warning);
+		getLogger().warning(warning);
 	}
 
 	/**

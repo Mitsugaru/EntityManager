@@ -3,6 +3,8 @@ package net.milkycraft.listeners;
 import net.milkycraft.EntityManager;
 import net.milkycraft.configuration.Settings;
 import net.milkycraft.configuration.WorldSettings;
+import net.milkycraft.permissions.PermissionHandler;
+import net.milkycraft.permissions.PermissionNode;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -16,31 +18,35 @@ import org.bukkit.inventory.ItemStack;
 
 // TODO: Auto-generated Javadoc
 /**
- * The listener interface for receiving throw events.
- * The class that is interested in processing a throw
- * event implements this interface, and the object created
- * with that class is registered with a component using the
+ * The listener interface for receiving throw events. The class that is
+ * interested in processing a throw event implements this interface, and the
+ * object created with that class is registered with a component using the
  * component's <code>addThrowListener<code> method. When
  * the throw event occurs, that object's appropriate
  * method is invoked.
- *
+ * 
  * @see ThrowEvent
  */
-public class ThrowListener extends EntityManager implements Listener {
+public class ThrowListener extends EntityManager implements Listener
+{
 
 	/**
 	 * On attempted throw.
-	 *
-	 * @param e the PlayerInteractEvent
+	 * 
+	 * @param e
+	 *            the PlayerInteractEvent
 	 */
 	@EventHandler(priority = EventPriority.HIGHEST)
-	public void OnThrow(PlayerInteractEvent e) {
+	public void OnThrow(PlayerInteractEvent e)
+	{
 		final Player player = e.getPlayer();
 		final ItemStack item = e.getItem();
-		if (item == null) {
+		if (item == null)
+		{
 			return;
 		}
-		if (player.hasPermission("entitymanager.throw.*")) {
+		if (PermissionHandler.has(player, PermissionNode.THROW_ALL))
+		{
 			return;
 		}
 		if (!(item.getType() == Material.EXP_BOTTLE
@@ -49,73 +55,100 @@ public class ThrowListener extends EntityManager implements Listener {
 				|| item.getType() == Material.ENDER_PEARL
 				|| item.getType() == Material.EYE_OF_ENDER
 				|| item.getType() == Material.BOAT
-				|| item.getType() == Material.POTION || item.getType() == Material.MINECART)) {
+				|| item.getType() == Material.POTION || item.getType() == Material.MINECART))
+		{
 			return;
 		}
-		for (String worldname : WorldSettings.worlds) {
-			if (Settings.world || player.getWorld().getName().equals(worldname)) {
+		for (String worldname : WorldSettings.worlds)
+		{
+			if (Settings.world || player.getWorld().getName().equals(worldname))
+			{
 				if (e.getAction() == Action.RIGHT_CLICK_BLOCK
-						|| e.getAction() == Action.RIGHT_CLICK_AIR) {
-					if (item.getType() == Material.EXP_BOTTLE) {
+						|| e.getAction() == Action.RIGHT_CLICK_AIR)
+				{
+					if (item.getType() == Material.EXP_BOTTLE)
+					{
 						if (Settings.xpbott
-								&& !player
-										.hasPermission("entitymanager.throw.xpbottles")) {
+								&& !PermissionHandler.has(player,
+										PermissionNode.THROW_XPBOTTLES))
+						{
 							e.setCancelled(true);
 							messager(e);
 							return;
 						}
-					} else if (item.getType() == Material.FIREBALL) {
+					}
+					else if (item.getType() == Material.FIREBALL)
+					{
 						if (Settings.fire
-								&& !player
-										.hasPermission("entitymanager.throw.firecharges")) {
+								&& !PermissionHandler.has(player,
+										PermissionNode.THROW_FIRECHARGES))
+						{
 							e.setCancelled(true);
 							messager(e);
 							return;
 						}
-					} else if (item.getType() == Material.EGG) {
+					}
+					else if (item.getType() == Material.EGG)
+					{
 						if (Settings.egg
-								&& !player
-										.hasPermission("entitymanager.throw.chickeneggs")) {
+								&& !PermissionHandler.has(player,
+										PermissionNode.THROW_CHICKENEGGS))
+						{
 							e.setCancelled(true);
 							messager(e);
 							return;
 						}
-					} else if (item.getType() == Material.ENDER_PEARL) {
+					}
+					else if (item.getType() == Material.ENDER_PEARL)
+					{
 						if (Settings.pearl
-								&& !player
-										.hasPermission("entitymanager.throw.enderpearls")) {
+								&& !PermissionHandler.has(player,
+										PermissionNode.THROW_ENDERPEARLS))
+						{
 							e.setCancelled(true);
 							messager(e);
 							return;
 						}
-					} else if (item.getType() == Material.EYE_OF_ENDER) {
+					}
+					else if (item.getType() == Material.EYE_OF_ENDER)
+					{
 						if (Settings.eye
-								&& !player
-										.hasPermission("entitymanager.throw.endereyes")) {
+								&& !PermissionHandler.has(player,
+										PermissionNode.THROW_ENDEREYES))
+						{
 							e.setCancelled(true);
 							messager(e);
 							return;
 						}
-					} else if (item.getType() == Material.BOAT) {
+					}
+					else if (item.getType() == Material.BOAT)
+					{
 						if (Settings.boatz
-								&& !player
-										.hasPermission("entitymanager.throw.boats")) {
+								&& !PermissionHandler.has(player,
+										PermissionNode.THROW_BOATS))
+						{
 							e.setCancelled(true);
 							messager(e);
 							return;
 						}
-					} else if (item.getType() == Material.MINECART) {
+					}
+					else if (item.getType() == Material.MINECART)
+					{
 						if (Settings.cartz
-								&& !player
-										.hasPermission("entitymanager.throw.minecarts")) {
+								&& !PermissionHandler.has(player,
+										PermissionNode.THROW_MINECARTS))
+						{
 							e.setCancelled(true);
 							messager(e);
 							return;
 						}
-					} else if (item.getType() == Material.POTION) {
+					}
+					else if (item.getType() == Material.POTION)
+					{
 						if (Settings.potion
-								&& !player
-										.hasPermission("entitymanager.throw.potions")) {
+								&& !PermissionHandler.has(player,
+										PermissionNode.THROW_POTIONS))
+						{
 							e.setCancelled(true);
 							messager(e);
 							return;
@@ -133,19 +166,24 @@ public class ThrowListener extends EntityManager implements Listener {
 	 * @param e
 	 *            the e
 	 */
-	public final void messager(PlayerInteractEvent e) {
+	public final void messager(PlayerInteractEvent e)
+	{
 		final Player player = e.getPlayer();
 		player.sendMessage(ChatColor.GREEN + "[EM] " + ChatColor.RED
 				+ "You dont have permission for "
 				+ e.getItem().getType().toString().toLowerCase() + "'s.");
-		if (Settings.logging) {
+		if (Settings.logging)
+		{
 			writeLog("[EntityManager] " + player.getDisplayName().toLowerCase()
 					+ " tried to use a "
 					+ e.getItem().getType().toString().toLowerCase());
 		}
-		if (Settings.alertz) {
-			for (Player p : player.getServer().getOnlinePlayers()) {
-				if (p.hasPermission("entitymanager.admin")) {
+		if (Settings.alertz)
+		{
+			for (Player p : player.getServer().getOnlinePlayers())
+			{
+				if (PermissionHandler.has(player, PermissionNode.ADMIN))
+				{
 					p.sendMessage(ChatColor.GREEN + "[EM] "
 							+ ChatColor.DARK_RED
 							+ e.getPlayer().getDisplayName()
