@@ -12,37 +12,39 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Boat;
 import org.bukkit.entity.EnderCrystal;
+import org.bukkit.entity.IronGolem;
+import org.bukkit.entity.Minecart;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Snowman;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-// TODO: Auto-generated Javadoc
 /**
- * The listener interface for receiving spawnEgg events.
- * The class that is interested in processing a spawnEgg
- * event implements this interface, and the object created
- * with that class is registered with a component using the
+ * The listener interface for receiving spawnEgg events. The class that is
+ * interested in processing a spawnEgg event implements this interface, and the
+ * object created with that class is registered with a component using the
  * component's <code>addSpawnEggListener<code> method. When
  * the spawnEgg event occurs, that object's appropriate
  * method is invoked.
- *
+ * 
  * @see SpawnEggEvent
  */
 public class SpawnEggListener extends EntityManager implements Listener {
-	
+
 	/** The worldz. */
 	private List<String> worldz = WorldSettings.worlds;
-	
+
 	/** The monster. */
 	private static int monster = Settings.mons;
-	
+
 	/** The animal. */
 	private static int animal = Settings.animal;
-	
+
 	/** The npc. */
 	private static int npc = Settings.npc;
 
@@ -175,40 +177,79 @@ public class SpawnEggListener extends EntityManager implements Listener {
 	}
 
 	/**
-	 * Spawn ender crystal.
-	 * 
+	 * Spawn a entity based on its metadata 383:97 = Snow golem, 383:99 =
+	 * Irongolem, 383:200 = Ender crystal.
+	 * @author milkywayz
+	 * @since 3.8.1
 	 * @param e
-	 *            the e
+	 *            the interact event
 	 */
-	@EventHandler(priority = EventPriority.LOWEST)
-	public void SpawnEnderCrystal(PlayerInteractEvent e) {
+	@EventHandler(priority = EventPriority.HIGH)
+	public void spawnNonNaturalEntity(PlayerInteractEvent e) {
 		if (e.getItem() == null) {
 			return;
 		}
+		/*We want right clicks on blocks only*/
 		if (e.getAction() == Action.LEFT_CLICK_AIR
-				|| e.getAction() == Action.RIGHT_CLICK_AIR) {
+				|| e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.LEFT_CLICK_BLOCK) {
 			return;
 		}
-		final Location loc = e.getClickedBlock().getLocation();
+		if (!(e.getItem().getTypeId() == 383)) {
+			return;
+		}
+		final Location loc = e.getClickedBlock().getLocation().add(0, 1, 0);
 		final Block block = e.getClickedBlock();
 		final Player player = e.getPlayer();
-		if (e.getItem().getTypeId() == 383) {
-			if (e.getItem().getDurability() == 200) {
-				if (e.getPlayer().hasPermission("entitymanager.crystal")) {
-					block.getWorld().spawn(loc, EnderCrystal.class);
-					return;
+		if(e.getItem().getDurability() == 40) {
+			if (player.hasPermission("entitymanager.spawn.minecart")) {
+				block.getWorld().spawn(loc, Minecart.class);
+				return;
+			} else {
+				player.sendMessage(ChatColor.RED
+						+ "You don't have permission to spawn minecarts");
+				return;
+			}
+		} else if (e.getItem().getDurability() == 41) {
+			if (player.hasPermission("entitymanager.spawn.boat")) {
+				if(loc.getBlock().isLiquid() || loc.getBlock().getTypeId() == 0) {
+				block.getWorld().spawn(loc, Boat.class);
+				return;
 				} else {
-					e.getPlayer()
-							.sendMessage(
-									ChatColor.GREEN
-											+ "[EM]"
-											+ "You don't have permission to place ender crystals!");
-					if (Settings.logging) {
-						writeLog("[EntityManager] "
-								+ player.getDisplayName().toLowerCase()
-								+ " tried to place a Ender Crystal");
-					}
+					player.sendMessage(ChatColor.RED + "That boat would be caught in a block!");
 				}
+			} else {
+				player.sendMessage(ChatColor.RED
+						+ "You don't have permission to spawn boats");
+				return;
+			}
+		} else if (e.getItem().getDurability() == 97) {
+			if (player.hasPermission("entitymanager.spawn.snowgolem")) {
+				block.getWorld().spawn(loc, Snowman.class);
+				return;
+			} else {
+				player.sendMessage(ChatColor.RED
+						+ "You don't have permission to spawn snow golems");
+				return;
+			}
+		} else if (e.getItem().getDurability() == 99) {
+			if (player.hasPermission("entitymanager.spawn.irongolem")) {			
+				block.getWorld().spawn(loc, IronGolem.class);
+				return;
+			} else {
+				player.sendMessage(ChatColor.RED
+						+ "You don't have permission to spawn iron golems");
+				return;
+			}
+		} else if (e.getItem().getDurability() == 200) {
+			if (player.hasPermission("entitymanager.spawn.crystal")) {
+				if(loc.getBlock().getTypeId() == 0) {
+				block.getWorld().spawn(loc, EnderCrystal.class);
+				return;
+				}
+			} else {
+				player.sendMessage(ChatColor.RED
+						+ "You don't have permission to spawn ender crystals");
+				return;
 			}
 		}
 	}
