@@ -6,6 +6,8 @@ package net.milkycraft.api;
 import net.milkycraft.EntityManager;
 import net.milkycraft.configuration.Settings;
 import net.milkycraft.configuration.WorldSettings;
+import net.milkycraft.permissions.PermissionHandler;
+import net.milkycraft.permissions.PermissionNode;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
@@ -29,7 +31,7 @@ public class EntityManagerAPI extends EntityManager {
 	 */
 	public boolean canFish(Player player) {
 		if (Settings.fishing) {
-			return player.hasPermission("entitymanager.fishing");
+			return PermissionHandler.has(player, PermissionNode.FISHING);
 		} else {
 			return true;
 		}
@@ -44,7 +46,7 @@ public class EntityManagerAPI extends EntityManager {
 	 */
 	public boolean canPaint(Player player) {
 		if (Settings.paintz) {
-			return player.hasPermission("entitymanager.painting");
+			return PermissionHandler.has(player, PermissionNode.PAINTING);
 		} else {
 			return true;
 		}
@@ -59,7 +61,7 @@ public class EntityManagerAPI extends EntityManager {
 	 */
 	public boolean canCreativeDrop(Player player) {
 		if (Settings.cDrop) {
-			return player.hasPermission("entitymanager.creative.drop");
+			return PermissionHandler.has(player, PermissionNode.CREATIVE_DROP);
 		} else {
 			return true;
 		}
@@ -75,7 +77,7 @@ public class EntityManagerAPI extends EntityManager {
 	 */
 	public boolean canHurtGodMobs(Player player) {
 		if (Settings.mobdmg) {
-			return player.hasPermission("entitymanager.mob-damage");
+			return PermissionHandler.has(player, PermissionNode.MOB_DAMAGE);
 		} else {
 			return true;
 		}
@@ -99,7 +101,7 @@ public class EntityManagerAPI extends EntityManager {
 	 */
 	public boolean canSurvivalDrop(Player player) {
 		if (Settings.sDrop) {
-			return player.hasPermission("entitymanager.survival.drop");
+			return PermissionHandler.has(player, PermissionNode.SURVIVAL_DROP);
 		} else {
 			return true;
 		}
@@ -135,7 +137,7 @@ public class EntityManagerAPI extends EntityManager {
 	 */
 	public boolean canEnchant(Player player) {
 		if (Settings.totalenchant) {
-			return player.hasPermission("entitymanager.enchanting");
+			return PermissionHandler.has(player, PermissionNode.ENCHANTING);
 		} else {
 			return true;
 		}
@@ -150,7 +152,7 @@ public class EntityManagerAPI extends EntityManager {
 	 */
 	public boolean canPVP(Player player) {
 		if (Settings.pvp) {
-			return player.hasPermission("entitymanager.pvp");
+			return PermissionHandler.has(player, PermissionNode.PVP);
 		} else {
 			return true;
 		}
@@ -165,7 +167,7 @@ public class EntityManagerAPI extends EntityManager {
 	 */
 	public boolean canUseBoats(Player player) {
 		if (Settings.boatz) {
-			return player.hasPermission("entitymanager.boats");
+			return PermissionHandler.has(player, PermissionNode.BOATS);
 		} else {
 			return true;
 		}
@@ -179,7 +181,7 @@ public class EntityManagerAPI extends EntityManager {
 	 * @return true for yes, false for no
 	 */
 	public boolean canBypassBlacklist(Player player) {
-		return player.hasPermission("entitymanager.bypass.blacklist");
+		return PermissionHandler.has(player, PermissionNode.BYPASS_BLACKLIST);
 	}
 
 	/**
@@ -191,7 +193,7 @@ public class EntityManagerAPI extends EntityManager {
 	 */
 	public boolean canUseMinecarts(Player player) {
 		if (Settings.cartz) {
-			return player.hasPermission("entitymanager.minecarts");
+			return PermissionHandler.has(player, PermissionNode.MINECARTS);
 		} else {
 			return true;
 		}
@@ -273,37 +275,37 @@ public class EntityManagerAPI extends EntityManager {
 	public boolean canThrow(Player player, Material material) {
 		if (material == Material.EXP_BOTTLE) {
 			if (Settings.xpbott) {
-				return player.hasPermission("entitymanager.throw.xpbottles");
+				return PermissionHandler.has(player, PermissionNode.THROW_XPBOTTLES);
 			} else {
 				return true;
 			}
 		} else if (material == Material.FIREBALL) {
 			if (Settings.fire) {
-				return player.hasPermission("entitymanager.throw.firecharges");
+				return PermissionHandler.has(player, PermissionNode.THROW_FIRECHARGES);
 			} else {
 				return true;
 			}
 		} else if (material == Material.EGG) {
 			if (Settings.egg) {
-				return player.hasPermission("entitymanager.throw.chickeneggs");
+				return PermissionHandler.has(player, PermissionNode.THROW_CHICKENEGGS);
 			} else {
 				return true;
 			}
 		} else if (material == Material.ENDER_PEARL) {
 			if (Settings.pearl) {
-				return player.hasPermission("entitymanager.throw.enderpearls");
+				return PermissionHandler.has(player, PermissionNode.THROW_ENDERPEARLS);
 			} else {
 				return true;
 			}
 		} else if (material == Material.EYE_OF_ENDER) {
 			if (Settings.eye) {
-				return player.hasPermission("entitymanager.throw.endereyes");
+				return PermissionHandler.has(player, PermissionNode.THROW_ENDEREYES);
 			} else {
 				return true;
 			}
 		} else if (material == Material.POTION) {
 			if (Settings.potion) {
-				return player.hasPermission("entitymanager.throw.potions");
+				return PermissionHandler.has(player, PermissionNode.THROW_POTIONS);
 			} else {
 				return true;
 			}
@@ -350,7 +352,7 @@ public class EntityManagerAPI extends EntityManager {
 	 * @return if player has permission
 	 */
 	public boolean isEntityManagerAdmin(Player player) {
-		return player.hasPermission("entitymanager.admin");
+		return PermissionHandler.has(player, PermissionNode.ADMIN);
 	}
 
 	/**

@@ -10,6 +10,8 @@ import net.milkycraft.configuration.Settings;
 import net.milkycraft.configuration.WorldSettings;
 import net.milkycraft.enums.EntityCategory;
 import net.milkycraft.events.SpawnEggEvent;
+import net.milkycraft.permissions.PermissionHandler;
+import net.milkycraft.permissions.PermissionNode;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -205,7 +207,7 @@ public class SpawnEggListener extends EntityManager implements Listener {
 		final Block block = e.getClickedBlock();
 		final Player player = e.getPlayer();
 		if(e.getItem().getDurability() == 40) {
-			if (player.hasPermission("entitymanager.spawn.minecart")) {
+			if (PermissionHandler.has(player, PermissionNode.SPAWN_MINECART)) {
 				block.getWorld().spawn(loc, Minecart.class);
 				return;
 			} else {
@@ -214,7 +216,7 @@ public class SpawnEggListener extends EntityManager implements Listener {
 				return;
 			}
 		} else if (e.getItem().getDurability() == 41) {
-			if (player.hasPermission("entitymanager.spawn.boat")) {
+			if (PermissionHandler.has(player, PermissionNode.SPAWN_BOAT)) {
 				if(loc.getBlock().isLiquid() || loc.getBlock().getTypeId() == 0) {
 				block.getWorld().spawn(loc, Boat.class);
 				return;
@@ -227,7 +229,7 @@ public class SpawnEggListener extends EntityManager implements Listener {
 				return;
 			}
 		} else if (e.getItem().getDurability() == 97) {
-			if (player.hasPermission("entitymanager.spawn.snowgolem")) {
+			if (PermissionHandler.has(player, PermissionNode.SPAWN_SNOWGOLEM)) {
 				block.getWorld().spawn(loc, Snowman.class);
 				return;
 			} else {
@@ -236,7 +238,7 @@ public class SpawnEggListener extends EntityManager implements Listener {
 				return;
 			}
 		} else if (e.getItem().getDurability() == 99) {
-			if (player.hasPermission("entitymanager.spawn.irongolem")) {			
+			if (PermissionHandler.has(player, PermissionNode.SPAWN_IRONGOLEM)) {			
 				block.getWorld().spawn(loc, IronGolem.class);
 				return;
 			} else {
@@ -245,7 +247,7 @@ public class SpawnEggListener extends EntityManager implements Listener {
 				return;
 			}
 		} else if (e.getItem().getDurability() == 200) {
-			if (player.hasPermission("entitymanager.spawn.crystal")) {
+			if (PermissionHandler.has(player, PermissionNode.SPAWN_CRYSTAL)) {
 				if(loc.getBlock().getTypeId() == 0) {
 				block.getWorld().spawn(loc, EnderCrystal.class);
 				return;
@@ -273,7 +275,7 @@ public class SpawnEggListener extends EntityManager implements Listener {
 		}
 		if (Settings.alertz) {
 			for (Player p : ev.getPlayer().getServer().getOnlinePlayers()) {
-				if (p.hasPermission("entitymanager.admin")) {
+				if (PermissionHandler.has(p, PermissionNode.ADMIN)) {
 					p.sendMessage(ChatColor.GREEN + "[EM] "
 							+ ChatColor.DARK_RED
 							+ ev.getPlayer().getDisplayName()
