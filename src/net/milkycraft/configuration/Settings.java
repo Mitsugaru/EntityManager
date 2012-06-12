@@ -1,21 +1,18 @@
 package net.milkycraft.configuration;
 
-import java.io.InputStream;
 import java.util.List;
 
 import net.milkycraft.EntityManager;
 
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 
 /**
  * The Class Settings.
  */
 public class Settings extends ConfigLoader {
-	private FileConfiguration newConfig = null;
 	/** The totalenchant. */
 	public static Boolean Motd, alertz, metrics, logging, amrs, world,
-			totalexp, totalenchant;
+			totalexp, totalenchant, update;
 	public static String time;
 	/** The arrowz. */
 	public static Boolean doorBreak, enderPickup, pvp, mobdmg, fishing, arrowz, wmanager;
@@ -94,6 +91,7 @@ public class Settings extends ConfigLoader {
 		alertz = config.getBoolean("EntityManager.Send-Alerts");
 		metrics = config.getBoolean("EntityManager.Metrics");
 		logging = config.getBoolean("EntityManager.Logging");
+		update = config.getBoolean("EntityManager.Update-Checker");
 		amrs = config.getBoolean("EntityManager.Advanced-Mob-Remover");
 		world = WorldSettings.allworlds;
 		totalexp = config.getBoolean("block.Actions.exp-drops");

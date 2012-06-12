@@ -24,8 +24,8 @@ import org.bukkit.event.player.PlayerJoinEvent;
 public class LoginListener extends EntityManager implements Listener {
 
 	/** The motd. */
-	private String motd = ChatColor.GREEN
-			+ "This server is running EntityManager 3.7.2 by milkywayz";
+	private String motd = ChatColor.GRAY
+			+ "This server is running EntityManager v3.8 by milkywayz";
 
 	/**
 	 * On login.

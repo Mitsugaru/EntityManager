@@ -42,13 +42,22 @@ public class TimeManager extends EntityManager {
 		if (st == null) {
 			throw new NullPointerException("Time cannot be null!");
 		}
-		if (st.equalsIgnoreCase("noon") || st.equalsIgnoreCase("day")
+		if (st.equalsIgnoreCase("6am") || st.equalsIgnoreCase("day")
 				|| st.equalsIgnoreCase("sunny")) {
 			return 0L;
 		}
+		if (st.equalsIgnoreCase("noon") || st.equalsIgnoreCase("midday")
+				|| st.equalsIgnoreCase("fullbright")) {
+			return 6000L;
+		}
+		
 		if (st.equalsIgnoreCase("night") || st.equalsIgnoreCase("midnight")
 				|| st.equalsIgnoreCase("dark")) {
 			return 14000L;
+		}
+		if (st.equalsIgnoreCase("evening") || st.equalsIgnoreCase("5pm")
+				|| st.equalsIgnoreCase("17:30")) {
+			return 11500L;
 		}
 		if (st.equalsIgnoreCase("dawn") || st.equalsIgnoreCase("morning")
 				|| st.equalsIgnoreCase("5am")) {

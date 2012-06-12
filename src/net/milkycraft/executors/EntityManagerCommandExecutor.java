@@ -103,7 +103,6 @@ public class EntityManagerCommandExecutor  implements CommandExecutor{
 				}
 			}
 		
-		if (cmd.getName().equalsIgnoreCase("entitymanager")) {
 			if (args.length == 2) {
 				if (args[0].equalsIgnoreCase("canspawn")) {
 					if (sender.hasPermission("entitymanager.admin")) {
@@ -134,19 +133,29 @@ public class EntityManagerCommandExecutor  implements CommandExecutor{
 					}
 				}
 			}
-		}
-		if (args[0].equalsIgnoreCase("crystal")
-				&& sender.hasPermission("entitymanager.crystal")) {
+		if(args.length == 2) {
+		if (args[0].equalsIgnoreCase("set") && sender.hasPermission("entitymanager.set.durability")) {			
 			if (((Player) sender).getItemInHand().getTypeId() == 383) {
-				((Player) sender).getItemInHand().setAmount(1);
-				((Player) sender).getItemInHand().setDurability((short) 200);
+				try {
+				((Player) sender).getItemInHand().setDurability((short) Short.valueOf(args[1]));
+				} catch(ArrayIndexOutOfBoundsException e) {
+					sender.sendMessage(ChatColor.RED + "(AIOBE)Correct usage: /em set 50");
+				} catch(NullPointerException ev) {
+					sender.sendMessage(ChatColor.RED + "(NPE)Correct usage: /em set 50");
+				} catch(NumberFormatException ef) {
+					sender.sendMessage(ChatColor.RED + "(NFE)Correct usage: /em set 50");
+				}
+				try {
 				sender.sendMessage(ChatColor.GREEN
-						+ "You now have a EnderCrystal spawner egg inhand!");
+						+ "Your egg now has a durability of " + Integer.valueOf(args[1]));
+				} catch (NumberFormatException nfe) {					
+				}
 				return true;
 			} else {
 				sender.sendMessage(ChatColor.RED
 						+ "You must have a spawn egg in hand!");
 				return true;
+				}
 			}
 		}
 		if (args[0].equalsIgnoreCase("mobs")
