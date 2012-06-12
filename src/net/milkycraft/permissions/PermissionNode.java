@@ -16,7 +16,7 @@ public enum PermissionNode
 			".throw.potions"), CREATIVE_DROP(".creative.drop"), SURVIVAL_DROP(
 			".survival.drop"), BYPASS_BLACKLIST(".bypass.blacklist"), FISHING(
 			".fishing"), PAINTING(".painting"), ENCHANTING(".enchanting"), PVP(
-			".pvp"), BOATS(".boats"), MINECARTS(".minecarts");
+			".pvp"), BOATS(".boats"), MINECARTS(".minecarts"), SET_DURABILITY(".set.durability");
 
 	private static final String prefix = "entitymanager";
 	private String node;

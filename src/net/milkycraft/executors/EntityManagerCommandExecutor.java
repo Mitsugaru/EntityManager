@@ -125,10 +125,6 @@ public class EntityManagerCommandExecutor implements CommandExecutor
 						+ "Potion: " + a + pot);
 				return true;
 			}
-		}
-
-		if (cmd.getName().equalsIgnoreCase("entitymanager"))
-		{
 			if (args.length == 2)
 			{
 				if (args[0].equalsIgnoreCase("canspawn"))
@@ -178,97 +174,132 @@ public class EntityManagerCommandExecutor implements CommandExecutor
 					}
 				}
 			}
-		}
-		if (args[0].equalsIgnoreCase("crystal")
-				&& PermissionHandler.has(sender, PermissionNode.CRYSTAL))
-		{
-			if (((Player) sender).getItemInHand().getTypeId() == 383)
+			if (args.length == 2)
 			{
-				((Player) sender).getItemInHand().setAmount(1);
-				((Player) sender).getItemInHand().setDurability((short) 200);
+				if (args[0].equalsIgnoreCase("set")
+						&& PermissionHandler.has(sender,
+								PermissionNode.SET_DURABILITY))
+				{
+					if (((Player) sender).getItemInHand().getTypeId() == 383)
+					{
+						try
+						{
+							((Player) sender).getItemInHand().setDurability(
+									(short) Short.valueOf(args[1]));
+						}
+						catch (ArrayIndexOutOfBoundsException e)
+						{
+							sender.sendMessage(ChatColor.RED
+									+ "(AIOBE)Correct usage: /em set 50");
+						}
+						catch (NullPointerException ev)
+						{
+							sender.sendMessage(ChatColor.RED
+									+ "(NPE)Correct usage: /em set 50");
+						}
+						catch (NumberFormatException ef)
+						{
+							sender.sendMessage(ChatColor.RED
+									+ "(NFE)Correct usage: /em set 50");
+						}
+						try
+						{
+							sender.sendMessage(ChatColor.GREEN
+									+ "Your egg now has a durability of "
+									+ Integer.valueOf(args[1]));
+						}
+						catch (NumberFormatException nfe)
+						{
+						}
+						return true;
+					}
+					else
+					{
+						sender.sendMessage(ChatColor.RED
+								+ "You must have a spawn egg in hand!");
+						return true;
+					}
+				}
+			}
+			if (args[0].equalsIgnoreCase("mobs")
+					&& PermissionHandler.has(sender, PermissionNode.ADMIN))
+			{
+				sender.sendMessage(ChatColor.GRAY
+						+ "------------Blocked mobs list------------");
+				sender.sendMessage(ChatColor.YELLOW + "Pig = "
+						+ ChatColor.GREEN + Settings.pigs + ChatColor.YELLOW
+						+ "             Creeper = " + ChatColor.GREEN
+						+ Settings.creeps);
+				sender.sendMessage(ChatColor.YELLOW + "Sheep = "
+						+ ChatColor.GREEN + Settings.dragons + ChatColor.YELLOW
+						+ "        Skeleton = " + ChatColor.GREEN
+						+ Settings.skeles);
+				sender.sendMessage(ChatColor.YELLOW + "Cow = "
+						+ ChatColor.GREEN + Settings.cows + ChatColor.YELLOW
+						+ "            Spider = " + ChatColor.GREEN
+						+ Settings.spiders);
+				sender.sendMessage(ChatColor.YELLOW + "Chicken = "
+						+ ChatColor.GREEN + Settings.chicks + ChatColor.YELLOW
+						+ "       Zombie = " + ChatColor.GREEN
+						+ Settings.zombies);
+				sender.sendMessage(ChatColor.YELLOW + "Squid = "
+						+ ChatColor.GREEN + Settings.squids + ChatColor.YELLOW
+						+ "          Slime = " + ChatColor.GREEN
+						+ Settings.slimes);
+				sender.sendMessage(ChatColor.YELLOW + "Wolf = "
+						+ ChatColor.GREEN + Settings.wolfs + ChatColor.YELLOW
+						+ "            Ghast = " + ChatColor.GREEN
+						+ Settings.ghasts);
+				sender.sendMessage(ChatColor.YELLOW + "Mooshroom = "
+						+ ChatColor.GREEN + Settings.mooshs + ChatColor.YELLOW
+						+ "    Pigman = " + ChatColor.GREEN + Settings.pigmans);
+				sender.sendMessage(ChatColor.YELLOW + "Snowman = "
+						+ ChatColor.GREEN + Settings.snow + ChatColor.YELLOW
+						+ "       Enderman = " + ChatColor.GREEN
+						+ Settings.enders);
+				sender.sendMessage(ChatColor.YELLOW + "Ocelot = "
+						+ ChatColor.GREEN + Settings.ocelots + ChatColor.YELLOW
+						+ "          CaveSpider = " + ChatColor.GREEN
+						+ Settings.caves);
+				sender.sendMessage(ChatColor.YELLOW + "Villager = "
+						+ ChatColor.GREEN + Settings.villas + ChatColor.YELLOW
+						+ "        Silverfish = " + ChatColor.GREEN
+						+ Settings.fishs);
+				sender.sendMessage(ChatColor.YELLOW + "Blaze = "
+						+ ChatColor.GREEN + Settings.blazes + ChatColor.YELLOW
+						+ "           MagmaCube = " + ChatColor.GREEN
+						+ Settings.cubes);
+				sender.sendMessage(ChatColor.YELLOW + "IronGolem = "
+						+ ChatColor.GREEN + Settings.iron + ChatColor.YELLOW
+						+ "    EnderDragon = " + ChatColor.GREEN
+						+ Settings.dragons);
+				sender.sendMessage(ChatColor.GRAY
+						+ "-----------True = blocked mob------------");
+				return true;
+			}
+			if (args.length == 0)
+			{
+				sender.sendMessage(ChatColor.WHITE
+						+ "*************************************");
+				sender.sendMessage(ChatColor.GOLD + "Logging: " + ChatColor.RED
+						+ EntityManagerAPI.getManager().isLogging()
+						+ ChatColor.GOLD + "      Metrics: " + ChatColor.RED
+						+ EntityManagerAPI.getManager().isMetricsEnabled());
 				sender.sendMessage(ChatColor.GREEN
-						+ "You now have a EnderCrystal spawner egg inhand!");
+						+ "Sumbit requests on bukkit dev to have them added!");
+				sender.sendMessage(ChatColor.GREEN
+						+ "If you find any issues or bugs, please report them!");
+				sender.sendMessage(ChatColor.WHITE
+						+ "*************************************");
 				return true;
 			}
 			else
 			{
-				sender.sendMessage(ChatColor.RED
-						+ "You must have a spawn egg in hand!");
-				return true;
+				sender.sendMessage(ChatColor.DARK_RED
+						+ " Could not complete that command!");
+				return false;
 			}
 		}
-		if (args[0].equalsIgnoreCase("mobs")
-				&& PermissionHandler.has(sender, PermissionNode.ADMIN))
-		{
-			sender.sendMessage(ChatColor.GRAY
-					+ "------------Blocked mobs list------------");
-			sender.sendMessage(ChatColor.YELLOW + "Pig = " + ChatColor.GREEN
-					+ Settings.pigs + ChatColor.YELLOW
-					+ "             Creeper = " + ChatColor.GREEN
-					+ Settings.creeps);
-			sender.sendMessage(ChatColor.YELLOW + "Sheep = " + ChatColor.GREEN
-					+ Settings.dragons + ChatColor.YELLOW
-					+ "        Skeleton = " + ChatColor.GREEN + Settings.skeles);
-			sender.sendMessage(ChatColor.YELLOW + "Cow = " + ChatColor.GREEN
-					+ Settings.cows + ChatColor.YELLOW
-					+ "            Spider = " + ChatColor.GREEN
-					+ Settings.spiders);
-			sender.sendMessage(ChatColor.YELLOW + "Chicken = "
-					+ ChatColor.GREEN + Settings.chicks + ChatColor.YELLOW
-					+ "       Zombie = " + ChatColor.GREEN + Settings.zombies);
-			sender.sendMessage(ChatColor.YELLOW + "Squid = " + ChatColor.GREEN
-					+ Settings.squids + ChatColor.YELLOW + "          Slime = "
-					+ ChatColor.GREEN + Settings.slimes);
-			sender.sendMessage(ChatColor.YELLOW + "Wolf = " + ChatColor.GREEN
-					+ Settings.wolfs + ChatColor.YELLOW
-					+ "            Ghast = " + ChatColor.GREEN
-					+ Settings.ghasts);
-			sender.sendMessage(ChatColor.YELLOW + "Mooshroom = "
-					+ ChatColor.GREEN + Settings.mooshs + ChatColor.YELLOW
-					+ "    Pigman = " + ChatColor.GREEN + Settings.pigmans);
-			sender.sendMessage(ChatColor.YELLOW + "Snowman = "
-					+ ChatColor.GREEN + Settings.snow + ChatColor.YELLOW
-					+ "       Enderman = " + ChatColor.GREEN + Settings.enders);
-			sender.sendMessage(ChatColor.YELLOW + "Ocelot = " + ChatColor.GREEN
-					+ Settings.ocelots + ChatColor.YELLOW
-					+ "          CaveSpider = " + ChatColor.GREEN
-					+ Settings.caves);
-			sender.sendMessage(ChatColor.YELLOW + "Villager = "
-					+ ChatColor.GREEN + Settings.villas + ChatColor.YELLOW
-					+ "        Silverfish = " + ChatColor.GREEN
-					+ Settings.fishs);
-			sender.sendMessage(ChatColor.YELLOW + "Blaze = " + ChatColor.GREEN
-					+ Settings.blazes + ChatColor.YELLOW
-					+ "           MagmaCube = " + ChatColor.GREEN
-					+ Settings.cubes);
-			sender.sendMessage(ChatColor.YELLOW + "IronGolem = "
-					+ ChatColor.GREEN + Settings.iron + ChatColor.YELLOW
-					+ "    EnderDragon = " + ChatColor.GREEN + Settings.dragons);
-			sender.sendMessage(ChatColor.GRAY
-					+ "-----------True = blocked mob------------");
-			return true;
-		}
-		if (args.length == 0)
-		{
-			sender.sendMessage(ChatColor.WHITE
-					+ "*************************************");
-			sender.sendMessage(ChatColor.GOLD + "Logging: " + ChatColor.RED
-					+ EntityManagerAPI.getManager().isLogging()
-					+ ChatColor.GOLD + "      Metrics: " + ChatColor.RED
-					+ EntityManagerAPI.getManager().isMetricsEnabled());
-			sender.sendMessage(ChatColor.GREEN
-					+ "Sumbit requests on bukkit dev to have them added!");
-			sender.sendMessage(ChatColor.GREEN
-					+ "If you find any issues or bugs, please report them!");
-			sender.sendMessage(ChatColor.WHITE
-					+ "*************************************");
-			return true;
-		}
-		else
-		{
-			sender.sendMessage(ChatColor.DARK_RED
-					+ " Could not complete that command!");
-			return false;
-		}
+		return true;
 	}
 }
