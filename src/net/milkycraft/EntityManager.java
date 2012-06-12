@@ -77,9 +77,7 @@ public class EntityManager extends JavaPlugin {
 	@Override
 	public void onDisable() {
 		getServer().getScheduler().cancelTasks(main);
-		writeLog("[EntityManager] Scheduled tasks shutting down.");
-		writeLog("[" + getDescription().getName() + "] "
-				+ getDescription().getVersion() + " unloaded.");
+		writeLog("Scheduled tasks shutting down.");
 	}
 	private void setUpPaths() {
 		entitymanager = getFile();
@@ -129,13 +127,13 @@ public class EntityManager extends JavaPlugin {
 		try {
 			setupWorldGuard();
 		} catch (Exception e) {
-			writeWarn("[EntityManager] Failed to load WorldGuard.");
+			writeWarn("Failed to load WorldGuard.");
 			e.printStackTrace();
 		}
 		try {
 			setupEconomy();
 		} catch (Exception e) {
-			writeWarn("[EntityManager] Failed to load Vault.");
+			writeWarn("Failed to load Vault.");
 			e.printStackTrace();
 		}
 	}
@@ -149,9 +147,9 @@ public class EntityManager extends JavaPlugin {
 	private boolean setupEconomy() {		
 		if (getServer().getPluginManager().getPlugin("Vault") == null) {
 			econ = null;
-			writeLog("[EntityManager] Failed to hook into Vault");
+			writeLog("Failed to hook into Vault");
 		} else {
-			writeLog("[EntityManager] Sucessfully hooked into Vault");
+			writeLog("Sucessfully hooked into Vault");
 		}
 		if (getServer().getPluginManager().getPlugin("Vault") == null) {
 			return false;
@@ -172,10 +170,10 @@ public class EntityManager extends JavaPlugin {
 		final Plugin wg = this.getServer().getPluginManager()
 				.getPlugin("WorldGuard");
 		if (wg == null) {
-			writeLog("[EntityManager] Didn't find WorldGuard, Ignoring Regions.");
+			writeLog("Didn't find WorldGuard, Ignoring Regions.");
 		} else {
 			EntityManager.worldguardPlugin = (WorldGuardPlugin) wg;	
-			getLogger().info("[EntityManager] Sucessfully hooked into WorldGuard");
+			getLogger().info("Sucessfully hooked into WorldGuard");
 		}
 
 	}
@@ -225,13 +223,13 @@ public class EntityManager extends JavaPlugin {
 		for (String s : WorldSettings.worlds) {
 			for (World w : Bukkit.getWorlds()) {
 				if (s.equalsIgnoreCase(w.getName())) {
-					writeLog("[EntityManager] EntityManager is enabled in the world: ("
+					writeLog("EntityManager is enabled in the world: ("
 							+ s + ")");
 					x++;
 				}
 			}
 		}
-		writeLog("[EntityManager] A total of " + x + " world(s) were found of "
+		writeLog("A total of " + x + " world(s) were found of "
 				+ Bukkit.getWorlds().size() + " total worlds on server");
 	}
 
@@ -241,7 +239,7 @@ public class EntityManager extends JavaPlugin {
 	public final void schedule() {
 		if (factors()) {	
 			for(String s : WorldSettings.worldz) {
-				writeLog("[EntityManager] (" + s + ") is scheduled to always stay " + Settings.time);
+				writeLog("(" + s + ") is scheduled to always stay " + Settings.time);
 			}
 			getServer().getScheduler().scheduleSyncRepeatingTask(this,
 					new Runnable() {
