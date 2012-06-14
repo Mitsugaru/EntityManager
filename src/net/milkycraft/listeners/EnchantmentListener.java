@@ -1,6 +1,3 @@
-/*
- * 
- */
 package net.milkycraft.listeners;
 
 import net.milkycraft.EntityManager;
@@ -28,8 +25,7 @@ import org.bukkit.event.enchantment.PrepareItemEnchantEvent;
  * 
  * @see EnchantmentEvent
  */
-public class EnchantmentListener extends EntityManager implements Listener
-{
+public class EnchantmentListener extends EntityManager implements Listener {
 
 	/**
 	 * On enchant attempt.
@@ -38,17 +34,13 @@ public class EnchantmentListener extends EntityManager implements Listener
 	 *            the e
 	 */
 	@EventHandler(priority = EventPriority.LOWEST)
-	public void onEnchantAttempt(PrepareItemEnchantEvent e)
-	{
+	public void onEnchantAttempt(PrepareItemEnchantEvent e) {
 		final World world = e.getEnchantBlock().getWorld();
-		for (String worldname : WorldSettings.worlds)
-		{
-			if (Settings.world || world.getName() == worldname)
-			{
+		for (String worldname : WorldSettings.worlds) {
+			if (Settings.world || world.getName() == worldname) {
 				if (Settings.totalenchant
 						&& !PermissionHandler.has(e.getEnchanter(),
-								PermissionNode.ALLOW_ENCHANTING))
-				{
+								PermissionNode.ALLOW_ENCHANTING)) {
 					e.setCancelled(true);
 					e.getEnchanter()
 							.sendMessage(
@@ -68,19 +60,14 @@ public class EnchantmentListener extends EntityManager implements Listener
 	 * @param e
 	 *            the e
 	 */
-	public void alert(PrepareItemEnchantEvent e)
-	{
-		if (Settings.logging)
-		{
+	public void alert(PrepareItemEnchantEvent e) {
+		if (Settings.logging) {
 			writeLog(e.getEnchanter().getDisplayName() + " tried to enchant a "
 					+ e.getItem().getType().toString().toLowerCase());
 		}
-		if (Settings.alertz)
-		{
-			for (Player p : e.getEnchanter().getServer().getOnlinePlayers())
-			{
-				if (PermissionHandler.has(p, PermissionNode.ADMIN))
-				{
+		if (Settings.alertz) {
+			for (Player p : e.getEnchanter().getServer().getOnlinePlayers()) {
+				if (PermissionHandler.has(p, PermissionNode.ADMIN)) {
 					p.sendMessage(ChatColor.GREEN + "[EM] "
 							+ ChatColor.DARK_RED
 							+ e.getEnchanter().getDisplayName()

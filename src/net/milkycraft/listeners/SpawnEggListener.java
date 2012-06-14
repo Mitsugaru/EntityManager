@@ -1,287 +1,428 @@
-/*
- * 
- */
 package net.milkycraft.listeners;
-
-import java.util.List;
 
 import net.milkycraft.EntityManager;
 import net.milkycraft.configuration.Settings;
 import net.milkycraft.configuration.WorldSettings;
-import net.milkycraft.enums.EntityCategory;
-import net.milkycraft.events.SpawnEggEvent;
 import net.milkycraft.permissions.PermissionHandler;
 import net.milkycraft.permissions.PermissionNode;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Boat;
 import org.bukkit.entity.EnderCrystal;
+import org.bukkit.entity.EnderDragon;
+import org.bukkit.entity.Fireball;
+import org.bukkit.entity.Giant;
 import org.bukkit.entity.IronGolem;
 import org.bukkit.entity.Minecart;
+import org.bukkit.entity.Painting;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Snowman;
+import org.bukkit.entity.TNTPrimed;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-// TODO: Auto-generated Javadoc
-/**
- * The listener interface for receiving spawnEgg events. The class that is
- * interested in processing a spawnEgg event implements this interface, and the
- * object created with that class is registered with a component using the
- * component's <code>addSpawnEggListener<code> method. When
- * the spawnEgg event occurs, that object's appropriate
- * method is invoked.
- * 
- * @see SpawnEggEvent
- */
 public class SpawnEggListener extends EntityManager implements Listener {
 
-	/** The worldz. */
-	private List<String> worldz = WorldSettings.worlds;
-
-	/** The monster. */
-	private static int monster = Settings.mons;
-
-	/** The animal. */
-	private static int animal = Settings.animal;
-
-	/** The npc. */
-	private static int npc = Settings.npc;
-
-	/**
-	 * On spawn attempt.
-	 * 
-	 * @param e
-	 *            the e
-	 */
-	@EventHandler(priority = EventPriority.LOWEST)
+	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onSpawnAttempt(PlayerInteractEvent e) {
-		/* Variables */
-		final Player player = e.getPlayer();
-		final String playa = e.getPlayer().getName();
-		final Location loc = e.getPlayer().getLocation();
-		final SpawnEggEvent seg = new SpawnEggEvent(e);
-		/* Done with variables , Null check time */
 		if (e.getItem() == null) {
 			return;
 		}
-		if (!(e.getItem().getTypeId() == 383)) {
+		if (e.getAction() == Action.LEFT_CLICK_AIR
+				|| e.getAction() == Action.RIGHT_CLICK_AIR
+				|| e.getAction() == Action.LEFT_CLICK_BLOCK) {
 			return;
 		}
 		if (e.getClickedBlock() == null) {
 			return;
 		}
-		if (e.getAction() == Action.LEFT_CLICK_AIR
-				|| e.getAction() == Action.RIGHT_CLICK_AIR) {
-			return;
-		}
-		/* Check if player has the node */
-		if (player.hasPermission("entitymanager.*")) {
-			return;
-		}
+		 Location loc = e.getClickedBlock().getLocation().add(0, 1, 0);
+		final String playa = e.getPlayer().getName();
 
-		for (String wname : worldz) {
-			if (Settings.world || player.getWorld().getName().equals(wname)) {
-				if (player.getItemInHand().getTypeId() == 383) {
-					if (!worldguardPlugin.canBuild(player, loc)) {
-						e.setCancelled(true);
-						player.sendMessage(ChatColor.YELLOW
+		if (e.getItem().getTypeId() == 383) {
+			if (!worldguardPlugin.canBuild(e.getPlayer(), loc)) {
+				e.setCancelled(true);
+				e.getPlayer().sendMessage(
+						ChatColor.YELLOW
 								+ "You cant use spawner eggs in this region!");
-						if (Settings.logging) {
-							writeLog(e.getPlayer()
-									+ " tried to throw a spawner egg in "
-									+ worldguardPlugin.getRegionManager(
-											e.getPlayer().getWorld())
-											.getApplicableRegions(loc));
+				return;
+			}
+		}
+		if (e.getItem().getTypeId() == 383) {
+			if (WorldSettings.worlds.contains(e.getPlayer().getWorld()
+					.getName())) {
+				switch (e.getItem().getDurability()) {
+				case 9:
+					spawnPainting(e);
+					return;
+				case 12:
+					e.getClickedBlock()
+							.getWorld()
+							.spawn(e.getClickedBlock().getLocation()
+									.add(0, 2, 0), Fireball.class);
+					return;
+				case 20:
+					if (e.getPlayer().hasPermission(
+							"entitymanager.spawn.primedtnt")) {
+						e.getPlayer().getWorld().spawn(loc.add(0, 1, 0), TNTPrimed.class);
+						if (!PermissionHandler.has(e.getPlayer(),
+								PermissionNode.BYPASS_CHARGE) && econ != null) {
+							econ.withdrawPlayer(playa, (double) Settings.mons);
 						}
 						return;
-					}
-
-					final Material mat = e.getClickedBlock().getType();
-					if (!(mat == Material.CHEST || mat == Material.FURNACE || mat == Material.DISPENSER)) {
-						if (!onDecidingSpawningFactors(seg)) {
-							e.setCancelled(true); // Cancel
-							e.getPlayer()
-									// Tell player
-									.sendMessage(
-											ChatColor.GREEN
-													+ "[EM]"
-													+ ChatColor.RED
-													+ "You dont have permission to use "
-													+ ChatColor.YELLOW
-													+ seg.getEntityBreed()
-															.toString()
-															.toLowerCase()
-													+ ChatColor.RED + " eggs");
-							alerter(seg); // Alert admins
-						} else { // Handle egg charges based on the egg trying
-									// to be used
-							if (!player
-									.hasPermission("entitymanager.bypass.charge")
-									&& econ != null) {
-								if (seg.getEntityBreed().getCategory() == EntityCategory.ANIMAL) {
-									econ.withdrawPlayer(playa, animal);
-								} else if (seg.getEntityBreed().getCategory() == EntityCategory.MONSTER) {
-									econ.withdrawPlayer(playa, monster);
-								} else if (seg.getEntityBreed().getCategory() == EntityCategory.NPC) {
-									econ.withdrawPlayer(playa, npc);
-								} // end of specific charge block
-							} // end of bypass perm charge block
-						} // End of charges
 					} else {
-						player.sendMessage(ChatColor.AQUA
-								+ "Opened that "
-								+ e.getClickedBlock().getType().toString()
-										.toLowerCase() + " with a "
-								+ seg.getEntityBreed().toString().toLowerCase()
-								+ " egg");
+						handle(e);
 					}
-				} // Item check
-			} // World
-		} // World Iterator
+				case 17:
+					spawnExp(e);
+					return;
+				case 40:
+					if (e.getPlayer().hasPermission(
+							"entitymanager.spawn.minecart")) {
+						e.getPlayer().getWorld().spawn(loc, Minecart.class);
+						if (!PermissionHandler.has(e.getPlayer(),
+								PermissionNode.BYPASS_CHARGE) && econ != null) {
+							econ.withdrawPlayer(playa, (double) Settings.mons);
+						}
+						return;
+					} else {
+						handle(e);
+					}
+				case 41:
+					if (e.getPlayer().hasPermission("entitymanager.spawn.boat")) {
+						e.getPlayer().getWorld().spawn(loc, Boat.class);
+						if (!PermissionHandler.has(e.getPlayer(),
+								PermissionNode.BYPASS_CHARGE) && econ != null) {
+							econ.withdrawPlayer(playa, (double) Settings.mons);
+						}
+						return;
+					} else {
+						handle(e);
+					}
+				case 50:
+					if (Settings.creep) {
+						if (!(e.getPlayer()
+								.hasPermission("entitymanager.spawn.creeper"))) {
+							e.setCancelled(true);
+							handle(e);
+							return;
+						}
+						econ.withdrawPlayer(playa, (double) Settings.mons);					
+						}
+				case 51:
+					if (Settings.skele) {
+						if (!(e.getPlayer()
+								.hasPermission("entitymanager.spawn.skeleton"))) {
+							e.setCancelled(true);
+							handle(e);
+							return;
+						}
+						econ.withdrawPlayer(playa, (double) Settings.mons);		
+					}
+				case 52:
+					if (Settings.spider) {
+						if (!(e.getPlayer()
+								.hasPermission("entitymanager.spawn.spider"))) {
+							e.setCancelled(true);
+							handle(e);
+							return;
+						}
+						econ.withdrawPlayer(playa, (double) Settings.mons);		
+					}
+				case 53:
+					if (e.getPlayer()
+							.hasPermission("entitymanager.spawn.giant")) {
+						e.getPlayer().getWorld().spawn(loc, Giant.class);
+						if (!PermissionHandler.has(e.getPlayer(),
+								PermissionNode.BYPASS_CHARGE) && econ != null) {
+							econ.withdrawPlayer(playa, (double) Settings.mons);
+						}
+						return;
+					} else {
+						handle(e);
+					}
+				case 54:
+					if (Settings.zombie) {
+						if (!(e.getPlayer()
+								.hasPermission("entitymanager.spawn.zombie"))) {
+							e.setCancelled(true);
+						}
+						econ.withdrawPlayer(playa, (double) Settings.mons);		
+					}
+				case 55:
+					if (Settings.slime) {
+						if (!(e.getPlayer()
+								.hasPermission("entitymanager.spawn.slime"))) {
+							e.setCancelled(true);
+							handle(e);
+							return;
+						}
+						econ.withdrawPlayer(playa, (double) Settings.mons);		
+					}
+				case 56:
+					if (Settings.ghast) {
+						if (!(e.getPlayer()
+								.hasPermission("entitymanager.spawn.ghast"))) {
+							e.setCancelled(true);
+							handle(e);
+							return;
+						}
+						econ.withdrawPlayer(playa, (double) Settings.mons);		
+					}
+				case 57:
+					if (Settings.pigman) {
+						if (!(e.getPlayer()
+								.hasPermission("entitymanager.spawn.pigman"))) {
+							e.setCancelled(true);
+							handle(e);
+							return;
+						}
+						econ.withdrawPlayer(playa, (double) Settings.mons);		
+					}
+				case 58:
+					if (Settings.ender) {
+						if (!(e.getPlayer()
+								.hasPermission("entitymanager.spawn.enderman"))) {
+							e.setCancelled(true);
+							handle(e);
+							return;
+						}
+						econ.withdrawPlayer(playa, (double) Settings.mons);		
+					}
+				case 59:
+					if (Settings.cave) {
+						if (!(e.getPlayer()
+								.hasPermission("entitymanager.spawn.cavespider"))) {
+							e.setCancelled(true);
+							handle(e);
+							return;
+						}
+						econ.withdrawPlayer(playa, (double) Settings.mons);		
+					}
+				case 60:
+					if (Settings.fish) {
+						if (!(e.getPlayer()
+								.hasPermission("entitymanager.spawn.silverfish"))) {
+							e.setCancelled(true);
+							handle(e);
+							return;
+						}
+						econ.withdrawPlayer(playa, (double) Settings.mons);		
+					}
+				case 61:
+					if (Settings.blaze) {
+						if (!(e.getPlayer()
+								.hasPermission("entitymanager.spawn.blaze"))) {
+							e.setCancelled(true);
+							handle(e);
+							return;
+						}
+						econ.withdrawPlayer(playa, (double) Settings.mons);		
+					}
+				case 62:
+					if (Settings.cube) {
+						if (!(e.getPlayer()
+								.hasPermission("entitymanager.spawn.magmacube"))) {
+							e.setCancelled(true);
+							handle(e);
+							return;
+						}
+						econ.withdrawPlayer(playa, (double) Settings.mons);		
+					}
+				case 63:
+					if (e.getPlayer().hasPermission(
+							"entitymanager.spawn.dragon")) {
+						e.getPlayer().getWorld().spawn(loc, EnderDragon.class);
+						if (!PermissionHandler.has(e.getPlayer(),
+								PermissionNode.BYPASS_CHARGE) && econ != null) {
+							econ.withdrawPlayer(playa, (double) Settings.mons);
+						}
+						return;
+					} else {
+						handle(e);
+					}
+
+				case 90:
+					if (Settings.pig) {
+						if (!(e.getPlayer()
+								.hasPermission("entitymanager.spawn.pig"))) {
+							e.setCancelled(true);
+							handle(e);
+							return;
+						}
+						econ.withdrawPlayer(playa, (double) Settings.animal);		
+					}
+				case 91:
+					if (Settings.sheep) {
+						if (!(e.getPlayer()
+								.hasPermission("entitymanager.spawn.sheep"))) {
+							e.setCancelled(true);
+							handle(e);
+							return;
+						}
+						econ.withdrawPlayer(playa, (double) Settings.animal);	
+					}
+				case 92:
+					if (Settings.cow) {
+						if (!(e.getPlayer()
+								.hasPermission("entitymanager.spawn.cow"))) {
+							e.setCancelled(true);
+							handle(e);
+							return;
+						}
+						econ.withdrawPlayer(playa, (double) Settings.animal);	
+					}
+				case 93:
+					if (Settings.chick) {
+						if (!(e.getPlayer()
+								.hasPermission("entitymanager.spawn.chicken"))) {
+							e.setCancelled(true);
+							handle(e);
+							return;
+						}
+						econ.withdrawPlayer(playa, (double) Settings.animal);	
+					}
+				case 94:
+					if (Settings.squid) {
+						if (!(e.getPlayer()
+								.hasPermission("entitymanager.spawn.squid"))) {
+							e.setCancelled(true);
+							handle(e);
+							return;
+						}
+						econ.withdrawPlayer(playa, (double) Settings.animal);	
+					}
+				case 95:
+					if (Settings.wolf) {
+						if (!(e.getPlayer()
+								.hasPermission("entitymanager.spawn.wolf"))) {
+							e.setCancelled(true);
+							handle(e);
+							return;
+						}
+						econ.withdrawPlayer(playa, (double) Settings.animal);	
+					}
+				case 96:
+					if (Settings.moosh) {
+						if (!(e.getPlayer()
+								.hasPermission("entitymanager.spawn.mooshroom"))) {
+							e.setCancelled(true);
+							handle(e);
+							return;
+						}
+						econ.withdrawPlayer(playa, (double) Settings.animal);	
+					}
+				case 97:
+					if (e.getPlayer().hasPermission(
+							"entitymanager.spawn.snowgolem")) {
+						e.getPlayer().getWorld().spawn(loc, Snowman.class);
+						if (!PermissionHandler.has(e.getPlayer(),
+								PermissionNode.BYPASS_CHARGE) && econ != null) {
+							econ.withdrawPlayer(playa, (double) Settings.mons);
+						}
+						return;
+					} else {
+						handle(e);
+					}
+				case 98:
+					if (Settings.ocelot) {
+						if (!(e.getPlayer()
+								.hasPermission("entitymanager.spawn.ocelot"))) {
+							e.setCancelled(true);
+							handle(e);
+							return;
+						}
+						econ.withdrawPlayer(playa, (double) Settings.animal);	
+					}
+				case 99:
+					if (e.getPlayer().hasPermission(
+							"entitymanager.spawn.irongolem")) {
+						e.getPlayer().getWorld().spawn(loc, IronGolem.class);
+						if (!PermissionHandler.has(e.getPlayer(),
+								PermissionNode.BYPASS_CHARGE) && econ != null) {
+							econ.withdrawPlayer(playa, (double) Settings.mons);
+						}
+						return;
+					} else {
+						handle(e);
+					}
+				case 120:
+					if (Settings.villa) {
+						if (!(e.getPlayer()
+								.hasPermission("entitymanager.spawn.villager"))) {
+							e.setCancelled(true);
+							handle(e);
+							return;
+						}
+						econ.withdrawPlayer(playa, (double) Settings.npc);	
+					}
+				case 200:
+					if (e.getPlayer().hasPermission(
+							"entitymanager.spawn.crystal")) {
+						e.getPlayer().getWorld().spawn(loc, EnderCrystal.class);
+						if (!PermissionHandler.has(e.getPlayer(),
+								PermissionNode.BYPASS_CHARGE) && econ != null) {
+							econ.withdrawPlayer(playa, (double) Settings.mons);
+						}
+						return;
+					} else {
+						handle(e);
+					}
+				default:
+				}
+
+			}
+		}
 	}
 
-	/**
-	 * On deciding spawning factors.
-	 * 
-	 * @param e
-	 *            the e
-	 * @return true, if successful
-	 */
-	public boolean onDecidingSpawningFactors(SpawnEggEvent e) {
-		if (e.getPlayer().hasPermission("entitymanager.*")) {
-			return true;
-		}
-		if (e.getEntityBreed().getCategory() == EntityCategory.SPECIAL) {
-			return true;
-		}
-		if (e.getEntityBreed().getCategory() == EntityCategory.UNKNOWN) {
-			return true;
-		}
-		if (e.getEntityBreed().getCategory() != EntityCategory.UNKNOWN) {
-			if (Settings.getConfig().getBoolean(
-					"disabled.eggs."
-							+ e.getEntityBreed().toString().toLowerCase())) {
-				if (e.getPlayer().hasPermission(
-						"entitymanager."
-								+ e.getEntityBreed().toString().toLowerCase())) {
-					return true;
-				} else {
-					return false;
-				}
-			} else {
-				return true;
-			}
-		}
-		return true;
-	}
+	private void spawnExp(PlayerInteractEvent e) {
+		try {
+			e.getPlayer()
+					.getWorld()
+					.spawn(e.getClickedBlock().getLocation().add(0, 2, 0),
+							org.bukkit.entity.ThrownExpBottle.class);
+		} catch (Exception ve) {
 
-	/**
-	 * Spawn a entity based on its metadata 383:97 = Snow golem, 383:99 =
-	 * Irongolem, 383:200 = Ender crystal.
-	 *
-	 * @param e the interact event
-	 * @author milkywayz
-	 * @since 3.8.1
-	 */
-	@EventHandler(priority = EventPriority.HIGH)
-	public void spawnNonNaturalEntity(PlayerInteractEvent e) {
-		if (e.getItem() == null) {
-			return;
-		}
-		/*We want right clicks on blocks only*/
-		if (e.getAction() == Action.LEFT_CLICK_AIR
-				|| e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.LEFT_CLICK_BLOCK) {
-			return;
-		}
-		if (!(e.getItem().getTypeId() == 383)) {
-			return;
-		}
-		final Location loc = e.getClickedBlock().getLocation().add(0, 1, 0);
-		final Block block = e.getClickedBlock();
-		final Player player = e.getPlayer();
-		if(e.getItem().getDurability() == 40) {
-			if (PermissionHandler.has(player, PermissionNode.SPAWN_MINECART)) {
-				block.getWorld().spawn(loc, Minecart.class);
-				return;
-			} else {
-				player.sendMessage(ChatColor.RED
-						+ "You don't have permission to spawn minecarts");
-				return;
-			}
-		} else if (e.getItem().getDurability() == 41) {
-			if (PermissionHandler.has(player, PermissionNode.SPAWN_BOAT)) {
-				if(loc.getBlock().isLiquid() || loc.getBlock().getTypeId() == 0) {
-				block.getWorld().spawn(loc, Boat.class);
-				return;
-				} else {
-					player.sendMessage(ChatColor.RED + "That boat would be caught in a block!");
-				}
-			} else {
-				player.sendMessage(ChatColor.RED
-						+ "You don't have permission to spawn boats");
-				return;
-			}
-		} else if (e.getItem().getDurability() == 97) {
-			if (PermissionHandler.has(player, PermissionNode.SPAWN_SNOWGOLEM)) {
-				block.getWorld().spawn(loc, Snowman.class);
-				return;
-			} else {
-				player.sendMessage(ChatColor.RED
-						+ "You don't have permission to spawn snow golems");
-				return;
-			}
-		} else if (e.getItem().getDurability() == 99) {
-			if (PermissionHandler.has(player, PermissionNode.SPAWN_IRONGOLEM)) {			
-				block.getWorld().spawn(loc, IronGolem.class);
-				return;
-			} else {
-				player.sendMessage(ChatColor.RED
-						+ "You don't have permission to spawn iron golems");
-				return;
-			}
-		} else if (e.getItem().getDurability() == 200) {
-			if (PermissionHandler.has(player, PermissionNode.SPAWN_CRYSTAL)) {
-				if(loc.getBlock().getTypeId() == 0) {
-				block.getWorld().spawn(loc, EnderCrystal.class);
-				return;
-				}
-			} else {
-				player.sendMessage(ChatColor.RED
-						+ "You don't have permission to spawn ender crystals");
-				return;
-			}
 		}
 	}
 
-	/**
-	 * Alerter.
-	 * 
-	 * @param ev
-	 *            the ev
-	 */
-	public final void alerter(SpawnEggEvent ev) {
+	private void spawnPainting(PlayerInteractEvent e) {
+		try {
+			e.getPlayer()
+					.getWorld()
+					.spawn(e.getClickedBlock().getRelative(BlockFace.SELF)
+							.getLocation(), Painting.class);
+		} catch (Exception ve) {
+
+		}
+	}
+
+	public void handle(PlayerInteractEvent e) {
+		e.getPlayer().sendMessage(
+				ChatColor.RED + "You dont have permission to spawn that mob!");
+	}
+
+	public void alerter(PlayerInteractEvent ev) {
 		if (Settings.logging) {
-			writeWarn("[EntityManager] "
+			writeLog("[EntityManager] "
 					+ ev.getPlayer().getDisplayName().toLowerCase()
 					+ " tried to use an "
-					+ ev.getEntityBreed().toString().toLowerCase() + " egg");
+					+ ev.getItem().getType().toString().toLowerCase() + " egg");
 		}
 		if (Settings.alertz) {
 			for (Player p : ev.getPlayer().getServer().getOnlinePlayers()) {
-				if (PermissionHandler.has(p, PermissionNode.ADMIN)) {
+				if (p.hasPermission("entitymanager.admin")) {
 					p.sendMessage(ChatColor.GREEN + "[EM] "
 							+ ChatColor.DARK_RED
 							+ ev.getPlayer().getDisplayName()
 							+ " tried to use a " + ChatColor.GOLD
-							+ ev.getEntityBreed().toString().toLowerCase()
-							+ ChatColor.DARK_RED + " egg.");
+							+ ev.getItem().getType().toString().toLowerCase()
+							+ " egg.");
 				}
 			}
 		}

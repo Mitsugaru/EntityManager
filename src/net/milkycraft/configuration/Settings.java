@@ -1,6 +1,3 @@
-/*
- * 
- */
 package net.milkycraft.configuration;
 
 import java.util.List;
@@ -17,31 +14,32 @@ public class Settings extends ConfigLoader {
 	/** The totalenchant. */
 	public static Boolean Motd, alertz, metrics, logging, amrs, world,
 			totalexp, totalenchant, update;
-	
+
 	/** The time. */
 	public static String time;
 	/** The arrowz. */
-	public static Boolean doorBreak, enderPickup, pvp, mobdmg, fishing, arrowz, wmanager;
-	
+	public static Boolean doorBreak, enderPickup, pvp, mobdmg, fishing, arrowz,
+			wmanager;
+
 	/** The lava. */
 	public static Boolean MonsEggs, ChickEggs, Fballs, xBottz, potionz, water,
 			lava;
-	
+
 	/** The bitems. */
 	public static List<Integer> items, bitems;
-	
+
 	/** The potion. */
 	public static Boolean xpbott, fire, egg, pearl, eye, potion;
-	
+
 	/** The paintz. */
 	public static Boolean boatz, cartz, paintz;
-	
+
 	/** The on death. */
 	public static Boolean cDrop, sDrop, onDeath;
-	
+
 	/** The tripwires. */
 	public static Boolean portals, tripwires, msdrops, msxp;
-	
+
 	/** The npc. */
 	public static Integer mons, animal, npc, expwr;
 	/** Disabled eggs. */
@@ -53,7 +51,7 @@ public class Settings extends ConfigLoader {
 			pigmans, enders, caves, fishs, blazes, cubes, pigs, sheeps, cows,
 			chicks, squids, snow, dragons, iron, wolfs, mooshs, ocelots,
 			villas;
-	
+
 	/** The enderchest. */
 	public static Boolean all, godcrops, dragegg, enderchest;
 
@@ -198,5 +196,5 @@ public class Settings extends ConfigLoader {
 	public static FileConfiguration getConfig() {
 		return config;
 	}
-	
+
 }

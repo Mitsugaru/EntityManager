@@ -1,6 +1,3 @@
-/*
- * 
- */
 package net.milkycraft.api;
 
 import net.milkycraft.EntityManager;
@@ -275,37 +272,43 @@ public class EntityManagerAPI extends EntityManager {
 	public boolean canThrow(Player player, Material material) {
 		if (material == Material.EXP_BOTTLE) {
 			if (Settings.xpbott) {
-				return PermissionHandler.has(player, PermissionNode.THROW_XPBOTTLES);
+				return PermissionHandler.has(player,
+						PermissionNode.THROW_XPBOTTLES);
 			} else {
 				return true;
 			}
 		} else if (material == Material.FIREBALL) {
 			if (Settings.fire) {
-				return PermissionHandler.has(player, PermissionNode.THROW_FIRECHARGES);
+				return PermissionHandler.has(player,
+						PermissionNode.THROW_FIRECHARGES);
 			} else {
 				return true;
 			}
 		} else if (material == Material.EGG) {
 			if (Settings.egg) {
-				return PermissionHandler.has(player, PermissionNode.THROW_CHICKENEGGS);
+				return PermissionHandler.has(player,
+						PermissionNode.THROW_CHICKENEGGS);
 			} else {
 				return true;
 			}
 		} else if (material == Material.ENDER_PEARL) {
 			if (Settings.pearl) {
-				return PermissionHandler.has(player, PermissionNode.THROW_ENDERPEARLS);
+				return PermissionHandler.has(player,
+						PermissionNode.THROW_ENDERPEARLS);
 			} else {
 				return true;
 			}
 		} else if (material == Material.EYE_OF_ENDER) {
 			if (Settings.eye) {
-				return PermissionHandler.has(player, PermissionNode.THROW_ENDEREYES);
+				return PermissionHandler.has(player,
+						PermissionNode.THROW_ENDEREYES);
 			} else {
 				return true;
 			}
 		} else if (material == Material.POTION) {
 			if (Settings.potion) {
-				return PermissionHandler.has(player, PermissionNode.THROW_POTIONS);
+				return PermissionHandler.has(player,
+						PermissionNode.THROW_POTIONS);
 			} else {
 				return true;
 			}
@@ -377,9 +380,11 @@ public class EntityManagerAPI extends EntityManager {
 	/**
 	 * Get if player has a permission dedicated to entitymanager Typical
 	 * permission: entitymanager.fishing or entitymanager.throw.xpbottles
-	 *
-	 * @param player The player
-	 * @param permission The second half of a permission node (eg: .throw.xpbottle)
+	 * 
+	 * @param player
+	 *            The player
+	 * @param permission
+	 *            The second half of a permission node (eg: .throw.xpbottle)
 	 * @return wether player has permission or not for the specified permission
 	 * @author milkywayz
 	 * @since 3.4
@@ -390,7 +395,6 @@ public class EntityManagerAPI extends EntityManager {
 		}
 		return player.hasPermission("entitymanager." + permission);
 	}
-	
 
 	/**
 	 * Get this class so you can use the public values Proper use of API:

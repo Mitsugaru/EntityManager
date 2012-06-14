@@ -1,6 +1,3 @@
-/*
- * 
- */
 package net.milkycraft.listeners;
 
 import net.milkycraft.EntityManager;
@@ -24,8 +21,7 @@ import org.bukkit.event.entity.EntityTargetLivingEntityEvent;
  * 
  * @see TargetEvent
  */
-public class TargetListener extends EntityManager implements Listener
-{
+public class TargetListener extends EntityManager implements Listener {
 
 	/**
 	 * On target.
@@ -34,13 +30,10 @@ public class TargetListener extends EntityManager implements Listener
 	 *            the e
 	 */
 	@EventHandler(priority = EventPriority.LOWEST)
-	public void onTarget(EntityTargetLivingEntityEvent e)
-	{
-		if (e.getTarget() instanceof Player)
-		{
+	public void onTarget(EntityTargetLivingEntityEvent e) {
+		if (e.getTarget() instanceof Player) {
 			final Player player = (Player) e.getTarget();
-			if (PermissionHandler.has(player, PermissionNode.AVOID_TARGET))
-			{
+			if (PermissionHandler.has(player, PermissionNode.AVOID_TARGET)) {
 				e.setCancelled(true); // Cancel the target
 				return;
 			}

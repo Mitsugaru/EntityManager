@@ -1,14 +1,11 @@
-/*
- * 
- */
 package net.milkycraft;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.logging.Logger;
 
 import net.milkbowl.vault.economy.Economy;
 import net.milkycraft.api.DropManager;
@@ -27,10 +24,12 @@ import net.milkycraft.listeners.LoginListener;
 import net.milkycraft.listeners.SpawnEggListener;
 import net.milkycraft.listeners.TargetListener;
 import net.milkycraft.listeners.ThrowListener;
-import net.milkycraft.metrics.Metrics;
+import net.milkycraft.metrics.MetricsStarter;
 import net.milkycraft.permissions.PermissionHandler;
+import net.milkycraft.permissions.PermissionNode;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
@@ -44,32 +43,36 @@ import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
  * The Main Class of EntityManager.
  * 
  * @author milkywayz
- * @version 3.7.2
+ * @version 3.8.1
  */
 @SuppressWarnings("unused")
-public class EntityManager extends JavaPlugin {	
-	
+public class EntityManager extends JavaPlugin {
+
 	/** The maindirectory. */
 	public static String maindirectory;
+
 	/** The latest version. */
 	private static String latestVersion = null;
+
 	/** The version diff. */
 	private static boolean versionDiff = false;
+
 	/** The file. */
 	public static File file = new File(maindirectory + File.separator
 			+ "config.yml");
+
 	/** The worldguard plugin. */
 	protected static WorldGuardPlugin worldguardPlugin = null;
-	
+
 	/** The econ. */
 	public static Economy econ = null;
-	
+
 	/** The main. */
 	public static EntityManager main;
-	
+
 	/** The entitymanager. */
 	public static File entitymanager;
-	
+
 	/** The emce. */
 	private EntityManagerCommandExecutor emce;
 
@@ -202,8 +205,9 @@ public class EntityManager extends JavaPlugin {
 		if (wg == null) {
 			writeLog("Didn't find WorldGuard, Ignoring Regions.");
 		} else {
-			EntityManager.worldguardPlugin = (WorldGuardPlugin) wg;	
-			getLogger().info("Sucessfully hooked into WorldGuard");
+			EntityManager.worldguardPlugin = (WorldGuardPlugin) wg;
+			writeLog("Sucessfully hooked into WorldGuard");
+
 		}
 
 	}
@@ -218,7 +222,7 @@ public class EntityManager extends JavaPlugin {
 	 * @since 3.7
 	 */
 	public void writeLog(String text) {
-		getLogger().info(text);
+		Logger.getLogger("Minecraft").info(text);
 	}
 
 	/**
@@ -231,20 +235,17 @@ public class EntityManager extends JavaPlugin {
 	 * @since 3.7
 	 */
 	public void writeWarn(String warning) {
-		getLogger().warning(warning);
+		Logger.getLogger("Minecraft").warning(warning);
 	}
 
 	/**
 	 * Sets up metrics.
 	 */
 	public final void setUpMetrics() {
-		if (Settings.metrics) {
-			try {
-				Metrics metrics = new Metrics(this);
-				metrics.beginMeasuringPlugin(this);
-			} catch (IOException e) {
-				writeLog("Metrics failed to load!");
-			}
+		if(Settings.metrics) {
+		final MetricsStarter metricsStarter = new MetricsStarter();	
+		getServer().getScheduler().scheduleAsyncDelayedTask(this, metricsStarter, 100);
+		writeLog("[EntityManager] Metrics loaded!");
 		}
 	}
 
@@ -256,8 +257,8 @@ public class EntityManager extends JavaPlugin {
 		for (String s : WorldSettings.worlds) {
 			for (World w : Bukkit.getWorlds()) {
 				if (s.equalsIgnoreCase(w.getName())) {
-					writeLog("EntityManager is enabled in the world: ("
-							+ s + ")");
+					writeLog("EntityManager is enabled in the world: (" + s
+							+ ")");
 					x++;
 				}
 			}
@@ -270,9 +271,10 @@ public class EntityManager extends JavaPlugin {
 	 * Schedule the world time changer if needed.
 	 */
 	public final void schedule() {
-		if (factors()) {	
-			for(String s : WorldSettings.worldz) {
-				writeLog("(" + s + ") is scheduled to always stay " + Settings.time);
+		if (factors()) {
+			for (String s : WorldSettings.worldz) {
+				writeLog("(" + s + ") is scheduled to always stay "
+						+ Settings.time);
 			}
 			getServer().getScheduler().scheduleSyncRepeatingTask(this,
 					new Runnable() {
@@ -281,8 +283,9 @@ public class EntityManager extends JavaPlugin {
 							TimeManager.getTimeManager().adjustTime();
 						}
 					}, 95L, 1200L);
-			if(Settings.update) {
-			getServer().getScheduler().scheduleAsyncRepeatingTask(this, new UpdateCheck(), 40, 432000);
+			if (Settings.update) {
+				getServer().getScheduler().scheduleAsyncRepeatingTask(this,
+						new UpdateCheck(), 40, 432000);
 			}
 		}
 	}
@@ -326,17 +329,24 @@ public class EntityManager extends JavaPlugin {
 			writeWarn("Cracked servers are breeding ground for hackers!");
 		}
 	}
-	
+
 	/**
-	 * Tell.
+	 * Tell admins if theres an update available. Doesnt check for settings
+	 * because this cant get called unless update checking is on
+	 * 
+	 * @param message
+	 *            the message
 	 */
-	public void tell() {
+	public void tell(String message) {
 		for (Player p : Bukkit.getServer().getOnlinePlayers()) {
-			if (p.hasPermission("entitymanager.admin")) {
-				p.sendMessage("EntityManager has an update available!");
-				p.sendMessage("http://dev.bukkit.org/server-mods/entitymanager/");
-				}
+			if (PermissionHandler.has(p, PermissionNode.ADMIN)) {
+				p.sendMessage(ChatColor.YELLOW
+						+ "EntityManager has an update available!");
+				p.sendMessage(ChatColor.GRAY + message);
+				p.sendMessage(ChatColor.YELLOW
+						+ "http://dev.bukkit.org/server-mods/entitymanager/");
 			}
+		}
 	}
 
 	/**
@@ -349,13 +359,15 @@ public class EntityManager extends JavaPlugin {
 	public static final EntityManager getMainClass() {
 		return main;
 	}
-	
+
 	/**
 	 * The Class UpdateCheck.
 	 */
 	private class UpdateCheck implements Runnable {
-		
-		/* (non-Javadoc)
+
+		/*
+		 * (non-Javadoc)
+		 * 
 		 * @see java.lang.Runnable#run()
 		 */
 		@Override
@@ -379,7 +391,7 @@ public class EntityManager extends JavaPlugin {
 						writeLog("Found a different version available: "
 								+ version);
 						writeLog("Check http://dev.bukkit.org/server-mods/entitymanager/");
-						tell();
+						derpTell();
 						EntityManager.versionDiff = true;
 					}
 					bufferedReader.close();
@@ -391,6 +403,35 @@ public class EntityManager extends JavaPlugin {
 				}
 			} catch (final Exception e) {
 			}
+			writeWarn("Error: Could not check if plugin was up to date. Will try later");
+		}
+	}
+
+	/**
+	 * Derp tell.
+	 */
+	public void derpTell() {
+		try {
+			final String address = "http://updates.milkycraft.net/messages";
+			final URL url = new URL(address.replace(" ", "%20"));
+			final URLConnection connection = url.openConnection();
+			connection.setConnectTimeout(8000);
+			connection.setReadTimeout(15000);
+			connection.setRequestProperty("User-agent", "EntityManager ");
+			final BufferedReader bufferedReader = new BufferedReader(
+					new InputStreamReader(connection.getInputStream()));
+			String message;
+			if ((message = bufferedReader.readLine()) != null) {
+				tell(message);
+				bufferedReader.close();
+				connection.getInputStream().close();
+				return;
+			} else {
+				bufferedReader.close();
+				connection.getInputStream().close();
+				tell("Update message is null");
+			}
+		} catch (final Exception e) {
 			writeWarn("Error: Could not check if plugin was up to date. Will try later");
 		}
 	}

@@ -14,14 +14,13 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 // TODO: Auto-generated Javadoc
 /**
- * The listener interface for receiving login events.
- * The class that is interested in processing a login
- * event implements this interface, and the object created
- * with that class is registered with a component using the
+ * The listener interface for receiving login events. The class that is
+ * interested in processing a login event implements this interface, and the
+ * object created with that class is registered with a component using the
  * component's <code>addLoginListener<code> method. When
  * the login event occurs, that object's appropriate
  * method is invoked.
- *
+ * 
  * @see LoginEvent
  */
 public class LoginListener extends EntityManager implements Listener {
@@ -56,9 +55,11 @@ public class LoginListener extends EntityManager implements Listener {
 
 	/**
 	 * Set the motd.
-	 *
-	 * @param message the new motd
-	 * @deprecated MOTD will reset upon reload or restart therefore call this on in your plugins onEnable()
+	 * 
+	 * @param message
+	 *            the new motd
+	 * @deprecated MOTD will reset upon reload or restart therefore call this on
+	 *             in your plugins onEnable()
 	 */
 	public void setMotd(String message) {
 		writeWarn("MOTD was set to: " + message);

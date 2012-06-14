@@ -1,8 +1,6 @@
-/*
- * 
- */
 package net.milkycraft.executors;
 
+import net.milkycraft.EntityManager;
 import net.milkycraft.api.EntityManagerAPI;
 import net.milkycraft.configuration.Settings;
 import net.milkycraft.permissions.PermissionHandler;
@@ -20,20 +18,19 @@ import org.bukkit.entity.Player;
 /**
  * The Class EntityManagerCommandExecutor.
  */
-public class EntityManagerCommandExecutor  implements CommandExecutor{
+public class EntityManagerCommandExecutor extends EntityManager implements CommandExecutor {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see
 	 * org.bukkit.plugin.java.JavaPlugin#onCommand(org.bukkit.command.CommandSender
 	 * , org.bukkit.command.Command, java.lang.String, java.lang.String[])
 	 */
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd,
-			String commandLabel, String[] args)
-	{
-		if (args.length == 0)
-		{
+			String commandLabel, String[] args) {
+		if (args.length == 0) {
 			sender.sendMessage(ChatColor.WHITE
 					+ "*************************************");
 			sender.sendMessage(ChatColor.GOLD + "Logging: " + ChatColor.RED
@@ -52,23 +49,24 @@ public class EntityManagerCommandExecutor  implements CommandExecutor{
 					+ "*************************************");
 			return true;
 		}
-		if (args.length == 1)
-		{
-			if (args[0].equalsIgnoreCase("purge"))
-			{
+		if (args.length == 1) {
+			if (args[0].equalsIgnoreCase("purge")) {
 				sender.sendMessage(ChatColor.RED
 						+ "Usage: /em purge <playername>");
 				return false;
 			}
 		}
-		if (args.length == 2)
-		{
+		if (args[0].equalsIgnoreCase("test")) {
+			Boolean derp = getConfig().getBoolean("disabled.eggs.creeper");
+			sender.sendMessage(ChatColor.RED
+					+ "" + derp);
+			return false;
+		}
+		if (args.length == 2) {
 			if (args[0].equalsIgnoreCase("purge")
-					&& PermissionHandler.has(sender, PermissionNode.ADMIN))
-			{
+					&& PermissionHandler.has(sender, PermissionNode.ADMIN)) {
 				final Player target = sender.getServer().getPlayer(args[1]);
-				if (target == null)
-				{
+				if (target == null) {
 					sender.sendMessage(ChatColor.RED + args[1]
 							+ " is not online!");
 					return false;
@@ -79,43 +77,30 @@ public class EntityManagerCommandExecutor  implements CommandExecutor{
 				boolean end = false;
 				boolean eye = false;
 				boolean pot = false;
-				if (target.getInventory().contains(Material.MONSTER_EGG))
-				{
+				if (target.getInventory().contains(Material.MONSTER_EGG)) {
 					target.getInventory().remove(Material.MONSTER_EGG);
-				}
-				else if (target.getInventory().contains(Material.FIREBALL)
-						&& Settings.fire)
-				{
+				} else if (target.getInventory().contains(Material.FIREBALL)
+						&& Settings.fire) {
 					target.getInventory().remove(Material.FIREBALL);
 					fire = true;
-				}
-				else if (target.getInventory().contains(Material.EGG)
-						&& Settings.egg)
-				{
+				} else if (target.getInventory().contains(Material.EGG)
+						&& Settings.egg) {
 					target.getInventory().remove(Material.EGG);
 					egg = true;
-				}
-				else if (target.getInventory().contains(Material.EXP_BOTTLE)
-						&& Settings.xpbott)
-				{
+				} else if (target.getInventory().contains(Material.EXP_BOTTLE)
+						&& Settings.xpbott) {
 					target.getInventory().remove(Material.EXP_BOTTLE);
 					exp = true;
-				}
-				else if (target.getInventory().contains(Material.ENDER_PEARL)
-						&& Settings.pearl)
-				{
+				} else if (target.getInventory().contains(Material.ENDER_PEARL)
+						&& Settings.pearl) {
 					target.getInventory().remove(Material.ENDER_PEARL);
 					end = true;
-				}
-				else if (target.getInventory().contains(Material.EYE_OF_ENDER)
-						&& Settings.eye)
-				{
+				} else if (target.getInventory()
+						.contains(Material.EYE_OF_ENDER) && Settings.eye) {
 					target.getInventory().remove(Material.EYE_OF_ENDER);
 					eye = true;
-				}
-				else if (target.getInventory().contains(Material.POTION)
-						&& Settings.potion)
-				{
+				} else if (target.getInventory().contains(Material.POTION)
+						&& Settings.potion) {
 					target.getInventory().remove(Material.POTION);
 					pot = true;
 				}
@@ -131,96 +116,66 @@ public class EntityManagerCommandExecutor  implements CommandExecutor{
 						+ "Potion: " + a + pot);
 				return true;
 			}
-			if (args.length == 2)
-			{
-				if (args[0].equalsIgnoreCase("canspawn"))
-				{
-					if (PermissionHandler.has(sender, PermissionNode.ADMIN))
-					{
-						try
-						{
+			if (args.length == 2) {
+				if (args[0].equalsIgnoreCase("canspawn")) {
+					if (PermissionHandler.has(sender, PermissionNode.ADMIN)) {
+						try {
 							final String mob = args[1].toUpperCase();
 							if (!EntityManagerAPI.getManager().canSpawn(
-									EntityType.valueOf(mob)))
-							{
+									EntityType.valueOf(mob))) {
 								sender.sendMessage(ChatColor.GRAY
 										+ "The mob : " + mob.toLowerCase()
 										+ " can't spawn");
-							}
-							else
-							{
+							} else {
 								sender.sendMessage(ChatColor.GRAY
 										+ "The mob : " + mob.toLowerCase()
 										+ " can spawn");
 							}
 							return true;
-						}
-						catch (ArrayIndexOutOfBoundsException e)
-						{
+						} catch (ArrayIndexOutOfBoundsException e) {
 							sender.sendMessage(ChatColor.RED
 									+ "Correct usage: /em canspawn EntityType");
-						}
-						catch (NullPointerException e)
-						{
+						} catch (NullPointerException e) {
 							sender.sendMessage(ChatColor.RED
 									+ "Correct usage: /em canspawn EntityType");
-						}
-						catch (IllegalArgumentException e)
-						{
+						} catch (IllegalArgumentException e) {
 							sender.sendMessage(ChatColor.RED
 									+ "There is no entity named : "
 									+ ChatColor.YELLOW + args[1].toLowerCase());
 						}
-					}
-					else
-					{
+					} else {
 						sender.sendMessage(ChatColor.RED
 								+ "You dont have permission to do that!");
 						return false;
 					}
 				}
 			}
-			if (args.length == 2)
-			{
+			if (args.length == 2) {
 				if (args[0].equalsIgnoreCase("set")
 						&& PermissionHandler.has(sender,
-								PermissionNode.SET_DURABILITY))
-				{
-					if (((Player) sender).getItemInHand().getTypeId() == 383)
-					{
-						try
-						{
+								PermissionNode.SET_DURABILITY)) {
+					if (((Player) sender).getItemInHand().getTypeId() == 383) {
+						try {
 							((Player) sender).getItemInHand().setDurability(
 									Short.valueOf(args[1]));
-						}
-						catch (ArrayIndexOutOfBoundsException e)
-						{
+						} catch (ArrayIndexOutOfBoundsException e) {
 							sender.sendMessage(ChatColor.RED
 									+ "(AIOBE)Correct usage: /em set 50");
-						}
-						catch (NullPointerException ev)
-						{
+						} catch (NullPointerException ev) {
 							sender.sendMessage(ChatColor.RED
 									+ "(NPE)Correct usage: /em set 50");
-						}
-						catch (NumberFormatException ef)
-						{
+						} catch (NumberFormatException ef) {
 							sender.sendMessage(ChatColor.RED
 									+ "(NFE)Correct usage: /em set 50");
 						}
-						try
-						{
+						try {
 							sender.sendMessage(ChatColor.GREEN
 									+ "Your egg now has a durability of "
 									+ Integer.valueOf(args[1]));
-						}
-						catch (NumberFormatException nfe)
-						{
+						} catch (NumberFormatException nfe) {
 						}
 						return true;
-					}
-					else
-					{
+					} else {
 						sender.sendMessage(ChatColor.RED
 								+ "You must have a spawn egg in hand!");
 						return true;
@@ -228,8 +183,7 @@ public class EntityManagerCommandExecutor  implements CommandExecutor{
 				}
 			}
 			if (args[0].equalsIgnoreCase("mobs")
-					&& PermissionHandler.has(sender, PermissionNode.ADMIN))
-			{
+					&& PermissionHandler.has(sender, PermissionNode.ADMIN)) {
 				sender.sendMessage(ChatColor.GRAY
 						+ "------------Blocked mobs list------------");
 				sender.sendMessage(ChatColor.YELLOW + "Pig = "
@@ -283,8 +237,7 @@ public class EntityManagerCommandExecutor  implements CommandExecutor{
 						+ "-----------True = blocked mob------------");
 				return true;
 			}
-			if (args.length == 0)
-			{
+			if (args.length == 0) {
 				sender.sendMessage(ChatColor.WHITE
 						+ "*************************************");
 				sender.sendMessage(ChatColor.GOLD + "Logging: " + ChatColor.RED
@@ -298,9 +251,7 @@ public class EntityManagerCommandExecutor  implements CommandExecutor{
 				sender.sendMessage(ChatColor.WHITE
 						+ "*************************************");
 				return true;
-			}
-			else
-			{
+			} else {
 				sender.sendMessage(ChatColor.DARK_RED
 						+ " Could not complete that command!");
 				return false;

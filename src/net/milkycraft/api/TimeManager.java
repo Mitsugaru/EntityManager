@@ -1,6 +1,3 @@
-/*
- * 
- */
 package net.milkycraft.api;
 
 import org.bukkit.Bukkit;
@@ -15,33 +12,36 @@ import net.milkycraft.configuration.WorldSettings;
  * The Class TimeManager.
  */
 public class TimeManager extends EntityManager {
-	
+
 	/** The st. */
 	private String st = Settings.time;
-	
+
 	/** The Constant instance. */
 	private static final TimeManager instance = new TimeManager();
 
 	/**
 	 * Changes time of world based on config.
-	 *
+	 * <p>
+	 * Keep for loop because we adjust all worlds specified at the same time
+	 * <p>
+	 * 
 	 * @author milkywayz
 	 * @since 3.7
 	 */
 	public void adjustTime() {
-		for(String s : WorldSettings.worldz) {
+		for (String s : WorldSettings.worldz) {
 			try {
-			World world = Bukkit.getServer().getWorld(s);
-			world.setFullTime(getTime());
+				World world = Bukkit.getServer().getWorld(s);
+				world.setFullTime(getTime());
 			} catch (NullPointerException x) {
-				writeWarn("The world: (" + s +") is not a valid world!");
+				writeWarn("The world: (" + s + ") is not a valid world!");
 			}
 		}
 	}
 
 	/**
 	 * Parses the config value into a long usable by the setFullTime() method.
-	 *
+	 * 
 	 * @return the Long time based on String from config
 	 * @author milkywayz
 	 * @see Settings
@@ -59,7 +59,7 @@ public class TimeManager extends EntityManager {
 				|| st.equalsIgnoreCase("fullbright")) {
 			return 6000L;
 		}
-		
+
 		if (st.equalsIgnoreCase("night") || st.equalsIgnoreCase("midnight")
 				|| st.equalsIgnoreCase("dark")) {
 			return 14000L;
@@ -81,7 +81,7 @@ public class TimeManager extends EntityManager {
 
 	/**
 	 * Gets the time manager.
-	 *
+	 * 
 	 * @return the time manager
 	 */
 	public static TimeManager getTimeManager() {
