@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>net.milkycraft</groupId>
   <artifactId>EntityManager</artifactId>
-  <version>3.8.1-SNAPSHOT</version>
+  <version>3.8.3-SNAPSHOT</version>
   <name>EntityManager</name>
   <description>Block those spawn eggs! And much more!</description>
   <scm>
