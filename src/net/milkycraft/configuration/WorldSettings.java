@@ -18,7 +18,7 @@ public class WorldSettings extends ConfigLoader {
 	private static WorldSettings instance;
 
 	/** The worldz. */
-	public static List<String> worlds, worldz;
+	public static List<String> worlds;
 
 	/** The allworlds. */
 	public static boolean allworlds;
@@ -71,9 +71,7 @@ public class WorldSettings extends ConfigLoader {
 	@Override
 	protected void loadKeys() {
 		plugin.writeLog("[EntityManager] Loading worlds file");
-		worlds = config.getStringList("World.Worlds");
-
-		worldz = config.getStringList("WorldManager.Worlds");
+		worlds = config.getStringList("World.Worlds");		
 		allworlds = config.getBoolean("World.All");
 	}
 

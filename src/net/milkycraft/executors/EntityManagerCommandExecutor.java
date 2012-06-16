@@ -56,12 +56,7 @@ public class EntityManagerCommandExecutor extends EntityManager implements Comma
 				return false;
 			}
 		}
-		if (args[0].equalsIgnoreCase("test")) {
-			Boolean derp = getConfig().getBoolean("disabled.eggs.creeper");
-			sender.sendMessage(ChatColor.RED
-					+ "" + derp);
-			return false;
-		}
+		
 		if (args.length == 2) {
 			if (args[0].equalsIgnoreCase("purge")
 					&& PermissionHandler.has(sender, PermissionNode.ADMIN)) {

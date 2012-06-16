@@ -180,9 +180,9 @@ public class EntityManager extends JavaPlugin {
 	private boolean setupEconomy() {
 		if (getServer().getPluginManager().getPlugin("Vault") == null) {
 			econ = null;
-			writeLog("Failed to hook into Vault");
+			writeLog("[EntityManager] Failed to hook into Vault");
 		} else {
-			writeLog("Sucessfully hooked into Vault");
+			writeLog("[EntityManager] Sucessfully hooked into Vault");
 		}
 		if (getServer().getPluginManager().getPlugin("Vault") == null) {
 			return false;
@@ -203,10 +203,10 @@ public class EntityManager extends JavaPlugin {
 		final Plugin wg = this.getServer().getPluginManager()
 				.getPlugin("WorldGuard");
 		if (wg == null) {
-			writeLog("Didn't find WorldGuard, Ignoring Regions.");
+			writeLog("[EntityManager] Didn't find WorldGuard, Ignoring Regions.");
 		} else {
 			EntityManager.worldguardPlugin = (WorldGuardPlugin) wg;
-			writeLog("Sucessfully hooked into WorldGuard");
+			writeLog("[EntityManager] Sucessfully hooked into WorldGuard");
 
 		}
 
@@ -271,9 +271,9 @@ public class EntityManager extends JavaPlugin {
 	 * Schedule the world time changer if needed.
 	 */
 	public final void schedule() {
-		if (factors()) {
-			for (String s : WorldSettings.worldz) {
-				writeLog("(" + s + ") is scheduled to always stay "
+		if (factors() && Settings.wmanager) {
+			for (String s : Settings.worldz) {
+				writeLog("(" + s + ") will always stay: "
 						+ Settings.time);
 			}
 			getServer().getScheduler().scheduleSyncRepeatingTask(this,
@@ -283,11 +283,11 @@ public class EntityManager extends JavaPlugin {
 							TimeManager.getTimeManager().adjustTime();
 						}
 					}, 95L, 1200L);
+		}
 			if (Settings.update) {
 				getServer().getScheduler().scheduleAsyncRepeatingTask(this,
 						new UpdateCheck(), 40, 432000);
 			}
-		}
 	}
 
 	/**
@@ -300,9 +300,6 @@ public class EntityManager extends JavaPlugin {
 	 */
 	public boolean factors() {
 		String st = Settings.time;
-		if (Settings.wmanager) {
-			return false;
-		}
 		/*
 		 * In the event of a bad reload/forced restart, etc... st can sometimes
 		 * be null which frucks everything up
@@ -363,7 +360,7 @@ public class EntityManager extends JavaPlugin {
 	/**
 	 * The Class UpdateCheck.
 	 */
-	private class UpdateCheck implements Runnable {
+	public class UpdateCheck implements Runnable {
 
 		/*
 		 * (non-Javadoc)
@@ -388,7 +385,7 @@ public class EntityManager extends JavaPlugin {
 					EntityManager.latestVersion = version;
 					if (!EntityManager.getMainClass().getDescription()
 							.getVersion().equals(version)) {
-						writeLog("Found a different version available: "
+						writeLog("Found a new version available: "
 								+ version);
 						writeLog("Check http://dev.bukkit.org/server-mods/entitymanager/");
 						derpTell();

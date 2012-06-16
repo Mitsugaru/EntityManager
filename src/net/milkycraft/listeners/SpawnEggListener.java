@@ -112,7 +112,8 @@ public class SpawnEggListener extends EntityManager implements Listener {
 							handle(e);
 							return;
 						}
-						econ.withdrawPlayer(playa, (double) Settings.mons);					
+						econ.withdrawPlayer(playa, (double) Settings.mons);			
+						return;
 						}
 				case 51:
 					if (Settings.skele) {
@@ -122,7 +123,8 @@ public class SpawnEggListener extends EntityManager implements Listener {
 							handle(e);
 							return;
 						}
-						econ.withdrawPlayer(playa, (double) Settings.mons);		
+						econ.withdrawPlayer(playa, (double) Settings.mons);	
+						return;
 					}
 				case 52:
 					if (Settings.spider) {
@@ -133,6 +135,7 @@ public class SpawnEggListener extends EntityManager implements Listener {
 							return;
 						}
 						econ.withdrawPlayer(playa, (double) Settings.mons);		
+						return;
 					}
 				case 53:
 					if (e.getPlayer()
@@ -145,6 +148,7 @@ public class SpawnEggListener extends EntityManager implements Listener {
 						return;
 					} else {
 						handle(e);
+						return;
 					}
 				case 54:
 					if (Settings.zombie) {
@@ -153,6 +157,7 @@ public class SpawnEggListener extends EntityManager implements Listener {
 							e.setCancelled(true);
 						}
 						econ.withdrawPlayer(playa, (double) Settings.mons);		
+						return;
 					}
 				case 55:
 					if (Settings.slime) {
@@ -163,6 +168,7 @@ public class SpawnEggListener extends EntityManager implements Listener {
 							return;
 						}
 						econ.withdrawPlayer(playa, (double) Settings.mons);		
+						return;
 					}
 				case 56:
 					if (Settings.ghast) {
@@ -172,7 +178,8 @@ public class SpawnEggListener extends EntityManager implements Listener {
 							handle(e);
 							return;
 						}
-						econ.withdrawPlayer(playa, (double) Settings.mons);		
+						econ.withdrawPlayer(playa, (double) Settings.mons);	
+						return;
 					}
 				case 57:
 					if (Settings.pigman) {
@@ -183,6 +190,7 @@ public class SpawnEggListener extends EntityManager implements Listener {
 							return;
 						}
 						econ.withdrawPlayer(playa, (double) Settings.mons);		
+						return;
 					}
 				case 58:
 					if (Settings.ender) {
@@ -193,6 +201,7 @@ public class SpawnEggListener extends EntityManager implements Listener {
 							return;
 						}
 						econ.withdrawPlayer(playa, (double) Settings.mons);		
+						return;
 					}
 				case 59:
 					if (Settings.cave) {
@@ -203,6 +212,7 @@ public class SpawnEggListener extends EntityManager implements Listener {
 							return;
 						}
 						econ.withdrawPlayer(playa, (double) Settings.mons);		
+						return;
 					}
 				case 60:
 					if (Settings.fish) {
@@ -213,6 +223,7 @@ public class SpawnEggListener extends EntityManager implements Listener {
 							return;
 						}
 						econ.withdrawPlayer(playa, (double) Settings.mons);		
+						return;
 					}
 				case 61:
 					if (Settings.blaze) {
@@ -223,6 +234,7 @@ public class SpawnEggListener extends EntityManager implements Listener {
 							return;
 						}
 						econ.withdrawPlayer(playa, (double) Settings.mons);		
+						return;
 					}
 				case 62:
 					if (Settings.cube) {
@@ -232,7 +244,8 @@ public class SpawnEggListener extends EntityManager implements Listener {
 							handle(e);
 							return;
 						}
-						econ.withdrawPlayer(playa, (double) Settings.mons);		
+						econ.withdrawPlayer(playa, (double) Settings.mons);	
+						return;
 					}
 				case 63:
 					if (e.getPlayer().hasPermission(
@@ -245,6 +258,7 @@ public class SpawnEggListener extends EntityManager implements Listener {
 						return;
 					} else {
 						handle(e);
+						return;
 					}
 
 				case 90:
@@ -255,7 +269,8 @@ public class SpawnEggListener extends EntityManager implements Listener {
 							handle(e);
 							return;
 						}
-						econ.withdrawPlayer(playa, (double) Settings.animal);		
+						econ.withdrawPlayer(playa, (double) Settings.animal);	
+						return;
 					}
 				case 91:
 					if (Settings.sheep) {
@@ -266,6 +281,7 @@ public class SpawnEggListener extends EntityManager implements Listener {
 							return;
 						}
 						econ.withdrawPlayer(playa, (double) Settings.animal);	
+						return;
 					}
 				case 92:
 					if (Settings.cow) {
@@ -276,6 +292,7 @@ public class SpawnEggListener extends EntityManager implements Listener {
 							return;
 						}
 						econ.withdrawPlayer(playa, (double) Settings.animal);	
+						return;
 					}
 				case 93:
 					if (Settings.chick) {
@@ -286,6 +303,7 @@ public class SpawnEggListener extends EntityManager implements Listener {
 							return;
 						}
 						econ.withdrawPlayer(playa, (double) Settings.animal);	
+						return;
 					}
 				case 94:
 					if (Settings.squid) {
@@ -296,6 +314,7 @@ public class SpawnEggListener extends EntityManager implements Listener {
 							return;
 						}
 						econ.withdrawPlayer(playa, (double) Settings.animal);	
+						return;
 					}
 				case 95:
 					if (Settings.wolf) {
@@ -306,6 +325,7 @@ public class SpawnEggListener extends EntityManager implements Listener {
 							return;
 						}
 						econ.withdrawPlayer(playa, (double) Settings.animal);	
+						return;
 					}
 				case 96:
 					if (Settings.moosh) {
@@ -316,6 +336,7 @@ public class SpawnEggListener extends EntityManager implements Listener {
 							return;
 						}
 						econ.withdrawPlayer(playa, (double) Settings.animal);	
+						return;
 					}
 				case 97:
 					if (e.getPlayer().hasPermission(
@@ -328,6 +349,7 @@ public class SpawnEggListener extends EntityManager implements Listener {
 						return;
 					} else {
 						handle(e);
+						return;
 					}
 				case 98:
 					if (Settings.ocelot) {
@@ -338,6 +360,7 @@ public class SpawnEggListener extends EntityManager implements Listener {
 							return;
 						}
 						econ.withdrawPlayer(playa, (double) Settings.animal);	
+						return;
 					}
 				case 99:
 					if (e.getPlayer().hasPermission(
@@ -350,6 +373,7 @@ public class SpawnEggListener extends EntityManager implements Listener {
 						return;
 					} else {
 						handle(e);
+						return;
 					}
 				case 120:
 					if (Settings.villa) {
@@ -360,6 +384,7 @@ public class SpawnEggListener extends EntityManager implements Listener {
 							return;
 						}
 						econ.withdrawPlayer(playa, (double) Settings.npc);	
+						return;
 					}
 				case 200:
 					if (e.getPlayer().hasPermission(
@@ -372,6 +397,7 @@ public class SpawnEggListener extends EntityManager implements Listener {
 						return;
 					} else {
 						handle(e);
+						return;
 					}
 				default:
 				}

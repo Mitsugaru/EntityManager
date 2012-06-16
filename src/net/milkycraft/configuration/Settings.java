@@ -27,6 +27,7 @@ public class Settings extends ConfigLoader {
 
 	/** The bitems. */
 	public static List<Integer> items, bitems;
+	public static List<String> worldz;
 
 	/** The potion. */
 	public static Boolean xpbott, fire, egg, pearl, eye, potion;
@@ -158,6 +159,7 @@ public class Settings extends ConfigLoader {
 		zombies = config.getBoolean("disabled.mobs.zombie");
 		slimes = config.getBoolean("disabled.mobs.slime");
 		ghasts = config.getBoolean("disabled.mobs.ghast");
+		worldz = config.getStringList("WorldManager.Worlds");
 		pigmans = config.getBoolean("disabled.mobs.pig_zombie");
 		enders = config.getBoolean("disabled.mobs.enderman");
 		caves = config.getBoolean("disabled.mobs.cavespider");
