@@ -5,7 +5,6 @@ import org.bukkit.World;
 
 import net.milkycraft.EntityManager;
 import net.milkycraft.configuration.Settings;
-import net.milkycraft.configuration.WorldSettings;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -29,7 +28,7 @@ public class TimeManager extends EntityManager {
 	 * @since 3.7
 	 */
 	public void adjustTime() {
-		for (String s : WorldSettings.worldz) {
+		for (String s : Settings.worldz) {
 			try {
 				World world = Bukkit.getServer().getWorld(s);
 				world.setFullTime(getTime());
